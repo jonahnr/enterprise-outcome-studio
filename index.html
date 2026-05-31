@@ -344,7 +344,7 @@
 
     .detail-table {
       width: 100%;
-      min-width: 760px;
+      min-width: 980px;
       border-collapse: collapse;
     }
 
@@ -368,6 +368,27 @@
       padding: 6px 8px;
       border: 1px solid #c9d6e8;
       border-radius: 7px;
+    }
+
+    .table-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .delete-row {
+      min-height: 30px;
+      padding: 5px 8px;
+      border: 1px solid #f0b6b4;
+      border-radius: 7px;
+      color: #8f2d2c;
+      background: #fff5f4;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 850;
     }
 
     .field {
@@ -535,13 +556,14 @@
 
     .score-ring {
       --score: 0%;
+      --score-color: var(--blue);
       width: min(100%, 230px);
       aspect-ratio: 1;
       display: grid;
       place-items: center;
       margin: 8px auto 16px;
       border-radius: 50%;
-      background: conic-gradient(var(--blue) var(--score), #e5edf8 0);
+      background: conic-gradient(var(--score-color) var(--score), #e5edf8 0);
     }
 
     .score-ring div {
@@ -561,6 +583,48 @@
       color: var(--navy);
     }
 
+    .score-status {
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: -4px;
+      color: var(--score-color, var(--blue));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .score-breakdown {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .break-row {
+      display: grid;
+      grid-template-columns: 112px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .break-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e5edf8;
+    }
+
+    .break-track i {
+      display: block;
+      width: var(--value);
+      height: 100%;
+      background: var(--score-color, var(--blue));
+    }
+
     .score-ring span {
       color: var(--muted);
       font-size: 12px;
@@ -575,7 +639,7 @@
 
     .criterion {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 155px 1fr 54px;
       gap: 8px 12px;
       align-items: center;
       padding: 12px;
@@ -608,7 +672,6 @@
     }
 
     .bar {
-      grid-column: 1 / -1;
       height: 8px;
       overflow: hidden;
       border-radius: 999px;
@@ -621,6 +684,11 @@
       height: 100%;
       background: linear-gradient(90deg, var(--blue), var(--sky));
     }
+
+    .criterion.band-low { border-left: 5px solid var(--red); }
+    .criterion.band-mid { border-left: 5px solid #d88919; }
+    .criterion.band-good { border-left: 5px solid #d6b21e; }
+    .criterion.band-high { border-left: 5px solid var(--green); }
 
     .evidence {
       padding: 20px;
@@ -654,7 +722,7 @@
 
     .semantic-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.85fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(390px, 0.85fr);
       gap: 22px;
       align-items: start;
     }
@@ -678,7 +746,7 @@
       display: grid;
       grid-template-columns: 1fr 1.1fr 1fr;
       gap: 14px;
-      align-items: stretch;
+      align-items: start;
       margin-top: 14px;
     }
 
@@ -808,9 +876,28 @@
       font-weight: 800;
     }
 
-    .model-chip.dim { background: var(--sky); color: var(--navy); }
-    .model-chip.measure { background: var(--gold); color: var(--navy); }
+    .model-chip.dim { background: #0878be; color: #ffffff; }
+    .model-chip.measure { background: #9f6a00; color: #ffffff; }
     .model-chip.role { background: var(--violet); }
+
+    .hierarchy {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tree-node {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .tree-node.child { margin-left: 18px; }
+    .tree-node.grandchild { margin-left: 36px; }
+    .tree-node b { color: var(--navy); }
 
     .automation-layout {
       display: grid;
@@ -889,6 +976,46 @@
       margin-top: 14px;
     }
 
+    .example-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .example-shot {
+      min-height: 136px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .example-shot b,
+    .example-shot span {
+      display: block;
+    }
+
+    .example-bars {
+      display: grid;
+      gap: 7px;
+      margin: 12px 0;
+    }
+
+    .example-bars i {
+      display: block;
+      height: 9px;
+      width: var(--w);
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--sky));
+    }
+
+    .example-shot span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
     .detail-box {
       padding: 14px;
       border: 1px solid var(--line);
@@ -965,6 +1092,17 @@
       border-right: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       font-size: 13px;
+      cursor: pointer;
+    }
+
+    .cell.selected-col {
+      background: #fff2cc;
+      box-shadow: inset 0 0 0 2px var(--gold);
+    }
+
+    .cell.header.selected-col {
+      color: var(--navy);
+      background: var(--gold);
     }
 
     .cell:nth-child(5n) { border-right: 0; }
@@ -1259,8 +1397,18 @@
       .health-grid,
       .recipe-visual,
       .recipe-detail,
+      .example-strip,
       .package-defs,
       .catalog-grid { grid-template-columns: 1fr; }
+
+      .criterion {
+        grid-template-columns: 1fr auto;
+      }
+
+      .criterion .bar,
+      .criterion details {
+        grid-column: 1 / -1;
+      }
       .benchmark {
         border-right: 0;
         border-bottom: 1px solid var(--line);
@@ -1388,9 +1536,13 @@
                   </div>
                   <div class="detail-table-wrap" id="detailedInputs">
                     <table class="detail-table" aria-label="Detailed report inventory">
-                      <thead><tr><th>Report group</th><th>Reports</th><th>Cadence</th><th>Hours/cycle</th><th>Eligibility</th><th>Loads/month</th><th>Queries/load</th><th>Wait sec</th></tr></thead>
+                      <thead><tr><th>Report group</th><th># of reports</th><th>Cadence</th><th>Cycles/mo</th><th>Hours/cycle</th><th>Automation eligible %</th><th>Loads/mo</th><th>Queries/load</th><th>Wait sec</th><th></th></tr></thead>
                       <tbody id="reportRows"></tbody>
                     </table>
+                    <div class="table-actions">
+                      <span class="section-subtitle">Eligibility is the share of refresh, prep, QA, reconciliation, publishing, and follow-up that follows a repeatable pattern.</span>
+                      <button class="mini-btn" type="button" id="addReportRow">Add row</button>
+                    </div>
                   </div>
                   <div class="helper-card">
                     <b>Not sure what to enter?</b>
@@ -1402,6 +1554,7 @@
                   <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly capacity value returned to the business</span></div>
                   <div class="result-card"><b id="queryHoursSaved">5</b><span>hours of wait time removed per month using dashboard loads x queries per load</span></div>
                   <div class="result-card"><b id="modelOpportunity">18%</b><span>estimated Power BI model and logic cleanup opportunity</span></div>
+                  <div class="result-card"><b id="modelValue">$0</b><span>monthly value from model-size, logic, and performance cleanup</span></div>
                   <div class="result-card"><b id="storyLine">25 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on your volume, not a made-up savings slider.</span></div>
                   <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span></div>
                 </div>
@@ -1427,6 +1580,12 @@
               </div>
               <div class="score-ring" id="scoreRing">
                 <div><b id="scoreValue">0</b><span>out of 100</span></div>
+              </div>
+              <span class="score-status" id="scoreStatus">Needs attention</span>
+              <div class="score-breakdown">
+                <div class="break-row"><b>Self-assess</b><div class="break-track"><i id="selfAssessBar"></i></div><span id="selfAssessText">0/80</span></div>
+                <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
+                <div class="break-row"><b>100 state</b><div class="break-track"><i style="--value:100%;background:var(--green)"></i></div><span>100/100</span></div>
               </div>
               <div class="criteria" id="criteriaList"></div>
             </aside>
@@ -1519,6 +1678,14 @@
                   <tr><td>RLS need confirmed</td><td><span class="status bad">Package</span></td></tr>
                 </tbody>
               </table>
+              <div class="hierarchy">
+                <h2 class="section-title">Example Hierarchy</h2>
+                <div class="tree-node"><b>Executive Revenue Model</b><br>Certified semantic model</div>
+                <div class="tree-node child"><b>Facts</b><br>Sales, Invoice, Forecast</div>
+                <div class="tree-node child"><b>Dimensions</b><br>Date, Account, Region, Product</div>
+                <div class="tree-node grandchild"><b>Measures</b><br>Revenue, Margin, Forecast Accuracy</div>
+                <div class="tree-node grandchild"><b>Access</b><br>Executive, Region, Finance roles</div>
+              </div>
             </aside>
           </div>
         </section>
@@ -1549,6 +1716,11 @@
                   <div class="detail-box"><b>Parallax mechanism</b><span id="recipeMechanism"></span></div>
                   <div class="detail-box"><b>Best fit</b><span id="recipeFit"></span></div>
                   <div class="detail-box"><b>Proof artifact</b><span id="recipeProof"></span></div>
+                </div>
+                <div class="example-strip">
+                  <div class="example-shot"><b>Before</b><div class="example-bars"><i style="--w:92%"></i><i style="--w:76%"></i><i style="--w:64%"></i></div><span>Manual checks, slow handoffs, unclear ownership.</span></div>
+                  <div class="example-shot"><b>Control</b><div class="example-bars"><i style="--w:52%"></i><i style="--w:88%"></i><i style="--w:42%"></i></div><span>Workflow, validation, owner approval, evidence.</span></div>
+                  <div class="example-shot"><b>After</b><div class="example-bars"><i style="--w:28%"></i><i style="--w:36%"></i><i style="--w:84%"></i></div><span>Repeatable delivery with proof you can inspect.</span></div>
                 </div>
               </div>
             </article>
@@ -1637,10 +1809,10 @@
 
     let inputMode = "quick";
     const detailedReports = [
-      { name: "Executive scorecards", reports: 4, cadence: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
-      { name: "Finance close pack", reports: 8, cadence: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
-      { name: "Operations weekly", reports: 10, cadence: 4, hours: 1.25, eligible: 30, loads: 260, queries: 8, wait: 8 },
-      { name: "Ad hoc extracts", reports: 3, cadence: 2, hours: 2, eligible: 15, loads: 40, queries: 6, wait: 6 }
+      { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
+      { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
+      { name: "Operations weekly", reports: 10, cadence: "weekly", cycles: 4, hours: 1.25, eligible: 30, loads: 260, queries: 8, wait: 8 },
+      { name: "Ad hoc extracts", reports: 3, cadence: "custom", cycles: 2, hours: 2, eligible: 15, loads: 40, queries: 6, wait: 6 }
     ];
 
     const recipes = [
@@ -1713,13 +1885,13 @@
     ];
 
     const catalog = [
-      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", proof: ["Inventory", "Baseline", "Refresh log"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
-      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", proof: ["Runtime", "Slow list", "Before/after"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
-      { title: "Power BI Model Slimdown", art: "semantic", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", proof: ["PBIX size", "DAX audit", "Refresh lift"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
-      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", proof: ["Glossary", "Owner", "Certified KPI"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
-      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", proof: ["Workflow", "Tests", "Docs"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
-      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", proof: ["Model map", "Footprint", "Measure audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
-      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", proof: ["Role matrix", "Access test", "Audit pack"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
+      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "This matters because manual reporting time is usually hidden capacity loss: people are reconciling and republishing instead of analyzing.", proof: ["Inventory", "Baseline", "Refresh log"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
+      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "This matters because slow reports erode trust, increase exports, and waste time every time a report is opened.", proof: ["Runtime", "Slow list", "Before/after"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
+      { title: "Power BI Model Slimdown", art: "semantic", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "This matters because model bloat slows refresh, publishing, development, and report interaction.", proof: ["PBIX size", "DAX audit", "Refresh lift"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
+      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "This matters because transformation stalls when every dashboard has its own version of the truth.", proof: ["Glossary", "Owner", "Certified KPI"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
+      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "This matters because analytics scale comes from repeatable delivery patterns, not more one-off hero work.", proof: ["Workflow", "Tests", "Docs"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
+      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "This matters because the semantic model is where business trust, performance, governance, and reuse meet.", proof: ["Model map", "Footprint", "Measure audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
+      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "This matters because access control without evidence is hard to defend and harder to scale.", proof: ["Role matrix", "Access test", "Audit pack"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
     ];
 
     const numberFormat = new Intl.NumberFormat("en-US");
@@ -1753,29 +1925,48 @@
           <td><input data-report-field="name" data-report-index="${index}" value="${row.name}"></td>
           <td><input type="number" min="0" data-report-field="reports" data-report-index="${index}" value="${row.reports}"></td>
           <td><select data-report-field="cadence" data-report-index="${index}">
-            <option value="1" ${row.cadence === 1 ? "selected" : ""}>Monthly</option>
-            <option value="2" ${row.cadence === 2 ? "selected" : ""}>Biweekly</option>
-            <option value="4" ${row.cadence === 4 ? "selected" : ""}>Weekly</option>
-            <option value="20" ${row.cadence === 20 ? "selected" : ""}>Daily</option>
+            <option value="monthly" ${row.cadence === "monthly" ? "selected" : ""}>Monthly</option>
+            <option value="weekly" ${row.cadence === "weekly" ? "selected" : ""}>Weekly</option>
+            <option value="custom" ${row.cadence === "custom" ? "selected" : ""}>Custom monthly</option>
           </select></td>
+          <td><input type="number" min="0" step="0.25" data-report-field="cycles" data-report-index="${index}" value="${row.cycles}"></td>
           <td><input type="number" min="0" step="0.25" data-report-field="hours" data-report-index="${index}" value="${row.hours}"></td>
           <td><input type="number" min="0" max="100" data-report-field="eligible" data-report-index="${index}" value="${row.eligible}"></td>
           <td><input type="number" min="0" data-report-field="loads" data-report-index="${index}" value="${row.loads}"></td>
           <td><input type="number" min="0" data-report-field="queries" data-report-index="${index}" value="${row.queries}"></td>
           <td><input type="number" min="0" data-report-field="wait" data-report-index="${index}" value="${row.wait}"></td>
+          <td><button class="delete-row" type="button" data-delete-row="${index}">Delete</button></td>
         </tr>
       `).join("");
       tbody.querySelectorAll("input, select").forEach((input) => {
         input.addEventListener("input", updateDetailedReport);
         input.addEventListener("change", updateDetailedReport);
       });
+      tbody.querySelectorAll("[data-delete-row]").forEach((button) => button.addEventListener("click", () => deleteReportRow(Number(button.dataset.deleteRow))));
     }
 
     function updateDetailedReport(event) {
       const target = event.target;
       const row = detailedReports[Number(target.dataset.reportIndex)];
       const field = target.dataset.reportField;
-      row[field] = field === "name" ? target.value : Number(target.value || 0);
+      row[field] = field === "name" || field === "cadence" ? target.value : Number(target.value || 0);
+      if (field === "cadence") {
+        row.cycles = target.value === "monthly" ? 1 : target.value === "weekly" ? 4 : row.cycles || 2;
+        buildReportRows();
+      }
+      updateCalculator();
+    }
+
+    function addReportRow() {
+      detailedReports.push({ name: "New report group", reports: 1, cadence: "monthly", cycles: 1, hours: 1, eligible: 20, loads: 25, queries: 6, wait: 8 });
+      buildReportRows();
+      updateCalculator();
+    }
+
+    function deleteReportRow(index) {
+      if (detailedReports.length === 1) return;
+      detailedReports.splice(index, 1);
+      buildReportRows();
       updateCalculator();
     }
 
@@ -1801,8 +1992,8 @@
 
       if (inputMode === "detailed") {
         reportCount = detailedReports.reduce((sum, row) => sum + row.reports, 0);
-        baselineHours = detailedReports.reduce((sum, row) => sum + row.reports * row.cadence * row.hours, 0);
-        eligibleHours = detailedReports.reduce((sum, row) => sum + row.reports * row.cadence * row.hours * row.eligible / 100, 0);
+        baselineHours = detailedReports.reduce((sum, row) => sum + row.reports * row.cycles * row.hours, 0);
+        eligibleHours = detailedReports.reduce((sum, row) => sum + row.reports * row.cycles * row.hours * row.eligible / 100, 0);
         queryRuns = detailedReports.reduce((sum, row) => sum + row.loads * row.queries, 0);
         beforeWaitHours = detailedReports.reduce((sum, row) => sum + row.loads * row.queries * row.wait / 3600, 0);
       }
@@ -1811,12 +2002,14 @@
       const afterWaitHours = beforeWaitHours / 25;
       const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
       const modelOpportunity = Math.min(70, Math.round(numeric("modelSizeMb") / 80 + numeric("logicIssueCount") * 1.8 + numeric("duplicateMeasureInput") * 0.8));
+      const modelValue = Math.round((queryHoursSaved * reportingRate) + (numeric("modelSizeMb") * 0.7) + (numeric("logicIssueCount") * 260) + (modelOpportunity * 45));
       const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligible - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
       document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
       document.getElementById("queryHoursSaved").textContent = numberFormat.format(queryHoursSaved);
       document.getElementById("modelOpportunity").textContent = `${modelOpportunity}%`;
+      document.getElementById("modelValue").textContent = moneyFormat.format(modelValue);
       document.getElementById("storyLine").textContent = `${numberFormat.format(reportCount)} reports become a governed product backlog.`;
       document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${numberFormat.format(queryRuns)} query executions, and ${eligible}% eligible effort using the proven 75% enterprise reduction benchmark.`;
       document.getElementById("assessmentTrigger").textContent = assessmentScore > 85 ? "High-priority health assessment recommended" : assessmentScore > 40 ? "Foundation health assessment recommended" : "Starter environment: keep pressure-testing";
@@ -1833,17 +2026,31 @@
         const out = document.getElementById(`${criterion.id}Out`);
         if (out) out.textContent = `${value}%`;
         total += value * criterion.weight / 100;
-        return `<div class="criterion"><b>${criterion.label}</b><span>${criterion.weight}% weight | ${value}%</span><div class="bar" style="--value:${value}%"><i></i></div><details><summary>Scoring guidance</summary><p>${criterion.guidance}</p></details></div>`;
+        const bandClass = value < 40 ? "band-low" : value < 60 ? "band-mid" : value < 80 ? "band-good" : "band-high";
+        return `<div class="criterion ${bandClass}"><b>${criterion.label}</b><div class="bar" style="--value:${value}%"><i></i></div><span>${value}%</span><details><summary>${criterion.weight}% weight | Scoring guidance</summary><p>${criterion.guidance}</p></details></div>`;
       }).join("");
       const manualPressure = Math.min(100, numeric("reportCount") * 1.2 + numeric("hoursPerReport") * numeric("cyclesPerMonth") * 8);
       const modelPressure = Math.min(100, numeric("modelSizeMb") / 20 + numeric("logicIssueCount") * 3 + numeric("duplicateMeasureInput") * 2);
       const queryPressure = Math.min(100, numeric("dashboardViews") * numeric("queriesPerView") * numeric("querySeconds") / 900);
       const pressurePenalty = (manualPressure + modelPressure + queryPressure) / 3;
       const operationalComponent = Math.max(0, 100 - pressurePenalty);
-      const score = Math.round(total * 0.72 + operationalComponent * 0.28);
+      const score = Math.round(total * 0.8 + operationalComponent * 0.2);
+      const scoreColor = score < 40 ? "var(--red)" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "var(--green)";
+      const scoreStatus = score < 40 ? "Needs attention" : score < 60 ? "Foundation risk" : score < 80 ? "Scaling" : "Healthy";
       list.innerHTML = html;
       document.getElementById("scoreValue").textContent = score;
       document.getElementById("scoreRing").style.setProperty("--score", `${score}%`);
+      document.getElementById("scoreRing").style.setProperty("--score-color", scoreColor);
+      document.getElementById("scoreStatus").textContent = scoreStatus;
+      document.getElementById("scoreStatus").style.setProperty("--score-color", scoreColor);
+      const selfScore = Math.round(total * 0.8);
+      const opsScore = Math.round(operationalComponent * 0.2);
+      document.getElementById("selfAssessBar").style.setProperty("--value", `${Math.min(100, selfScore / 80 * 100)}%`);
+      document.getElementById("selfAssessBar").style.setProperty("--score-color", scoreColor);
+      document.getElementById("selfAssessText").textContent = `${selfScore}/80`;
+      document.getElementById("opsHealthBar").style.setProperty("--value", `${Math.min(100, opsScore / 20 * 100)}%`);
+      document.getElementById("opsHealthBar").style.setProperty("--score-color", scoreColor);
+      document.getElementById("opsHealthText").textContent = `${opsScore}/20`;
       const band = score < 40 ? "Fragmented" : score < 60 ? "Foundation" : score < 80 ? "Scaling" : "Optimized";
       document.getElementById("scoreInterpretation").textContent = `${score}/100: ${band}. The score blends your readiness sliders with operational pressure from manual reporting, query wait, model size, and logic issues.`;
       buildAdviceButtons();
@@ -1898,17 +2105,35 @@
           <div class="flip-inner">
             <div class="face">
               <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
-              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><p><b>Hover or focus for example.</b></p></div>
+              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><p><b>Open the card for proof and rationale.</b></p></div>
             </div>
             <div class="face back">
               <h3>${item.title}</h3>
               <p>${item.example}</p>
+              <p><b>Why this matters:</b> ${item.why}</p>
               <div class="proof-grid">${item.proof.map((proof) => `<div class="proof-tile">${proof}</div>`).join("")}</div>
               <span class="tag">Parallax delivery module</span>
             </div>
           </div>
         </article>
       `).join("");
+    }
+
+    function setupGovernanceMatrix() {
+      document.querySelectorAll(".matrix .cell").forEach((cell, index) => {
+        const col = index % 5;
+        cell.dataset.col = col;
+        if (col > 0) {
+          cell.addEventListener("click", () => selectGovernanceColumn(col));
+        }
+      });
+      selectGovernanceColumn(1);
+    }
+
+    function selectGovernanceColumn(col) {
+      document.querySelectorAll(".matrix .cell").forEach((cell) => {
+        cell.classList.toggle("selected-col", Number(cell.dataset.col) === col);
+      });
     }
 
     const examples = {
@@ -1960,7 +2185,8 @@
 
     function exportBrief() {
       const score = document.getElementById("scoreValue").textContent;
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;padding:32px;max-width:840px;margin:auto}h1{color:#071d54}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px}.card b{display:block;font-size:28px;color:#071d54}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}</style></head><body><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Monthly capacity value</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${score}/100</b>Readiness score</div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div></body></html>`;
+      const scoreColor = score < 40 ? "#be4b49" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "#20845a";
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:900px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Monthly capacity value</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div></div></body></html>`;
       const blob = new Blob([html], { type: "text/html" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -1988,8 +2214,10 @@
     buildReportRows();
     buildAutomationQueue();
     buildCatalog();
+    setupGovernanceMatrix();
     document.getElementById("quickModeBtn").addEventListener("click", () => setInputMode("quick"));
     document.getElementById("detailedModeBtn").addEventListener("click", () => setInputMode("detailed"));
+    document.getElementById("addReportRow").addEventListener("click", addReportRow);
     ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "reportingRate", "eligiblePercent", "modelSizeMb", "logicIssueCount", "sourceSystems", "factTables", "dimensionTables", "measureCount", "certifiedMetrics", "duplicateMeasureInput", "rlsRoles", "refreshJobs", ...criteria.map((item) => item.id)].forEach((id) => {
       document.getElementById(id).addEventListener("input", updateCalculator);
       document.getElementById(id).addEventListener("change", updateCalculator);

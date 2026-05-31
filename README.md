@@ -13,10 +13,12 @@ A customer-facing static web app for demonstrating enterprise transformation out
 - Guided definitions for customer inputs so buyers understand what they are choosing
 - Quick estimate mode and detailed report-inventory mode for mixed weekly/monthly reporting portfolios
 - 0-100 readiness score based on weighted criteria with scoring guidance bands
-- Readiness score blended from self-assessment plus operational pressure from manual reporting, query wait, model size, and logic issues
+- Readiness score blended from 80% self-assessment plus 20% operational pressure from manual reporting, query wait, model size, and logic issues
 - Mutable semantic model trust layer with Power BI model-size, bad-logic, certification, duplicate-measure, and access signals
 - Plain-language automation recipes with customer pain, mechanism, best fit, and proof artifacts
 - Exportable outcome brief from the first-page results
+- Editable detailed report inventory with add/delete rows
+- Clickable governance package columns for comparison
 - Governance packaging for Base, Scale, Audit, and RLS Add-on
 - Capability catalog with unique visual cards, examples, and proof artifacts
 
