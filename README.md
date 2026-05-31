@@ -11,9 +11,12 @@ A customer-facing static web app for demonstrating enterprise transformation out
   - RLS as an added governance package
 - Customer-input outcome calculator using report volume, report-cycle effort, query usage, wait time, hourly cost, and automation eligibility
 - Guided definitions for customer inputs so buyers understand what they are choosing
+- Quick estimate mode and detailed report-inventory mode for mixed weekly/monthly reporting portfolios
 - 0-100 readiness score based on weighted criteria with scoring guidance bands
-- Mutable semantic model trust layer with model health signals
+- Readiness score blended from self-assessment plus operational pressure from manual reporting, query wait, model size, and logic issues
+- Mutable semantic model trust layer with Power BI model-size, bad-logic, certification, duplicate-measure, and access signals
 - Plain-language automation recipes with customer pain, mechanism, best fit, and proof artifacts
+- Exportable outcome brief from the first-page results
 - Governance packaging for Base, Scale, Audit, and RLS Add-on
 - Capability catalog with unique visual cards, examples, and proof artifacts
 
