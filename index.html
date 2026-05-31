@@ -304,6 +304,12 @@
       line-height: 1.35;
     }
 
+    .benchmark .info {
+      display: inline-grid;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
     .benchmark small {
       display: inline-block;
       margin-top: 10px;
@@ -802,7 +808,7 @@
 
     .semantic-stage {
       display: grid;
-      grid-template-columns: minmax(180px, 0.92fr) minmax(360px, 1.35fr) minmax(180px, 0.92fr);
+      grid-template-columns: minmax(190px, 0.9fr) minmax(190px, 0.9fr);
       gap: 14px;
       align-items: start;
       margin-top: 14px;
@@ -822,6 +828,7 @@
     }
 
     .semantic-node.primary {
+      grid-column: 1 / -1;
       min-height: 100%;
       border: 2px solid var(--blue);
       background: linear-gradient(180deg, #edf6ff, #ffffff);
@@ -907,7 +914,13 @@
     }
 
     .model-layer b {
-      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      color: #ffffff;
+      background: var(--navy);
       font-size: 12px;
     }
 
@@ -936,7 +949,7 @@
 
     .model-chip.dim { background: #0878be; color: #ffffff; }
     .model-chip.measure { background: #9f6a00; color: #ffffff; }
-    .model-chip.role { background: var(--violet); }
+    .model-chip.role { background: var(--violet); color: #ffffff; }
 
     .hierarchy {
       display: grid;
@@ -1134,6 +1147,40 @@
       line-height: 1.35;
     }
 
+    .automation-value {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid #f0d08a;
+      border-radius: 8px;
+      background: #fff9eb;
+    }
+
+    .value-tile {
+      padding: 12px;
+      border-radius: 8px;
+      color: var(--navy);
+      background: #ffffff;
+    }
+
+    .value-tile b,
+    .value-tile span {
+      display: block;
+    }
+
+    .value-tile b {
+      font-size: 18px;
+    }
+
+    .value-tile span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
     .detail-box {
       padding: 14px;
       border: 1px solid var(--line);
@@ -1298,6 +1345,47 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
+    }
+
+    .criteria-assessor {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .criteria-assessor h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .check-band {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .check-band strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .check-band label {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .check-band input {
+      margin-top: 2px;
     }
 
     .catalog-grid {
@@ -1525,6 +1613,7 @@
       .recipe-visual,
       .recipe-detail,
       .example-strip,
+      .automation-value,
       .package-defs,
       .catalog-grid { grid-template-columns: 1fr; }
 
@@ -1608,10 +1697,10 @@
                 <span class="pill">Evidence-led</span>
               </div>
               <div class="benchmark-row">
-                <div class="benchmark"><b>75%</b><span>proven reduction in eligible manual reporting effort</span><small>enterprise benchmark</small></div>
-                <div class="benchmark"><b>25x</b><span>query optimization and dashboard performance lift</span><small>enterprise benchmark</small></div>
-                <div class="benchmark"><b>10x</b><span>analytics delivery scale through BI engineering automation</span><small>enterprise benchmark</small></div>
-                <div class="benchmark"><b>RLS+</b><span>governance package for sensitive role and row-level access</span><small>optional package</small></div>
+                <div class="benchmark"><b>75%</b><span>proven reduction in eligible manual reporting effort <span class="info" tabindex="0" data-tip="The calculator applies 75% only to the reporting effort marked eligible for automation. It does not assume every report hour disappears.">?</span></span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>25x</b><span>query optimization and dashboard performance lift <span class="info" tabindex="0" data-tip="The calculator compares current wait time against a 25x tuned state, then counts the user-facing wait removed across dashboard loads and query runs.">?</span></span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>10x</b><span>analytics delivery scale through BI engineering automation <span class="info" tabindex="0" data-tip="10x is represented through automation recipes and readiness, not as a blanket multiplier on dollars. It measures repeatability: templates, checks, deployment, documentation, and proof.">?</span></span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>RLS+</b><span>governance package for sensitive role and row-level access <span class="info" tabindex="0" data-tip="RLS becomes a package when row-level access needs policy design, role testing, and audit evidence for department-specific or sensitive data.">?</span></span><small>optional package</small></div>
               </div>
               <div class="scenario">
                 <div>
@@ -1681,7 +1770,7 @@
                 </div>
                 <div class="result-stack">
                   <div class="result-card"><b id="manualHoursSaved">9</b><span>manual hours saved per month from eligible reporting work</span></div>
-                  <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly capacity value returned to the business</span></div>
+                  <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly value returned: reporting capacity plus model, logic, and premium-capacity risk</span></div>
                   <div class="result-card"><b id="queryHoursSaved">5</b><span>hours of wait time removed per month using dashboard loads x queries per load</span></div>
                   <div class="result-card"><b id="modelOpportunity">18%</b><span>estimated Power BI model and logic cleanup opportunity</span></div>
                   <div class="result-card"><b id="modelValue">$0</b><span>monthly value from model-size, logic, and performance cleanup</span></div>
@@ -1758,6 +1847,12 @@
                 <div><span>80-100</span><b>Optimized</b></div>
               </div>
               <div class="advice-card"><b id="adviceTitle">Select a metric</b><span id="adviceBody">Choose a readiness metric to see what the current score means and what to improve next.</span></div>
+              <div class="criteria-assessor">
+                <h3>Evidence-Based Autoset</h3>
+                <p class="section-subtitle">Check the statements that are true for the selected metric, then submit. The highest band with at least half of its boxes checked sets the slider.</p>
+                <div id="criterionChecklist"></div>
+                <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit autoscore</button>
+              </div>
             </aside>
           </div>
         </section>
@@ -1858,6 +1953,11 @@
                   <div class="example-shot"><b>Control</b><div class="example-bars"><i style="--w:52%"></i><i style="--w:88%"></i><i style="--w:42%"></i></div><span>Workflow, validation, owner approval, evidence.</span></div>
                   <div class="example-shot"><b>After</b><div class="example-bars"><i style="--w:28%"></i><i style="--w:36%"></i><i style="--w:84%"></i></div><span>Repeatable delivery with proof you can inspect.</span></div>
                 </div>
+                <div class="automation-value">
+                  <div class="value-tile"><b id="recipeFinancialWin">$0/mo</b><span>financial value this recipe helps expose or recover</span></div>
+                  <div class="value-tile"><b id="recipeAcceleration">Faster cycle</b><span>what gets accelerated when the process is standardized</span></div>
+                  <div class="value-tile"><b id="recipeBusinessWin">Proof</b><span>the win you can show after implementation</span></div>
+                </div>
               </div>
             </article>
           </div>
@@ -1903,7 +2003,7 @@
               <div class="assessment-card" id="rlsUpgradeCta">
                 <b>RLS package upgrade</b>
                 <span id="rlsUpgradeText">Select the RLS package column when row-level policy, role testing, and access evidence need to be delivered as their own workstream.</span>
-                <button class="mini-btn" type="button" id="rlsPackageBtn" style="margin-top:10px">Highlight RLS package</button>
+                <button class="mini-btn" type="button" id="rlsPackageBtn" style="margin-top:10px">Open RLS package demo</button>
               </div>
             </aside>
           </div>
@@ -1940,12 +2040,12 @@
     };
 
     const criteria = [
-      { id: "metricStandardization", label: "Metric standards", weight: 18, bands: [["0-20", "KPIs are redefined report by report."], ["21-40", "Team standards exist, but conflicts remain."], ["41-60", "A glossary exists, but adoption is uneven."], ["61-80", "Certified KPIs have owners."], ["81-100", "Standards are governed and enforced."]], advice: "Focus first on high-conflict KPIs like revenue, margin, utilization, backlog, and SLA. The next move is a metric owner, definition, lineage, and certified status for each." },
-      { id: "automationCoverage", label: "Automation coverage", weight: 20, bands: [["0-20", "Refresh, QA, and reconciliation are manual."], ["21-40", "Scheduled refresh exists, but validation is light."], ["41-60", "Repeatable checks and templates exist."], ["61-80", "Governed workflows handle common builds."], ["81-100", "Automation produces evidence by default."]], advice: "Look for repeatable work: refresh monitoring, reconciliation, report publishing, table creation, documentation, and validation. Automate the stable work before custom edge cases." },
-      { id: "semanticHealth", label: "Semantic health", weight: 22, bands: [["0-20", "Report-specific datasets and duplicated logic."], ["21-40", "A shared model exists, but it is messy."], ["41-60", "The core model works, but measures are not fully certified."], ["61-80", "Lean model with owned measures."], ["81-100", "Optimized semantic product with active ownership."]], advice: "Prioritize PBIX/model size, unused tables, duplicate measures, calculated columns that belong upstream, ambiguous relationships, and DAX that conflicts across reports." },
-      { id: "performanceHealth", label: "Performance health", weight: 15, bands: [["0-20", "Slow reports are normal and unmeasured."], ["21-40", "Slow reports are known but fixed reactively."], ["41-60", "Performance is profiled periodically."], ["61-80", "Tuning gates exist before certification."], ["81-100", "Performance budgets are monitored continuously."]], advice: "Separate report render time from query execution time. Power BI visual/render time, semantic model query time, and warehouse query time can each be bottlenecks." },
-      { id: "governanceCoverage", label: "Governance coverage", weight: 17, bands: [["0-20", "Ownership and access rules are unclear."], ["21-40", "Basic owners and permissions exist."], ["41-60", "Lineage, glossary, and access reviews are in progress."], ["61-80", "Governance evidence is packaged."], ["81-100", "Audit-ready governance and policy automation."]], advice: "Base governance should prove ownership, lineage, refresh status, and certification. RLS becomes its own package when HR, Finance, Legal, regional, account, or employee-level policy needs row-level testing and audit evidence." },
-      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8, bands: [["0-20", "Users export around reports."], ["21-40", "Trust is mixed."], ["41-60", "Training and support exist."], ["61-80", "Adoption is measured and guided."], ["81-100", "Governed reports are the default operating rhythm."]], advice: "Look for export behavior, duplicate shadow reports, low usage, and recurring metric debates. Adoption improves when trusted reports become easier than workarounds." }
+      { id: "metricStandardization", label: "Metric standards", weight: 18, bands: [["0-20", "KPIs are redefined report by report.", ["Different teams use different KPI formulas", "No named metric owners", "Definitions live in report logic or tribal knowledge"]], ["21-40", "Team standards exist, but conflicts remain.", ["A few shared definitions exist", "Conflicts still show up in meetings", "Owners are informal or inconsistent"]], ["41-60", "A glossary exists, but adoption is uneven.", ["Core terms are documented", "Some reports still use local variants", "Certification is not consistently enforced"]], ["61-80", "Certified KPIs have owners.", ["Priority KPIs have owners", "Definitions include lineage", "Reports clearly show certified measures"]], ["81-100", "Standards are governed and enforced.", ["New reports must use certified metrics", "Changes follow approval workflow", "Conflicts are detected before release"]]], advice: "Focus first on high-conflict KPIs like revenue, margin, utilization, backlog, and SLA. The next move is a metric owner, definition, lineage, and certified status for each." },
+      { id: "automationCoverage", label: "Automation coverage", weight: 20, bands: [["0-20", "Refresh, QA, and reconciliation are manual.", ["People manually refresh or export files", "QA is visual or spreadsheet-based", "Failures are found by business users"]], ["21-40", "Scheduled refresh exists, but validation is light.", ["Some refreshes are scheduled", "Validation is mostly row counts", "Owner alerts are inconsistent"]], ["41-60", "Repeatable checks and templates exist.", ["Common checks are reusable", "Some build patterns are templated", "Exceptions still need manual handling"]], ["61-80", "Governed workflows handle common builds.", ["Requests follow an intake flow", "Validation and documentation are generated", "Deployments have owner approval"]], ["81-100", "Automation produces evidence by default.", ["Refresh, QA, approvals, and lineage are logged", "Failures create accountable follow-up", "Evidence is ready for leadership or audit"]]], advice: "Look for repeatable work: refresh monitoring, reconciliation, report publishing, table creation, documentation, and validation. Automate the stable work before custom edge cases." },
+      { id: "semanticHealth", label: "Semantic health", weight: 22, bands: [["0-20", "Report-specific datasets and duplicated logic.", ["Many reports have private datasets", "Duplicate DAX appears across reports", "Relationships are unclear or fragile"]], ["21-40", "A shared model exists, but it is messy.", ["Shared model has unused tables or columns", "Measures are inconsistently named", "Model size slows refresh or publishing"]], ["41-60", "The core model works, but measures are not fully certified.", ["Facts and dimensions have defined grain", "Some measures are certified", "Duplicates and bad logic remain"]], ["61-80", "Lean model with owned measures.", ["Unused objects are retired", "Certified measures cover priority reporting", "Relationships are intentionally designed"]], ["81-100", "Optimized semantic product with active ownership.", ["Model size is budgeted", "Performance is monitored", "Metric changes have governance and release control"]]], advice: "Prioritize PBIX/model size, unused tables, duplicate measures, calculated columns that belong upstream, ambiguous relationships, and DAX that conflicts across reports." },
+      { id: "performanceHealth", label: "Performance health", weight: 15, bands: [["0-20", "Slow reports are normal and unmeasured.", ["No target load time exists", "Slow visuals are accepted as normal", "Warehouse and semantic query time are not separated"]], ["21-40", "Slow reports are known but fixed reactively.", ["Users report slowness manually", "Fixes happen after escalation", "Before/after evidence is not retained"]], ["41-60", "Performance is profiled periodically.", ["Critical reports have runtime checks", "Slow queries are listed", "Tuning is not yet a release gate"]], ["61-80", "Tuning gates exist before certification.", ["Reports must meet load targets", "Model and query bottlenecks are separated", "Aggregations or model redesign are used intentionally"]], ["81-100", "Performance budgets are monitored continuously.", ["Slowdown alerts reach owners", "Capacity impact is tracked", "Performance regressions block release"]]], advice: "Separate report render time from query execution time. Power BI visual/render time, semantic model query time, and warehouse query time can each be bottlenecks." },
+      { id: "governanceCoverage", label: "Governance coverage", weight: 17, bands: [["0-20", "Ownership and access rules are unclear.", ["Report owners are missing", "Access rules are informal", "Lineage is not documented"]], ["21-40", "Basic owners and permissions exist.", ["Owners exist for key reports", "Permissions are reviewed occasionally", "Refresh evidence is inconsistent"]], ["41-60", "Lineage, glossary, and access reviews are in progress.", ["Lineage exists for priority assets", "Glossary and certification are emerging", "Access reviews are scheduled but manual"]], ["61-80", "Governance evidence is packaged.", ["Owners, lineage, refresh, and certification are visible", "Access review evidence is retained", "RLS scope is explicitly decided"]], ["81-100", "Audit-ready governance and policy automation.", ["Policy decisions are logged", "Access tests produce evidence", "Governance reporting is automated"]]], advice: "Base governance should prove ownership, lineage, refresh status, and certification. RLS becomes its own package when HR, Finance, Legal, regional, account, or employee-level policy needs row-level testing and audit evidence." },
+      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8, bands: [["0-20", "Users export around reports.", ["Teams routinely export to Excel", "Shadow reports compete with certified reports", "Metric debates happen in operating meetings"]], ["21-40", "Trust is mixed.", ["Some users trust the reports", "Training is informal", "Support questions repeat"]], ["41-60", "Training and support exist.", ["Users know where to find certified reports", "Support has a clear owner", "Usage is measured sometimes"]], ["61-80", "Adoption is measured and guided.", ["Usage patterns inform improvements", "Training is tied to release", "Workarounds are actively retired"]], ["81-100", "Governed reports are the default operating rhythm.", ["Executives use certified reports by default", "Teams stop duplicating logic", "Adoption is managed as a product metric"]]], advice: "Look for export behavior, duplicate shadow reports, low usage, and recurring metric debates. Adoption improves when trusted reports become easier than workarounds." }
     ];
 
     let inputMode = "quick";
@@ -1956,7 +2056,7 @@
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
       { name: "Operations weekly", reports: 10, cadence: "weekly", cycles: 4, hours: 1.25, eligible: 30, loads: 260, queries: 8, wait: 8 },
-      { name: "Ad hoc extracts", reports: 3, cadence: "custom", cycles: 2, hours: 2, eligible: 15, loads: 40, queries: 6, wait: 6 }
+      { name: "Quarterly board package", reports: 3, cadence: "quarterly", cycles: 0.33, hours: 6, eligible: 20, loads: 40, queries: 6, wait: 6 }
     ];
 
     const recipes = [
@@ -1969,7 +2069,10 @@
         pain: "Teams rebuild the same tables by hand, then spend time reconciling mismatched numbers.",
         mechanism: "Create reusable table patterns with standard grain, keys, refresh checks, and ownership.",
         fit: "Recurring tables with stable grain, repeated joins, or monthly/weekly aggregation work.",
-        proof: "Certified table inventory, refresh evidence, row count checks, and owner sign-off."
+        proof: "Certified table inventory, refresh evidence, row count checks, and owner sign-off.",
+        value: "$8k-$35k/mo",
+        accelerates: "Table delivery",
+        win: "Less rebuild and reconciliation"
       },
       {
         title: "Analyst Table Builder",
@@ -1980,7 +2083,10 @@
         pain: "Analysts need new tables, but every request waits on custom engineering cycles.",
         mechanism: "Use guided templates for naming, grain, PII flags, approval, documentation, and deployment.",
         fit: "Teams that want self-service analytics without letting unmanaged tables multiply.",
-        proof: "Approved table request, generated documentation, lineage, and test results."
+        proof: "Approved table request, generated documentation, lineage, and test results.",
+        value: "$12k-$50k/mo",
+        accelerates: "Analyst delivery",
+        win: "More tables without unmanaged sprawl"
       },
       {
         title: "Performance Recovery",
@@ -1991,7 +2097,10 @@
         pain: "You wait on dashboards, lose trust in reports, and export data to work around performance.",
         mechanism: "Profile slow measures, optimize relationships, add aggregations, and retest against target runtimes.",
         fit: "Reports where users wait on visuals, capacity is strained, or warehouse queries are expensive.",
-        proof: "Before/after runtime evidence, slow query list, optimization notes, and certification status."
+        proof: "Before/after runtime evidence, slow query list, optimization notes, and certification status.",
+        value: "$5k-$80k/mo",
+        accelerates: "Report load time",
+        win: "Lower wait, fewer exports"
       },
       {
         title: "Governance Evidence Pack",
@@ -2002,7 +2111,10 @@
         pain: "Governance exists in fragments, so leaders cannot see what is trusted or controlled.",
         mechanism: "Assemble glossary, ownership, lineage, access policy, refresh history, and RLS decisions.",
         fit: "Leadership, compliance, or data governance teams that need proof of trust and control.",
-        proof: "Executive evidence pack with controls, owners, lineage, access review, and RLS scope."
+        proof: "Executive evidence pack with controls, owners, lineage, access review, and RLS scope.",
+        value: "Risk reduction",
+        accelerates: "Trust decisions",
+        win: "Evidence leaders can defend"
       },
       {
         title: "Power BI Model Slimdown",
@@ -2013,7 +2125,10 @@
         pain: "Large models slow refresh, publishing, local development, and report interaction.",
         mechanism: "Audit model size, cardinality, calculated columns, unused fields, duplicate measures, and relationship design.",
         fit: "Power BI estates with large PBIX files, slow refreshes, repeated measures, or report-specific datasets.",
-        proof: "Before/after model size, retired objects, measure audit, and refresh/runtime comparison."
+        proof: "Before/after model size, retired objects, measure audit, and refresh/runtime comparison.",
+        value: "$10k-$90k/mo",
+        accelerates: "Refresh and publish",
+        win: "Avoid premium capacity pressure"
       },
       {
         title: "Refresh Reliability Control",
@@ -2024,18 +2139,21 @@
         pain: "Reports are published before data is ready, or teams find failures after a meeting already started.",
         mechanism: "Create refresh monitoring, dependency checks, owner alerts, and evidence logs for critical reporting assets.",
         fit: "Operational or executive reporting where freshness and reliability matter as much as the dashboard itself.",
-        proof: "Refresh SLA log, failure history, owner alerts, and recovery evidence."
+        proof: "Refresh SLA log, failure history, owner alerts, and recovery evidence.",
+        value: "$4k-$25k/mo",
+        accelerates: "Issue recovery",
+        win: "Fewer meeting-day surprises"
       }
     ];
 
     const catalog = [
-      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "This matters because manual reporting time is usually hidden capacity loss: people are reconciling and republishing instead of analyzing.", proof: ["Inventory", "Baseline", "Refresh log"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
-      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "This matters because slow reports erode trust, increase exports, and waste time every time a report is opened.", proof: ["Runtime", "Slow list", "Before/after"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
-      { title: "Power BI Model Slimdown", art: "semantic", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "This matters because model bloat slows refresh, publishing, development, and report interaction.", proof: ["PBIX size", "DAX audit", "Refresh lift"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
-      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "This matters because transformation stalls when every dashboard has its own version of the truth.", proof: ["Glossary", "Owner", "Certified KPI"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
-      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "This matters because analytics scale comes from repeatable delivery patterns, not more one-off hero work.", proof: ["Workflow", "Tests", "Docs"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
-      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "This matters because the semantic model is where business trust, performance, governance, and reuse meet.", proof: ["Model map", "Footprint", "Measure audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
-      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "This matters because access control without evidence is hard to defend and harder to scale.", proof: ["Role matrix", "Access test", "Audit pack"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
+      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "You can see which recurring hours are actually removable instead of arguing from averages. The module turns hidden reporting labor into a monthly capacity number and a delivery backlog.", proof: ["Report count by cadence", "Eligible hours baseline", "Saved-hours model"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
+      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "Every slow report creates repeated wait time and pushes users toward extracts. This module shows where 25x tuning applies and where the bottleneck is report render, semantic model, or warehouse query time.", proof: ["Before/after seconds", "Slow query inventory", "Tuning evidence"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
+      { title: "Power BI Model Slimdown", art: "semantic", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "Large models become expensive before they become obviously broken. This module gives you a model-size risk signal tied to refresh, publishing, development speed, and premium-capacity pressure.", proof: ["Model size delta", "Retired objects", "Capacity risk"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
+      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "Transformation breaks down when the meeting becomes a definitions debate. This module shows which KPIs are certified, who owns them, and where logic still conflicts.", proof: ["Definition owner", "Lineage path", "Conflict list"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
+      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "Scale does not come from asking analysts to move faster by hand. This module identifies repeatable builds that can be templated, validated, documented, and released with evidence.", proof: ["Intake flow", "Validation checks", "Release evidence"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
+      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "The semantic model is the product boundary between raw data and trusted reporting. This module shows the table relationships, certified measures, duplicate logic, and access rules that make reporting reusable.", proof: ["Relationship map", "Measure coverage", "Duplicate audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
+      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "Access control is only useful when you can prove it works. This module separates base governance from RLS package work when HR, Finance, Legal, account, or territory rows need role-specific visibility.", proof: ["Role test matrix", "Access evidence", "Policy owner"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
     ];
 
     const numberFormat = new Intl.NumberFormat("en-US");
@@ -2062,11 +2180,20 @@
       return Number(document.getElementById(id).value || 0);
     }
 
+    function setQuickPreset(value) {
+      const presets = value === "zero"
+        ? { reportCount: 180, hoursPerReport: 5, cyclesPerMonth: 4, dashboardViews: 18000, queriesPerView: 22, querySeconds: 45, modelSizeMb: 6500, logicIssueCount: 90, eligiblePercent: 55 }
+        : { reportCount: 8, hoursPerReport: 0.5, cyclesPerMonth: 1, dashboardViews: 120, queriesPerView: 4, querySeconds: 2, modelSizeMb: 120, logicIssueCount: 0, eligiblePercent: 10 };
+      Object.entries(presets).forEach(([id, value]) => { document.getElementById(id).value = value; });
+      setInputMode("quick");
+    }
+
     function setOpsOverride(value) {
+      setQuickPreset(value);
       opsOverride = value;
       document.getElementById("opsZeroBtn").classList.toggle("active", value === "zero");
       document.getElementById("opsFullBtn").classList.toggle("active", value === "full");
-      updateScore();
+      updateCalculator();
     }
 
     function clearOpsOverride() {
@@ -2085,7 +2212,8 @@
           <td><select data-report-field="cadence" data-report-index="${index}">
             <option value="monthly" ${row.cadence === "monthly" ? "selected" : ""}>Monthly</option>
             <option value="weekly" ${row.cadence === "weekly" ? "selected" : ""}>Weekly</option>
-            <option value="custom" ${row.cadence === "custom" ? "selected" : ""}>Custom monthly</option>
+            <option value="quarterly" ${row.cadence === "quarterly" ? "selected" : ""}>Quarterly</option>
+            <option value="yearly" ${row.cadence === "yearly" ? "selected" : ""}>Yearly</option>
           </select></td>
           <td><input type="number" min="0" step="0.25" data-report-field="cycles" data-report-index="${index}" value="${row.cycles}"></td>
           <td><input type="number" min="0" step="0.25" data-report-field="hours" data-report-index="${index}" value="${row.hours}"></td>
@@ -2110,7 +2238,7 @@
       const field = target.dataset.reportField;
       row[field] = field === "name" || field === "cadence" ? target.value : Number(target.value || 0);
       if (field === "cadence") {
-        row.cycles = target.value === "monthly" ? 1 : target.value === "weekly" ? 4 : row.cycles || 2;
+        row.cycles = target.value === "monthly" ? 1 : target.value === "weekly" ? 4 : target.value === "quarterly" ? 0.33 : 0.08;
         buildReportRows();
       }
       updateCalculator();
@@ -2163,11 +2291,17 @@
       const eligibleRate = baselineHours ? Math.round(eligibleHours / baselineHours * 100) : 0;
       currentFacts = { reportCount, baselineHours, queryRuns, beforeWaitHours, eligibleRate };
       const savedHours = Math.round(eligibleHours * 0.75);
-      const savedValue = savedHours * reportingRate;
       const afterWaitHours = beforeWaitHours / 25;
       const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
-      const modelOpportunity = Math.min(70, Math.round(numeric("modelSizeMb") / 80 + numeric("logicIssueCount") * 1.8 + numeric("duplicateMeasureInput") * 0.8));
-      const modelValue = Math.round((queryHoursSaved * reportingRate) + (numeric("modelSizeMb") * 0.7) + (numeric("logicIssueCount") * 260) + (modelOpportunity * 45));
+      const modelSize = numeric("modelSizeMb");
+      const logicIssues = numeric("logicIssueCount");
+      const duplicateMeasures = numeric("duplicateMeasureInput");
+      const modelOpportunity = Math.min(70, Math.round(modelSize / 80 + logicIssues * 1.8 + duplicateMeasures * 0.8));
+      const premiumPressure = Math.max(0, modelSize - 1000);
+      const premiumRiskValue = Math.round(Math.pow(premiumPressure / 1000, 1.18) * 5200);
+      const logicValue = logicIssues * 720 + duplicateMeasures * 190;
+      const modelValue = Math.round((queryHoursSaved * reportingRate) + (modelSize * 1.35) + logicValue + premiumRiskValue + (modelOpportunity * 85));
+      const savedValue = savedHours * reportingRate + modelValue;
       const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligibleRate - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
@@ -2233,6 +2367,35 @@
       document.querySelectorAll("[data-criterion]").forEach((row) => row.classList.toggle("active", row.dataset.criterion === id));
       document.getElementById("adviceTitle").textContent = `${criterion.label}: ${band[0]}`;
       document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${criterion.advice}`;
+      renderCriterionChecklist(criterion);
+    }
+
+    function renderCriterionChecklist(criterion) {
+      const wrap = document.getElementById("criterionChecklist");
+      if (!wrap) return;
+      wrap.innerHTML = criterion.bands.map((band, bandIndex) => `
+        <div class="check-band">
+          <strong>${band[0]}: ${band[1]}</strong>
+          ${band[2].map((item, itemIndex) => `
+            <label><input type="checkbox" data-check-band="${bandIndex}" data-check-item="${itemIndex}"> ${item}</label>
+          `).join("")}
+        </div>
+      `).join("");
+    }
+
+    function applyChecklistScore() {
+      const criterion = criteria.find((item) => item.id === selectedAdviceId);
+      if (!criterion) return;
+      let chosenIndex = 0;
+      criterion.bands.forEach((band, bandIndex) => {
+        const checked = document.querySelectorAll(`[data-check-band="${bandIndex}"]:checked`).length;
+        const needed = Math.ceil(band[2].length / 2);
+        if (checked >= needed) chosenIndex = bandIndex;
+      });
+      const values = [10, 30, 50, 70, 90];
+      document.getElementById(criterion.id).value = values[chosenIndex];
+      updateCalculator();
+      showAdvice(criterion.id);
     }
 
     function buildAutomationQueue() {
@@ -2259,6 +2422,9 @@
       document.getElementById("recipeMechanism").textContent = recipe.mechanism;
       document.getElementById("recipeFit").textContent = recipe.fit;
       document.getElementById("recipeProof").textContent = recipe.proof;
+      document.getElementById("recipeFinancialWin").textContent = recipe.value;
+      document.getElementById("recipeAcceleration").textContent = recipe.accelerates;
+      document.getElementById("recipeBusinessWin").textContent = recipe.win;
     }
 
     function buildCatalog() {
@@ -2358,10 +2524,12 @@
         [examples.facts[0], examples.dims[0]],
         [examples.facts[1], examples.dims[1]],
         [examples.facts[2], examples.dims[2]],
+        [examples.facts[3], examples.dims[3]],
+        ["Fact Labor", "Dim Employee"],
         [roles ? "Role Access" : examples.dims[3], roles ? "Filtered Facts" : examples.facts[3]]
       ];
       document.getElementById("relationshipMap").innerHTML = relationshipRows.map((row, index) => {
-        const roleRow = index === 3 && roles;
+        const roleRow = index === relationshipRows.length - 1 && roles;
         return `<div class="relationship-row"><div class="rel-table ${roleRow ? "dim" : ""}">${row[0]}</div><div class="rel-line"><span>${roleRow ? "1" : "*"}</span><span>${roleRow ? "*" : "1"}</span></div><div class="rel-table ${roleRow ? "" : "dim"}">${row[1]}</div></div>`;
       }).join("");
     }
@@ -2410,7 +2578,11 @@
       document.getElementById("railToggle").setAttribute("title", collapsed ? "Show navigation" : "Collapse navigation");
       document.getElementById("railToggle").setAttribute("aria-label", collapsed ? "Show navigation" : "Collapse navigation");
     });
-    document.getElementById("rlsPackageBtn").addEventListener("click", () => selectGovernanceColumn(4));
+    document.getElementById("rlsPackageBtn").addEventListener("click", () => {
+      selectGovernanceColumn(4);
+      window.open("https://jonahnr.github.io/rls-demo-webapp/", "_blank", "noopener");
+    });
+    document.getElementById("applyChecklistBtn").addEventListener("click", applyChecklistScore);
     const operationalInputIds = ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "modelSizeMb", "logicIssueCount", "duplicateMeasureInput"];
     ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "reportingRate", "eligiblePercent", "modelSizeMb", "logicIssueCount", "sourceSystems", "factTables", "dimensionTables", "measureCount", "certifiedMetrics", "duplicateMeasureInput", "rlsRoles", "refreshJobs", ...criteria.map((item) => item.id)].forEach((id) => {
       document.getElementById(id).addEventListener("input", updateCalculator);
