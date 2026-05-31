@@ -427,6 +427,12 @@
       background: #ffffff;
     }
 
+    .field.active-input {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 106, 229, 0.12);
+      background: #f7fbff;
+    }
+
     .field label {
       display: flex;
       align-items: center;
@@ -635,6 +641,37 @@
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 12px;
+    }
+
+    .ops-drivers {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .ops-driver {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .ops-driver b,
+    .ops-driver span {
+      display: block;
+    }
+
+    .ops-driver b {
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .ops-driver span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
     }
 
     .break-row {
@@ -862,6 +899,86 @@
     .health span {
       display: block;
       margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .bad-logic-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .bad-logic-list label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .bad-logic-list input {
+      width: 100%;
+      min-height: 34px;
+      padding: 7px 9px;
+      border: 1px solid #c9d6e8;
+      border-radius: 7px;
+      color: var(--ink);
+      background: #ffffff;
+    }
+
+    .semantic-proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .proof-card {
+      min-height: 156px;
+      perspective: 900px;
+    }
+
+    .proof-card-inner {
+      position: relative;
+      min-height: 156px;
+      transition: transform 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .proof-card:hover .proof-card-inner,
+    .proof-card:focus-within .proof-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .proof-face {
+      position: absolute;
+      inset: 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      backface-visibility: hidden;
+    }
+
+    .proof-face.back {
+      transform: rotateY(180deg);
+      background: #fff9eb;
+    }
+
+    .proof-face b,
+    .proof-face span {
+      display: block;
+    }
+
+    .proof-face b {
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .proof-face span {
+      margin-top: 7px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.35;
@@ -1388,6 +1505,11 @@
       margin-top: 2px;
     }
 
+    .check-band.active-band {
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1395,7 +1517,7 @@
     }
 
     .flip-card {
-      min-height: 310px;
+      min-height: 390px;
       perspective: 1200px;
     }
 
@@ -1403,7 +1525,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      min-height: 310px;
+      min-height: 390px;
       transition: transform 0.55s ease;
       transform-style: preserve-3d;
     }
@@ -1524,6 +1646,35 @@
       margin-top: 14px;
     }
 
+    .meaning-box {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #dbe7f8;
+      border-radius: 8px;
+      background: #f7fbff;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .workflow-steps span {
+      display: grid;
+      place-items: center;
+      min-height: 38px;
+      padding: 6px;
+      border-radius: 7px;
+      color: #ffffff;
+      background: var(--blue);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
     .proof-tile {
       min-height: 54px;
       display: grid;
@@ -1609,11 +1760,14 @@
       .evidence-grid,
       .semantic-stage,
       .semantic-controls,
+      .semantic-proof-grid,
       .health-grid,
       .recipe-visual,
       .recipe-detail,
       .example-strip,
       .automation-value,
+      .ops-drivers,
+      .workflow-steps,
       .package-defs,
       .catalog-grid { grid-template-columns: 1fr; }
 
@@ -1806,6 +1960,11 @@
                 <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
                 <div class="break-row"><b>100 state</b><div class="break-track"><i style="--value:100%;background:var(--green)"></i></div><span>100/100</span></div>
               </div>
+              <div class="ops-drivers">
+                <div class="ops-driver"><b id="manualPressureText">0%</b><span>Manual reporting pressure</span></div>
+                <div class="ops-driver"><b id="modelPressureText">0%</b><span>Model and logic pressure</span></div>
+                <div class="ops-driver"><b id="queryPressureText">0%</b><span>Query wait pressure</span></div>
+              </div>
               <div class="score-actions">
                 <button class="mini-btn" type="button" id="editReadinessBtn">Edit readiness inputs</button>
                 <button class="mini-btn" type="button" id="opsZeroBtn">Set ops 0/20</button>
@@ -1886,7 +2045,13 @@
                     <div class="health"><b id="badLogicScore">8</b><span>bad logic items to inspect</span></div>
                     <div class="health"><b id="semanticTrust">23%</b><span>certified metric coverage</span></div>
                   </div>
+                  <div class="bad-logic-list" id="badLogicList"></div>
                   <div class="model-canvas" id="modelCanvas"></div>
+                  <div class="semantic-proof-grid">
+                    <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Certified Owners</b><span>Revenue, margin, and forecast accuracy have named accountable owners.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Owner: Finance Analytics. Approver: CFO delegate. Review cadence: monthly close and quarterly planning.</span></div></div></article>
+                    <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Definitions</b><span>Trusted metrics carry plain-language definitions, formulas, and grain.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Revenue = posted invoice amount net of credit memos, recognized by invoice date, filtered by active customer.</span></div></div></article>
+                    <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Trusted Metrics</b><span>Reports pull certified measures instead of rebuilding DAX in each file.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Certified: Revenue, Gross Margin %, Forecast Accuracy, Active Customers. Deprecated duplicates are hidden.</span></div></div></article>
+                  </div>
                 </div>
                 <div class="semantic-column">
                   <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
@@ -1915,6 +2080,13 @@
                   <div class="relationship-row"><div class="rel-table">Fact Invoice</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Account</div></div>
                   <div class="relationship-row"><div class="rel-table">Fact Forecast</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Product</div></div>
                   <div class="relationship-row"><div class="rel-table dim">Role Access</div><div class="rel-line"><span>1</span><span>*</span></div><div class="rel-table">Filtered Facts</div></div>
+                </div>
+                <h2 class="section-title" style="margin-top:16px">Department Cost Model</h2>
+                <p class="section-subtitle">A second finished model example: cost facts connect to department, vendor, date, and role access dimensions.</p>
+                <div class="relationship-map" id="relationshipMapAlt">
+                  <div class="relationship-row"><div class="rel-table">Fact Cost</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Department</div></div>
+                  <div class="relationship-row"><div class="rel-table">Fact Budget</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Vendor</div></div>
+                  <div class="relationship-row"><div class="rel-table dim">Finance Role</div><div class="rel-line"><span>1</span><span>*</span></div><div class="rel-table">Cost Facts</div></div>
                 </div>
               </div>
             </aside>
@@ -2052,6 +2224,7 @@
     let opsOverride = null;
     let selectedAdviceId = "metricStandardization";
     let currentFacts = { reportCount: 25, baselineHours: 50, queryRuns: 2400, beforeWaitHours: 5, eligibleRate: 25 };
+    let currentFinancials = { savedValue: 0, modelValue: 0, reportingValue: 0, savedHours: 0, queryHoursSaved: 0 };
     const detailedReports = [
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
@@ -2156,6 +2329,16 @@
       { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "Access control is only useful when you can prove it works. This module separates base governance from RLS package work when HR, Finance, Legal, account, or territory rows need role-specific visibility.", proof: ["Role test matrix", "Access evidence", "Policy owner"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
     ];
 
+    const catalogDetails = {
+      "Manual Reporting Reduction": { meaning: "Find recurring report work, separate truly repeatable effort from judgment work, then automate the repeatable parts with proof.", flow: ["Inventory", "Eligibility", "Saved hours"] },
+      "Query Performance": { meaning: "Measure where users wait, identify whether the bottleneck is visuals, DAX, semantic relationships, or warehouse SQL, then prove the runtime lift.", flow: ["Profile", "Tune", "Retest"] },
+      "Power BI Model Slimdown": { meaning: "Reduce model bloat by removing unused objects, fixing high-cardinality design, retiring duplicate DAX, and lowering refresh/publish friction.", flow: ["Audit model", "Remove waste", "Prove size"] },
+      "Unified Standards": { meaning: "Turn debated KPIs into owned definitions with formula, grain, lineage, certification, and change control.", flow: ["Define", "Own", "Certify"] },
+      "BI Engineering Automation": { meaning: "Convert common analytics requests into guided intake, templates, tests, documentation, and repeatable deployment.", flow: ["Request", "Generate", "Release"] },
+      "Trusted Semantic Models": { meaning: "Create the governed layer where facts, dimensions, certified measures, relationships, and access rules become reusable reporting products.", flow: ["Model", "Certify", "Reuse"] },
+      "Governance + RLS": { meaning: "Package ownership, lineage, refresh proof, access review, and row-level security tests so trust can be inspected.", flow: ["Policy", "Test roles", "Audit pack"] }
+    };
+
     const numberFormat = new Intl.NumberFormat("en-US");
     const moneyFormat = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
@@ -2180,10 +2363,14 @@
       return Number(document.getElementById(id).value || 0);
     }
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+
     function setQuickPreset(value) {
       const presets = value === "zero"
-        ? { reportCount: 180, hoursPerReport: 5, cyclesPerMonth: 4, dashboardViews: 18000, queriesPerView: 22, querySeconds: 45, modelSizeMb: 6500, logicIssueCount: 90, eligiblePercent: 55 }
-        : { reportCount: 8, hoursPerReport: 0.5, cyclesPerMonth: 1, dashboardViews: 120, queriesPerView: 4, querySeconds: 2, modelSizeMb: 120, logicIssueCount: 0, eligiblePercent: 10 };
+        ? { reportCount: 180, hoursPerReport: 5, cyclesPerMonth: 4, dashboardViews: 18000, queriesPerView: 22, querySeconds: 45, modelSizeMb: 6500, logicIssueCount: 90, duplicateMeasureInput: 80, eligiblePercent: 55 }
+        : { reportCount: 1, hoursPerReport: 0.25, cyclesPerMonth: 1, dashboardViews: 1, queriesPerView: 1, querySeconds: 1, modelSizeMb: 1, logicIssueCount: 0, duplicateMeasureInput: 0, eligiblePercent: 5 };
       Object.entries(presets).forEach(([id, value]) => { document.getElementById(id).value = value; });
       setInputMode("quick");
     }
@@ -2301,7 +2488,9 @@
       const premiumRiskValue = Math.round(Math.pow(premiumPressure / 1000, 1.18) * 5200);
       const logicValue = logicIssues * 720 + duplicateMeasures * 190;
       const modelValue = Math.round((queryHoursSaved * reportingRate) + (modelSize * 1.35) + logicValue + premiumRiskValue + (modelOpportunity * 85));
-      const savedValue = savedHours * reportingRate + modelValue;
+      const reportingValue = savedHours * reportingRate;
+      const savedValue = reportingValue + modelValue;
+      currentFinancials = { savedValue, modelValue, reportingValue, savedHours, queryHoursSaved };
       const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligibleRate - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
@@ -2333,8 +2522,10 @@
       const modelPressure = Math.min(100, numeric("modelSizeMb") / 20 + numeric("logicIssueCount") * 3 + numeric("duplicateMeasureInput") * 2);
       const queryPressure = Math.min(100, currentFacts.beforeWaitHours * 8 + currentFacts.queryRuns / 450);
       const pressurePenalty = (manualPressure + modelPressure + queryPressure) / 3;
-      const operationalComponent = opsOverride === "full" ? 100 : opsOverride === "zero" ? 0 : Math.max(0, 100 - pressurePenalty);
-      const score = Math.round(total * 0.8 + operationalComponent * 0.2);
+      const operationalComponent = Math.max(0, 100 - pressurePenalty);
+      const selfScore = Math.round(total * 0.8);
+      const opsScore = Math.round(operationalComponent * 0.2);
+      const score = selfScore + opsScore;
       const scoreColor = score < 40 ? "var(--red)" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "var(--green)";
       const scoreStatus = score < 40 ? "Needs attention" : score < 60 ? "Foundation risk" : score < 80 ? "Scaling" : "Healthy";
       list.innerHTML = html;
@@ -2343,8 +2534,9 @@
       document.getElementById("scoreRing").style.setProperty("--score-color", scoreColor);
       document.getElementById("scoreStatus").textContent = scoreStatus;
       document.getElementById("scoreStatus").style.setProperty("--score-color", scoreColor);
-      const selfScore = Math.round(total * 0.8);
-      const opsScore = Math.round(operationalComponent * 0.2);
+      document.getElementById("manualPressureText").textContent = `${Math.round(manualPressure)}%`;
+      document.getElementById("modelPressureText").textContent = `${Math.round(modelPressure)}%`;
+      document.getElementById("queryPressureText").textContent = `${Math.round(queryPressure)}%`;
       document.getElementById("selfAssessBar").style.setProperty("--value", `${Math.min(100, selfScore / 80 * 100)}%`);
       document.getElementById("selfAssessBar").style.setProperty("--score-color", scoreColor);
       document.getElementById("selfAssessText").textContent = `${selfScore}/80`;
@@ -2365,6 +2557,8 @@
       const bandIndex = value < 21 ? 0 : value < 41 ? 1 : value < 61 ? 2 : value < 81 ? 3 : 4;
       const band = criterion.bands[bandIndex];
       document.querySelectorAll("[data-criterion]").forEach((row) => row.classList.toggle("active", row.dataset.criterion === id));
+      document.querySelectorAll(".field.active-input").forEach((field) => field.classList.remove("active-input"));
+      document.getElementById(id)?.closest(".field")?.classList.add("active-input");
       document.getElementById("adviceTitle").textContent = `${criterion.label}: ${band[0]}`;
       document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${criterion.advice}`;
       renderCriterionChecklist(criterion);
@@ -2376,24 +2570,39 @@
       wrap.innerHTML = criterion.bands.map((band, bandIndex) => `
         <div class="check-band">
           <strong>${band[0]}: ${band[1]}</strong>
-          ${band[2].map((item, itemIndex) => `
+          ${[...band[2], `There is evidence you can show for the ${band[0]} state`].map((item, itemIndex) => `
             <label><input type="checkbox" data-check-band="${bandIndex}" data-check-item="${itemIndex}"> ${item}</label>
           `).join("")}
         </div>
       `).join("");
+      wrap.querySelectorAll(".check-band input").forEach((input) => {
+        input.addEventListener("change", () => {
+          const band = input.closest(".check-band");
+          const checked = band.querySelectorAll("input:checked").length;
+          band.classList.toggle("active-band", checked > 0);
+        });
+      });
     }
 
     function applyChecklistScore() {
       const criterion = criteria.find((item) => item.id === selectedAdviceId);
       if (!criterion) return;
-      let chosenIndex = 0;
-      criterion.bands.forEach((band, bandIndex) => {
-        const checked = document.querySelectorAll(`[data-check-band="${bandIndex}"]:checked`).length;
-        const needed = Math.ceil(band[2].length / 2);
-        if (checked >= needed) chosenIndex = bandIndex;
-      });
       const values = [10, 30, 50, 70, 90];
-      document.getElementById(criterion.id).value = values[chosenIndex];
+      let weighted = 0;
+      let checkedTotal = 0;
+      const checkedByBand = criterion.bands.map((band, bandIndex) => {
+        const checked = document.querySelectorAll(`[data-check-band="${bandIndex}"]:checked`).length;
+        weighted += values[bandIndex] * checked;
+        checkedTotal += checked;
+        return checked;
+      });
+      if (!checkedTotal) return;
+      const highestIndex = checkedByBand.reduce((highest, checked, index) => checked ? index : highest, 0);
+      const supportingChecks = checkedByBand.slice(0, highestIndex).reduce((sum, checked) => sum + checked, 0);
+      let score = Math.round(weighted / checkedTotal);
+      if (highestIndex >= 4 && supportingChecks < 2) score = Math.min(score, 70);
+      else if (highestIndex >= 3 && supportingChecks < 1) score = Math.min(score, 60);
+      document.getElementById(criterion.id).value = score;
       updateCalculator();
       showAdvice(criterion.id);
     }
@@ -2433,11 +2642,12 @@
           <div class="flip-inner">
             <div class="face">
               <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
-              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><p><b>Open the card for proof and rationale.</b></p></div>
+              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><div class="meaning-box"><b>What it does:</b><p>${catalogDetails[item.title].meaning}</p></div></div>
             </div>
             <div class="face back">
               <h3>${item.title}</h3>
               <p>${item.example}</p>
+              <div class="workflow-steps">${catalogDetails[item.title].flow.map((step) => `<span>${step}</span>`).join("")}</div>
               <p><b>Why this matters:</b> ${item.why}</p>
               <div class="proof-grid">${item.proof.map((proof) => `<div class="proof-tile">${proof}</div>`).join("")}</div>
               <span class="tag">Parallax delivery module</span>
@@ -2490,6 +2700,21 @@
       return items.join("");
     }
 
+    function renderBadLogicList(count) {
+      const wrap = document.getElementById("badLogicList");
+      if (!wrap) return;
+      if (wrap.dataset.count === String(count)) return;
+      const existing = Array.from(wrap.querySelectorAll("input")).map((input) => input.value);
+      const examples = ["Duplicate Revenue measure", "Calculated column belongs upstream", "Ambiguous date relationship", "Conflicting margin logic", "Unused high-cardinality field", "Report-only business rule"];
+      const visible = Math.min(Math.max(count, 1), 6);
+      wrap.innerHTML = Array.from({ length: visible }, (_, index) => `
+        <label>${count ? `Bad logic item ${index + 1}` : "Optional bad logic item"}
+          <input type="text" value="${escapeHtml(existing[index] || examples[index] || "")}" placeholder="Describe the logic issue">
+        </label>
+      `).join("") + (count > visible ? `<span class="section-subtitle">${count - visible} more items can be captured during the health assessment.</span>` : "");
+      wrap.dataset.count = String(count);
+    }
+
     function updateSemanticModel() {
       if (!document.getElementById("sourceSystems")) return;
       const sources = numeric("sourceSystems");
@@ -2511,6 +2736,7 @@
       document.getElementById("duplicateMeasures").textContent = `${duplicateOpportunity}%`;
       document.getElementById("semanticTrust").textContent = `${certifiedCoverage}%`;
       document.getElementById("badLogicScore").textContent = numberFormat.format(numeric("logicIssueCount"));
+      renderBadLogicList(numeric("logicIssueCount"));
       document.getElementById("certifiedText").textContent = `Reports inherit ${numberFormat.format(certified)} trusted metrics instead of redefining logic in every dashboard.`;
       document.getElementById("accessText").textContent = roles ? `${roles} sensitive access roles may require RLS package design and testing.` : "No sensitive access roles entered yet; base governance may be enough.";
       document.getElementById("modelCanvas").innerHTML = `
@@ -2537,7 +2763,8 @@
     function exportBrief() {
       const score = document.getElementById("scoreValue").textContent;
       const scoreColor = score < 40 ? "#be4b49" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "#20845a";
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:900px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Monthly capacity value</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div></div></body></html>`;
+      const annualRoi = currentFinancials.savedValue * 12;
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:920px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year ROI opportunity. This is monthly estimated value returned (${document.getElementById("manualValue").textContent}) x 12.</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Total monthly value returned</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div></div></body></html>`;
       const blob = new Blob([html], { type: "text/html" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -2558,6 +2785,7 @@
         sourceSystems: 3, factTables: 4, dimensionTables: 6, measureCount: 35, certifiedMetrics: 8, duplicateMeasureInput: 12, rlsRoles: 2, refreshJobs: 4
       };
       Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
+      document.getElementById("badLogicList").dataset.count = "";
       updateCalculator();
     }
 
@@ -2593,6 +2821,7 @@
       if (criteria.some((item) => item.id === id)) {
         document.getElementById(id).addEventListener("focus", () => showAdvice(id));
         document.getElementById(id).addEventListener("pointerdown", () => showAdvice(id));
+        document.getElementById(id).closest(".field").addEventListener("click", () => showAdvice(id));
       }
     });
     document.getElementById("copyBtn").addEventListener("click", exportBrief);
