@@ -34,9 +34,24 @@
     button, input, select { font: inherit; }
 
     .app {
+      --mode-color: var(--blue);
+      --mode-soft: #edf6ff;
       min-height: 100vh;
       display: grid;
       grid-template-columns: 286px minmax(0, 1fr);
+    }
+
+    .app.mode-detailed {
+      --mode-color: var(--green);
+      --mode-soft: #eaf7f1;
+    }
+
+    .app.rail-collapsed {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .app.rail-collapsed .rail {
+      display: none;
     }
 
     .app > section {
@@ -192,6 +207,12 @@
       border-color: var(--blue);
     }
 
+    .icon-btn {
+      width: 42px;
+      min-width: 42px;
+      padding: 0;
+    }
+
     .view {
       display: none;
       width: 100%;
@@ -326,8 +347,8 @@
     .mode-switch button.active,
     .mini-btn.active {
       color: #ffffff;
-      border-color: var(--blue);
-      background: var(--blue);
+      border-color: var(--mode-color);
+      background: var(--mode-color);
     }
 
     .detail-table-wrap {
@@ -493,15 +514,15 @@
 
     .result-card {
       padding: 16px;
-      border: 1px solid var(--line);
+      border: 1px solid color-mix(in srgb, var(--mode-color) 34%, var(--line));
       border-radius: 8px;
-      background: #ffffff;
+      background: linear-gradient(180deg, var(--mode-soft), #ffffff 44%);
     }
 
     .result-card b {
       display: block;
       font-size: 27px;
-      color: var(--navy);
+      color: var(--mode-color);
       line-height: 1.05;
     }
 
@@ -603,6 +624,13 @@
       background: #fbfdff;
     }
 
+    .score-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
     .break-row {
       display: grid;
       grid-template-columns: 112px 1fr auto;
@@ -646,6 +674,12 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfdff;
+      cursor: pointer;
+    }
+
+    .criterion.active {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 106, 229, 0.12);
     }
 
     .criterion span {
@@ -669,6 +703,30 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.45;
+    }
+
+    .band-table {
+      display: grid;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    .band-table div {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 8px;
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .band-table b {
+      color: var(--navy);
+      font-size: 12px;
     }
 
     .bar {
@@ -744,7 +802,7 @@
 
     .semantic-stage {
       display: grid;
-      grid-template-columns: 1fr 1.1fr 1fr;
+      grid-template-columns: minmax(180px, 0.92fr) minmax(360px, 1.35fr) minmax(180px, 0.92fr);
       gap: 14px;
       align-items: start;
       margin-top: 14px;
@@ -764,7 +822,7 @@
     }
 
     .semantic-node.primary {
-      min-height: 236px;
+      min-height: 100%;
       border: 2px solid var(--blue);
       background: linear-gradient(180deg, #edf6ff, #ffffff);
     }
@@ -898,6 +956,66 @@
     .tree-node.child { margin-left: 18px; }
     .tree-node.grandchild { margin-left: 36px; }
     .tree-node b { color: var(--navy); }
+
+    .relationship-map {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .relationship-row {
+      display: grid;
+      grid-template-columns: minmax(92px, 1fr) 88px minmax(92px, 1fr);
+      align-items: center;
+      gap: 8px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 12px;
+    }
+
+    .rel-table {
+      min-height: 40px;
+      display: grid;
+      align-content: center;
+      padding: 7px 8px;
+      border-radius: 7px;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 850;
+    }
+
+    .rel-table.dim { background: #0878be; }
+
+    .rel-line {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .rel-line::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .rel-line span {
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border: 1px solid #f0d08a;
+      border-radius: 50%;
+      background: #fff9eb;
+    }
 
     .automation-layout {
       display: grid;
@@ -1054,6 +1172,13 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfdff;
+      cursor: pointer;
+    }
+
+    .package-card.selected-package {
+      border-color: var(--gold);
+      background: #fff9eb;
+      box-shadow: 0 0 0 3px rgba(245, 181, 68, 0.2);
     }
 
     .package-card b,
@@ -1361,8 +1486,10 @@
     }
 
     @media (max-width: 1180px) {
-      .app { grid-template-columns: 1fr; }
+      .app,
+      .app.rail-collapsed { grid-template-columns: 1fr; }
       .rail { display: none; }
+      .icon-btn { display: none; }
       .mobile-tabs {
         position: sticky;
         top: 0;
@@ -1429,7 +1556,7 @@
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="app mode-quick" id="appShell">
     <aside class="rail" aria-label="Product navigation">
       <div>
         <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 150" role="img" aria-label="Parallax Data Lab">
@@ -1456,6 +1583,9 @@
             <p id="pageSubtitle">A Parallax Data Lab product demo that converts your operating facts into estimated reporting savings, performance value, readiness, and governance packaging.</p>
           </div>
           <div class="top-actions">
+            <button class="btn icon-btn" id="railToggle" type="button" title="Collapse navigation" aria-label="Collapse navigation">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16"/><path d="M4 12h10"/><path d="M4 19h16"/></svg>
+            </button>
             <button class="btn" id="resetBtn" type="button" title="Reset scenario">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/></svg>
               Reset
@@ -1587,6 +1717,11 @@
                 <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
                 <div class="break-row"><b>100 state</b><div class="break-track"><i style="--value:100%;background:var(--green)"></i></div><span>100/100</span></div>
               </div>
+              <div class="score-actions">
+                <button class="mini-btn" type="button" id="editReadinessBtn">Edit readiness inputs</button>
+                <button class="mini-btn" type="button" id="opsZeroBtn">Set ops 0/20</button>
+                <button class="mini-btn" type="button" id="opsFullBtn">Set ops 20/20</button>
+              </div>
               <div class="criteria" id="criteriaList"></div>
             </aside>
           </div>
@@ -1622,7 +1757,6 @@
                 <div><span>60-79</span><b>Scaling</b></div>
                 <div><span>80-100</span><b>Optimized</b></div>
               </div>
-              <div class="advice-buttons" id="adviceButtons"></div>
               <div class="advice-card"><b id="adviceTitle">Select a metric</b><span id="adviceBody">Choose a readiness metric to see what the current score means and what to improve next.</span></div>
             </aside>
           </div>
@@ -1679,12 +1813,14 @@
                 </tbody>
               </table>
               <div class="hierarchy">
-                <h2 class="section-title">Example Hierarchy</h2>
-                <div class="tree-node"><b>Executive Revenue Model</b><br>Certified semantic model</div>
-                <div class="tree-node child"><b>Facts</b><br>Sales, Invoice, Forecast</div>
-                <div class="tree-node child"><b>Dimensions</b><br>Date, Account, Region, Product</div>
-                <div class="tree-node grandchild"><b>Measures</b><br>Revenue, Margin, Forecast Accuracy</div>
-                <div class="tree-node grandchild"><b>Access</b><br>Executive, Region, Finance roles</div>
+                <h2 class="section-title">Example Model Relationships</h2>
+                <p class="section-subtitle">Facts sit on the many side. Shared dimensions sit on the one side so reports reuse the same Date, Account, Region, Product, and role filters.</p>
+                <div class="relationship-map" id="relationshipMap">
+                  <div class="relationship-row"><div class="rel-table">Fact Sales</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Date</div></div>
+                  <div class="relationship-row"><div class="rel-table">Fact Invoice</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Account</div></div>
+                  <div class="relationship-row"><div class="rel-table">Fact Forecast</div><div class="rel-line"><span>*</span><span>1</span></div><div class="rel-table dim">Dim Product</div></div>
+                  <div class="relationship-row"><div class="rel-table dim">Role Access</div><div class="rel-line"><span>1</span><span>*</span></div><div class="rel-table">Filtered Facts</div></div>
+                </div>
               </div>
             </aside>
           </div>
@@ -1737,10 +1873,10 @@
                 </div>
               </div>
               <div class="package-defs">
-                <div class="package-card"><b>Base</b><span>For teams with scattered reporting that need one trusted foundation: glossary, owners, certified metrics, core lineage, and refresh monitoring.</span><small>Best for: first governed analytics layer</small></div>
-                <div class="package-card"><b>Scale</b><span>For organizations with many domains and repeatable work: onboarding templates, automated report refresh orchestration, quality gates, and stewardship cadence.</span><small>Best for: scaling BI operations</small></div>
-                <div class="package-card"><b>Audit</b><span>For regulated or executive-critical reporting: approval history, control evidence, access review, refresh proof, and governance readout.</span><small>Best for: evidence and compliance</small></div>
-                <div class="package-card"><b>RLS Add-on</b><span>For sensitive row-level segmentation: policy design, role matrix, implementation support, testing, and audit evidence.</span><small>Best for: controlled access by role</small></div>
+                <div class="package-card" data-package-col="1"><b>Base</b><span>For scattered reporting that needs one trusted foundation: glossary, owners, certified metrics, core lineage, and refresh monitoring.</span><small>Best for: first governed analytics layer</small></div>
+                <div class="package-card" data-package-col="2"><b>Scale</b><span>For many domains and repeatable work: onboarding templates, automated report refresh orchestration, quality gates, and stewardship cadence.</span><small>Best for: scaling BI operations</small></div>
+                <div class="package-card" data-package-col="3"><b>Audit</b><span>For regulated or executive-critical reporting: approval history, control evidence, access review, refresh proof, and governance readout.</span><small>Best for: evidence and compliance</small></div>
+                <div class="package-card" data-package-col="4"><b>RLS Package</b><span>For department-specific or sensitive row-level segmentation across HR, Finance, Legal, region, sales comp, or account data.</span><small>Best for: controlled access by role with proof</small></div>
               </div>
               <div style="padding:20px">
                 <div class="matrix" aria-label="Governance coverage matrix">
@@ -1760,9 +1896,14 @@
               <p class="section-subtitle">RLS is not just a checkbox. It needs policy choices, testing, evidence, and ongoing ownership.</p>
               <div class="side-list">
                 <div><span>Regional restrictions</span><b>RLS fit</b></div>
-                <div><span>Executive-only metrics</span><b>RLS fit</b></div>
-                <div><span>Employee or account-level data</span><b>RLS fit</b></div>
+                <div><span>HR, Finance, Legal, or sales comp data</span><b>RLS fit</b></div>
+                <div><span>Employee, account, or territory-level data</span><b>RLS fit</b></div>
                 <div><span>Audit-ready access proof</span><b>RLS fit</b></div>
+              </div>
+              <div class="assessment-card" id="rlsUpgradeCta">
+                <b>RLS package upgrade</b>
+                <span id="rlsUpgradeText">Select the RLS package column when row-level policy, role testing, and access evidence need to be delivered as their own workstream.</span>
+                <button class="mini-btn" type="button" id="rlsPackageBtn" style="margin-top:10px">Highlight RLS package</button>
               </div>
             </aside>
           </div>
@@ -1799,15 +1940,18 @@
     };
 
     const criteria = [
-      { id: "metricStandardization", label: "Metric standards", weight: 18, guidance: "0-20: KPIs are redefined report by report. 21-40: team standards exist, but conflicts remain. 41-60: glossary exists, adoption is uneven. 61-80: certified KPIs have owners. 81-100: standards are governed and enforced.", advice: "Focus first on high-conflict KPIs like revenue, margin, utilization, backlog, and SLA. The next move is a metric owner, definition, lineage, and certified status for each." },
-      { id: "automationCoverage", label: "Automation coverage", weight: 20, guidance: "0-20: refresh, QA, and reconciliation are manual. 21-40: scheduled refresh exists, validation is light. 41-60: repeatable checks and templates exist. 61-80: governed workflows handle common builds. 81-100: automation produces evidence by default.", advice: "Look for repeatable work: refresh monitoring, reconciliation, report publishing, table creation, documentation, and validation. Automate the stable work before custom edge cases." },
-      { id: "semanticHealth", label: "Semantic health", weight: 22, guidance: "0-20: report-specific datasets and duplicated logic. 21-40: shared model exists, but it is messy. 41-60: core model works, but measures are not fully certified. 61-80: lean model with owned measures. 81-100: optimized semantic product with active ownership.", advice: "Prioritize PBIX/model size, unused tables, duplicate measures, calculated columns that belong upstream, ambiguous relationships, and DAX that conflicts across reports." },
-      { id: "performanceHealth", label: "Performance health", weight: 15, guidance: "0-20: slow reports are normal and unmeasured. 21-40: slow reports are known but fixed reactively. 41-60: performance is profiled periodically. 61-80: tuning gates exist before certification. 81-100: performance budgets are monitored continuously.", advice: "Separate report render time from query execution time. Power BI visual/render time, semantic model query time, and warehouse query time can each be bottlenecks." },
-      { id: "governanceCoverage", label: "Governance coverage", weight: 17, guidance: "0-20: ownership and access rules are unclear. 21-40: basic owners and permissions. 41-60: lineage, glossary, and access reviews are in progress. 61-80: governance evidence is packaged. 81-100: audit-ready governance and policy automation.", advice: "Base governance should prove ownership, lineage, refresh status, and certification. RLS becomes its own package when row-level policy, testing, and audit evidence are required." },
-      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8, guidance: "0-20: users export around reports. 21-40: trust is mixed. 41-60: training and support exist. 61-80: adoption is measured and guided. 81-100: governed reports are the default operating rhythm.", advice: "Look for export behavior, duplicate shadow reports, low usage, and recurring metric debates. Adoption improves when trusted reports become easier than workarounds." }
+      { id: "metricStandardization", label: "Metric standards", weight: 18, bands: [["0-20", "KPIs are redefined report by report."], ["21-40", "Team standards exist, but conflicts remain."], ["41-60", "A glossary exists, but adoption is uneven."], ["61-80", "Certified KPIs have owners."], ["81-100", "Standards are governed and enforced."]], advice: "Focus first on high-conflict KPIs like revenue, margin, utilization, backlog, and SLA. The next move is a metric owner, definition, lineage, and certified status for each." },
+      { id: "automationCoverage", label: "Automation coverage", weight: 20, bands: [["0-20", "Refresh, QA, and reconciliation are manual."], ["21-40", "Scheduled refresh exists, but validation is light."], ["41-60", "Repeatable checks and templates exist."], ["61-80", "Governed workflows handle common builds."], ["81-100", "Automation produces evidence by default."]], advice: "Look for repeatable work: refresh monitoring, reconciliation, report publishing, table creation, documentation, and validation. Automate the stable work before custom edge cases." },
+      { id: "semanticHealth", label: "Semantic health", weight: 22, bands: [["0-20", "Report-specific datasets and duplicated logic."], ["21-40", "A shared model exists, but it is messy."], ["41-60", "The core model works, but measures are not fully certified."], ["61-80", "Lean model with owned measures."], ["81-100", "Optimized semantic product with active ownership."]], advice: "Prioritize PBIX/model size, unused tables, duplicate measures, calculated columns that belong upstream, ambiguous relationships, and DAX that conflicts across reports." },
+      { id: "performanceHealth", label: "Performance health", weight: 15, bands: [["0-20", "Slow reports are normal and unmeasured."], ["21-40", "Slow reports are known but fixed reactively."], ["41-60", "Performance is profiled periodically."], ["61-80", "Tuning gates exist before certification."], ["81-100", "Performance budgets are monitored continuously."]], advice: "Separate report render time from query execution time. Power BI visual/render time, semantic model query time, and warehouse query time can each be bottlenecks." },
+      { id: "governanceCoverage", label: "Governance coverage", weight: 17, bands: [["0-20", "Ownership and access rules are unclear."], ["21-40", "Basic owners and permissions exist."], ["41-60", "Lineage, glossary, and access reviews are in progress."], ["61-80", "Governance evidence is packaged."], ["81-100", "Audit-ready governance and policy automation."]], advice: "Base governance should prove ownership, lineage, refresh status, and certification. RLS becomes its own package when HR, Finance, Legal, regional, account, or employee-level policy needs row-level testing and audit evidence." },
+      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8, bands: [["0-20", "Users export around reports."], ["21-40", "Trust is mixed."], ["41-60", "Training and support exist."], ["61-80", "Adoption is measured and guided."], ["81-100", "Governed reports are the default operating rhythm."]], advice: "Look for export behavior, duplicate shadow reports, low usage, and recurring metric debates. Adoption improves when trusted reports become easier than workarounds." }
     ];
 
     let inputMode = "quick";
+    let opsOverride = null;
+    let selectedAdviceId = "metricStandardization";
+    let currentFacts = { reportCount: 25, baselineHours: 50, queryRuns: 2400, beforeWaitHours: 5, eligibleRate: 25 };
     const detailedReports = [
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
@@ -1918,6 +2062,20 @@
       return Number(document.getElementById(id).value || 0);
     }
 
+    function setOpsOverride(value) {
+      opsOverride = value;
+      document.getElementById("opsZeroBtn").classList.toggle("active", value === "zero");
+      document.getElementById("opsFullBtn").classList.toggle("active", value === "full");
+      updateScore();
+    }
+
+    function clearOpsOverride() {
+      opsOverride = null;
+      document.getElementById("opsZeroBtn").classList.remove("active");
+      document.getElementById("opsFullBtn").classList.remove("active");
+      updateScore();
+    }
+
     function buildReportRows() {
       const tbody = document.getElementById("reportRows");
       tbody.innerHTML = detailedReports.map((row, index) => `
@@ -1946,6 +2104,7 @@
     }
 
     function updateDetailedReport(event) {
+      if (opsOverride) clearOpsOverride();
       const target = event.target;
       const row = detailedReports[Number(target.dataset.reportIndex)];
       const field = target.dataset.reportField;
@@ -1958,6 +2117,7 @@
     }
 
     function addReportRow() {
+      if (opsOverride) clearOpsOverride();
       detailedReports.push({ name: "New report group", reports: 1, cadence: "monthly", cycles: 1, hours: 1, eligible: 20, loads: 25, queries: 6, wait: 8 });
       buildReportRows();
       updateCalculator();
@@ -1965,6 +2125,7 @@
 
     function deleteReportRow(index) {
       if (detailedReports.length === 1) return;
+      if (opsOverride) clearOpsOverride();
       detailedReports.splice(index, 1);
       buildReportRows();
       updateCalculator();
@@ -1972,6 +2133,8 @@
 
     function setInputMode(mode) {
       inputMode = mode;
+      document.getElementById("appShell").classList.toggle("mode-detailed", mode === "detailed");
+      document.getElementById("appShell").classList.toggle("mode-quick", mode === "quick");
       document.getElementById("quickModeBtn").classList.toggle("active", mode === "quick");
       document.getElementById("detailedModeBtn").classList.toggle("active", mode === "detailed");
       document.getElementById("quickInputs").classList.toggle("hidden", mode === "detailed");
@@ -1997,13 +2160,15 @@
         queryRuns = detailedReports.reduce((sum, row) => sum + row.loads * row.queries, 0);
         beforeWaitHours = detailedReports.reduce((sum, row) => sum + row.loads * row.queries * row.wait / 3600, 0);
       }
+      const eligibleRate = baselineHours ? Math.round(eligibleHours / baselineHours * 100) : 0;
+      currentFacts = { reportCount, baselineHours, queryRuns, beforeWaitHours, eligibleRate };
       const savedHours = Math.round(eligibleHours * 0.75);
       const savedValue = savedHours * reportingRate;
       const afterWaitHours = beforeWaitHours / 25;
       const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
       const modelOpportunity = Math.min(70, Math.round(numeric("modelSizeMb") / 80 + numeric("logicIssueCount") * 1.8 + numeric("duplicateMeasureInput") * 0.8));
       const modelValue = Math.round((queryHoursSaved * reportingRate) + (numeric("modelSizeMb") * 0.7) + (numeric("logicIssueCount") * 260) + (modelOpportunity * 45));
-      const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligible - 20) * 0.6;
+      const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligibleRate - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
       document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
@@ -2011,7 +2176,7 @@
       document.getElementById("modelOpportunity").textContent = `${modelOpportunity}%`;
       document.getElementById("modelValue").textContent = moneyFormat.format(modelValue);
       document.getElementById("storyLine").textContent = `${numberFormat.format(reportCount)} reports become a governed product backlog.`;
-      document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${numberFormat.format(queryRuns)} query executions, and ${eligible}% eligible effort using the proven 75% enterprise reduction benchmark.`;
+      document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${numberFormat.format(queryRuns)} query executions, and ${eligibleRate}% eligible effort using the proven 75% enterprise reduction benchmark.`;
       document.getElementById("assessmentTrigger").textContent = assessmentScore > 85 ? "High-priority health assessment recommended" : assessmentScore > 40 ? "Foundation health assessment recommended" : "Starter environment: keep pressure-testing";
       document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? "Your operating footprint is large enough that manual reporting, query wait, model bloat, bad logic, and governance risk are likely hiding material cost." : assessmentScore > 40 ? "You have enough recurring analytics work to justify a structured review of architecture, automation, and semantic model health." : "Inputs are still near the conservative starter setup. Increase only what is true for your environment to reveal the gap.";
       updateScore();
@@ -2027,13 +2192,14 @@
         if (out) out.textContent = `${value}%`;
         total += value * criterion.weight / 100;
         const bandClass = value < 40 ? "band-low" : value < 60 ? "band-mid" : value < 80 ? "band-good" : "band-high";
-        return `<div class="criterion ${bandClass}"><b>${criterion.label}</b><div class="bar" style="--value:${value}%"><i></i></div><span>${value}%</span><details><summary>${criterion.weight}% weight | Scoring guidance</summary><p>${criterion.guidance}</p></details></div>`;
+        const bandRows = criterion.bands.map((band) => `<div><b>${band[0]}</b><span>${band[1]}</span></div>`).join("");
+        return `<div class="criterion ${bandClass} ${selectedAdviceId === criterion.id ? "active" : ""}" data-criterion="${criterion.id}"><b>${criterion.label}</b><div class="bar" style="--value:${value}%"><i></i></div><span>${value}%</span><details><summary>${criterion.weight}% weight | Scoring guidance</summary><div class="band-table">${bandRows}</div></details></div>`;
       }).join("");
-      const manualPressure = Math.min(100, numeric("reportCount") * 1.2 + numeric("hoursPerReport") * numeric("cyclesPerMonth") * 8);
+      const manualPressure = Math.min(100, currentFacts.reportCount * 1.2 + currentFacts.baselineHours * 0.55);
       const modelPressure = Math.min(100, numeric("modelSizeMb") / 20 + numeric("logicIssueCount") * 3 + numeric("duplicateMeasureInput") * 2);
-      const queryPressure = Math.min(100, numeric("dashboardViews") * numeric("queriesPerView") * numeric("querySeconds") / 900);
+      const queryPressure = Math.min(100, currentFacts.beforeWaitHours * 8 + currentFacts.queryRuns / 450);
       const pressurePenalty = (manualPressure + modelPressure + queryPressure) / 3;
-      const operationalComponent = Math.max(0, 100 - pressurePenalty);
+      const operationalComponent = opsOverride === "full" ? 100 : opsOverride === "zero" ? 0 : Math.max(0, 100 - pressurePenalty);
       const score = Math.round(total * 0.8 + operationalComponent * 0.2);
       const scoreColor = score < 40 ? "var(--red)" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "var(--green)";
       const scoreStatus = score < 40 ? "Needs attention" : score < 60 ? "Foundation risk" : score < 80 ? "Scaling" : "Healthy";
@@ -2053,24 +2219,20 @@
       document.getElementById("opsHealthText").textContent = `${opsScore}/20`;
       const band = score < 40 ? "Fragmented" : score < 60 ? "Foundation" : score < 80 ? "Scaling" : "Optimized";
       document.getElementById("scoreInterpretation").textContent = `${score}/100: ${band}. The score blends your readiness sliders with operational pressure from manual reporting, query wait, model size, and logic issues.`;
-      buildAdviceButtons();
-    }
-
-    function buildAdviceButtons() {
-      const wrap = document.getElementById("adviceButtons");
-      if (!wrap || wrap.children.length) return;
-      wrap.innerHTML = criteria.map((criterion, index) => `<button type="button" class="mini-btn ${index === 0 ? "active" : ""}" data-advice="${criterion.id}">${criterion.label}</button>`).join("");
-      wrap.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => showAdvice(button.dataset.advice)));
-      showAdvice(criteria[0].id);
+      document.querySelectorAll("[data-criterion]").forEach((row) => row.addEventListener("click", () => showAdvice(row.dataset.criterion)));
+      showAdvice(selectedAdviceId);
     }
 
     function showAdvice(id) {
       const criterion = criteria.find((item) => item.id === id);
+      if (!criterion) return;
+      selectedAdviceId = id;
       const value = numeric(id);
-      const band = value < 21 ? "0-20" : value < 41 ? "21-40" : value < 61 ? "41-60" : value < 81 ? "61-80" : "81-100";
-      document.querySelectorAll("[data-advice]").forEach((button) => button.classList.toggle("active", button.dataset.advice === id));
-      document.getElementById("adviceTitle").textContent = `${criterion.label}: ${band}`;
-      document.getElementById("adviceBody").textContent = `${criterion.guidance} Recommendation: ${criterion.advice}`;
+      const bandIndex = value < 21 ? 0 : value < 41 ? 1 : value < 61 ? 2 : value < 81 ? 3 : 4;
+      const band = criterion.bands[bandIndex];
+      document.querySelectorAll("[data-criterion]").forEach((row) => row.classList.toggle("active", row.dataset.criterion === id));
+      document.getElementById("adviceTitle").textContent = `${criterion.label}: ${band[0]}`;
+      document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${criterion.advice}`;
     }
 
     function buildAutomationQueue() {
@@ -2120,6 +2282,9 @@
     }
 
     function setupGovernanceMatrix() {
+      document.querySelectorAll("[data-package-col]").forEach((card) => {
+        card.addEventListener("click", () => selectGovernanceColumn(Number(card.dataset.packageCol)));
+      });
       document.querySelectorAll(".matrix .cell").forEach((cell, index) => {
         const col = index % 5;
         cell.dataset.col = col;
@@ -2134,6 +2299,14 @@
       document.querySelectorAll(".matrix .cell").forEach((cell) => {
         cell.classList.toggle("selected-col", Number(cell.dataset.col) === col);
       });
+      document.querySelectorAll("[data-package-col]").forEach((card) => {
+        card.classList.toggle("selected-package", Number(card.dataset.packageCol) === col);
+      });
+      const packageNames = { 1: "Base", 2: "Scale", 3: "Audit", 4: "RLS Package" };
+      const text = col === 4
+        ? "RLS is highlighted because department-specific or sensitive data needs role design, row-level tests, and auditable access proof as its own upgrade package."
+        : `${packageNames[col]} is highlighted. Select RLS Package when HR, Finance, Legal, territory, employee, or account-level rows need different visibility by role.`;
+      document.getElementById("rlsUpgradeText").textContent = text;
     }
 
     const examples = {
@@ -2181,6 +2354,16 @@
         <div class="model-layer"><b>Measures</b><div class="model-chips">${chips("KPI", Math.min(measures, 18), "measure", examples.measures)}</div></div>
         <div class="model-layer"><b>Access</b><div class="model-chips">${roles ? chips("Role", roles, "role", examples.roles) : '<span class="model-chip role">Base access</span>'}</div></div>
       `;
+      const relationshipRows = [
+        [examples.facts[0], examples.dims[0]],
+        [examples.facts[1], examples.dims[1]],
+        [examples.facts[2], examples.dims[2]],
+        [roles ? "Role Access" : examples.dims[3], roles ? "Filtered Facts" : examples.facts[3]]
+      ];
+      document.getElementById("relationshipMap").innerHTML = relationshipRows.map((row, index) => {
+        const roleRow = index === 3 && roles;
+        return `<div class="relationship-row"><div class="rel-table ${roleRow ? "dim" : ""}">${row[0]}</div><div class="rel-line"><span>${roleRow ? "1" : "*"}</span><span>${roleRow ? "*" : "1"}</span></div><div class="rel-table ${roleRow ? "" : "dim"}">${row[1]}</div></div>`;
+      }).join("");
     }
 
     function exportBrief() {
@@ -2200,6 +2383,7 @@
     }
 
     function resetScenario() {
+      clearOpsOverride();
       const defaults = {
         reportCount: 25, hoursPerReport: 1, cyclesPerMonth: 2, dashboardViews: 300, queriesPerView: 8, querySeconds: 8, reportingRate: 85, eligiblePercent: 25, modelSizeMb: 350, logicIssueCount: 8,
         metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30,
@@ -2218,9 +2402,26 @@
     document.getElementById("quickModeBtn").addEventListener("click", () => setInputMode("quick"));
     document.getElementById("detailedModeBtn").addEventListener("click", () => setInputMode("detailed"));
     document.getElementById("addReportRow").addEventListener("click", addReportRow);
+    document.getElementById("editReadinessBtn").addEventListener("click", () => setView("readiness"));
+    document.getElementById("opsZeroBtn").addEventListener("click", () => setOpsOverride("zero"));
+    document.getElementById("opsFullBtn").addEventListener("click", () => setOpsOverride("full"));
+    document.getElementById("railToggle").addEventListener("click", () => {
+      const collapsed = document.getElementById("appShell").classList.toggle("rail-collapsed");
+      document.getElementById("railToggle").setAttribute("title", collapsed ? "Show navigation" : "Collapse navigation");
+      document.getElementById("railToggle").setAttribute("aria-label", collapsed ? "Show navigation" : "Collapse navigation");
+    });
+    document.getElementById("rlsPackageBtn").addEventListener("click", () => selectGovernanceColumn(4));
+    const operationalInputIds = ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "modelSizeMb", "logicIssueCount", "duplicateMeasureInput"];
     ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "reportingRate", "eligiblePercent", "modelSizeMb", "logicIssueCount", "sourceSystems", "factTables", "dimensionTables", "measureCount", "certifiedMetrics", "duplicateMeasureInput", "rlsRoles", "refreshJobs", ...criteria.map((item) => item.id)].forEach((id) => {
       document.getElementById(id).addEventListener("input", updateCalculator);
       document.getElementById(id).addEventListener("change", updateCalculator);
+      if (operationalInputIds.includes(id)) {
+        document.getElementById(id).addEventListener("input", clearOpsOverride);
+      }
+      if (criteria.some((item) => item.id === id)) {
+        document.getElementById(id).addEventListener("focus", () => showAdvice(id));
+        document.getElementById(id).addEventListener("pointerdown", () => showAdvice(id));
+      }
     });
     document.getElementById("copyBtn").addEventListener("click", exportBrief);
     document.getElementById("resetBtn").addEventListener("click", resetScenario);
