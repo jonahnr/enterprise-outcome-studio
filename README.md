@@ -10,11 +10,12 @@ A customer-facing static web app for demonstrating enterprise transformation out
   - 10x analytics delivery scale through BI engineering automation
   - RLS as an added governance package
 - Customer-input outcome calculator using report volume, report-cycle effort, query usage, wait time, hourly cost, and automation eligibility
-- 0-100 readiness score based on weighted criteria
-- Semantic model trust layer with model health signals
-- Plain-language automation recipes
+- Guided definitions for customer inputs so buyers understand what they are choosing
+- 0-100 readiness score based on weighted criteria with scoring guidance bands
+- Mutable semantic model trust layer with model health signals
+- Plain-language automation recipes with customer pain, mechanism, best fit, and proof artifacts
 - Governance packaging for Base, Scale, Audit, and RLS Add-on
-- Capability catalog with examples and proof artifacts
+- Capability catalog with unique visual cards, examples, and proof artifacts
 
 ## Run Locally
 

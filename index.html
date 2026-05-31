@@ -28,6 +28,7 @@
       color: var(--ink);
       background: var(--wash);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
     }
 
     button, input, select { font: inherit; }
@@ -312,10 +313,57 @@
     }
 
     .field label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
       color: var(--ink);
       font-size: 13px;
       font-weight: 800;
       line-height: 1.3;
+    }
+
+    .info {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid #b9c9e5;
+      border-radius: 50%;
+      color: var(--blue);
+      background: #f7fbff;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: help;
+    }
+
+    .info::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      z-index: 20;
+      width: min(310px, 72vw);
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(4px);
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .info:hover::after,
+    .info:focus::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .field input,
@@ -381,6 +429,35 @@
       color: var(--green);
     }
 
+    .helper-card,
+    .assessment-card {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #cfe0f7;
+      border-radius: 8px;
+      background: #f7fbff;
+    }
+
+    .helper-card b,
+    .assessment-card b,
+    .helper-card span,
+    .assessment-card span {
+      display: block;
+    }
+
+    .helper-card span,
+    .assessment-card span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .assessment-card {
+      border-color: #f3d28d;
+      background: #fff9eb;
+    }
+
     .score-panel {
       padding: 20px;
     }
@@ -441,6 +518,24 @@
       font-size: 12px;
     }
 
+    .criterion details {
+      grid-column: 1 / -1;
+    }
+
+    .criterion summary {
+      color: var(--blue);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .criterion p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
     .bar {
       grid-column: 1 / -1;
       height: 8px;
@@ -495,6 +590,17 @@
 
     .semantic-workspace {
       padding: 20px;
+    }
+
+    .semantic-controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
     }
 
     .semantic-stage {
@@ -590,6 +696,51 @@
     .status.warn { color: #8b5b00; background: #fff0c9; }
     .status.bad { color: #8f2d2c; background: #ffe1df; }
 
+    .model-canvas {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .model-layer {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .model-layer b {
+      color: var(--navy);
+      font-size: 12px;
+    }
+
+    .model-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      min-height: 42px;
+      padding: 9px;
+      border: 1px dashed #b9c9e5;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .model-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .model-chip.dim { background: var(--sky); color: var(--navy); }
+    .model-chip.measure { background: var(--gold); color: var(--navy); }
+    .model-chip.role { background: var(--violet); }
+
     .automation-layout {
       display: grid;
       grid-template-columns: 340px minmax(0, 1fr);
@@ -662,7 +813,7 @@
 
     .recipe-detail {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin-top: 14px;
     }
@@ -714,6 +865,15 @@
       margin-top: 7px;
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .package-card small {
+      display: block;
+      margin-top: 10px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
       line-height: 1.35;
     }
 
@@ -853,6 +1013,83 @@
       box-shadow: 0 -48px 0 rgba(255, 255, 255, 0.12), 0 -96px 0 rgba(255, 255, 255, 0.08);
     }
 
+    .visual[data-art="reports"]::after {
+      height: 16px;
+      background: var(--gold);
+      box-shadow: 0 -34px 0 rgba(255, 255, 255, 0.28), 0 -68px 0 rgba(255, 255, 255, 0.2), 88px -34px 0 rgba(22, 181, 255, 0.8);
+    }
+
+    .visual[data-art="performance"]::after {
+      height: 76px;
+      width: 76px;
+      left: 50%;
+      right: auto;
+      bottom: 32px;
+      border: 13px solid rgba(255, 255, 255, 0.72);
+      border-left-color: var(--gold);
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: none;
+      transform: translateX(-50%);
+    }
+
+    .visual[data-art="standards"]::after {
+      height: 100px;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.9) 0 9px, transparent 9px 20px);
+      box-shadow: 88px 0 0 rgba(245,181,68,.75), 176px 0 0 rgba(22,181,255,.55);
+    }
+
+    .visual[data-art="automation"]::after {
+      height: 42px;
+      background: rgba(255,255,255,.2);
+      box-shadow: 72px -48px 0 rgba(245,181,68,.75), 144px 0 0 rgba(22,181,255,.75), 216px -48px 0 rgba(255,255,255,.28);
+    }
+
+    .visual[data-art="semantic"]::after {
+      height: 82px;
+      width: 82px;
+      left: 50%;
+      right: auto;
+      bottom: 34px;
+      border: 2px solid rgba(255,255,255,.75);
+      background: rgba(255,255,255,.18);
+      box-shadow: -86px 24px 0 rgba(22,181,255,.65), 86px 24px 0 rgba(245,181,68,.7), 0 -42px 0 rgba(255,255,255,.24);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .visual[data-art="governance"]::after {
+      height: 92px;
+      width: 78px;
+      left: 50%;
+      right: auto;
+      bottom: 28px;
+      clip-path: polygon(50% 0, 100% 18%, 86% 78%, 50% 100%, 14% 78%, 0 18%);
+      background: rgba(245,181,68,.86);
+      box-shadow: none;
+      transform: translateX(-50%);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .proof-tile {
+      min-height: 54px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border-radius: 8px;
+      color: var(--navy);
+      background: #edf6ff;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
     .face-body {
       padding: 16px;
     }
@@ -913,11 +1150,15 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      .panel-header {
+        flex-direction: column;
+      }
       .benchmark-row,
       .scenario,
       .input-grid,
       .evidence-grid,
       .semantic-stage,
+      .semantic-controls,
       .health-grid,
       .recipe-visual,
       .recipe-detail,
@@ -987,7 +1228,7 @@
               <div class="panel-header">
                 <div>
                   <h2>Customer Outcome Calculator</h2>
-                  <p>The four large numbers are enterprise-level proof points. The savings below are calculated from inputs a customer can answer without guessing at the outcome.</p>
+                  <p>The four large numbers are enterprise-level proof points. Start with the conservative defaults, then increase only what reflects the customer's current environment.</p>
                 </div>
                 <span class="pill">Evidence-led</span>
               </div>
@@ -1001,43 +1242,52 @@
                 <div>
                   <div class="input-grid">
                     <div class="field">
-                      <label for="reportCount">Recurring reports maintained</label>
-                      <input id="reportCount" type="number" min="1" max="5000" value="120">
+                      <label for="reportCount">Recurring reports maintained <span class="info" tabindex="0" data-tip="A recurring report is any dashboard, spreadsheet, paginated report, or scheduled output that someone maintains on a repeated cadence for business consumption.">?</span></label>
+                      <input id="reportCount" type="number" min="1" max="5000" value="25">
                     </div>
                     <div class="field">
-                      <label for="hoursPerReport">Average hours per report cycle</label>
-                      <input id="hoursPerReport" type="number" min="0.25" max="120" step="0.25" value="3">
+                      <label for="hoursPerReport">Average hours per report cycle <span class="info" tabindex="0" data-tip="A report cycle is one complete update cycle: gather data, refresh, reconcile, fix issues, publish, and answer follow-up questions. Use a typical cycle, not the worst one.">?</span></label>
+                      <input id="hoursPerReport" type="number" min="0.25" max="120" step="0.25" value="1">
                     </div>
                     <div class="field">
-                      <label for="cyclesPerMonth">Report cycles per month</label>
+                      <label for="cyclesPerMonth">Report cycles per month <span class="info" tabindex="0" data-tip="How many times per month those recurring reports are refreshed or republished. Weekly reporting is usually 4; monthly reporting is 1.">?</span></label>
                       <input id="cyclesPerMonth" type="number" min="1" max="60" value="2">
                     </div>
                     <div class="field">
-                      <label for="queryRuns">Dashboard/query runs per month</label>
-                      <input id="queryRuns" type="number" min="1" max="1000000" value="1800">
+                      <label for="dashboardViews">Dashboard loads per month <span class="info" tabindex="0" data-tip="A dashboard load is one user opening or refreshing a report page. Power BI usage metrics, audit logs, or web analytics can provide this.">?</span></label>
+                      <input id="dashboardViews" type="number" min="1" max="1000000" value="300">
                     </div>
                     <div class="field">
-                      <label for="querySeconds">Average wait time before tuning, seconds</label>
-                      <input id="querySeconds" type="number" min="1" max="900" value="35">
+                      <label for="queriesPerView">Average queries per dashboard load <span class="info" tabindex="0" data-tip="One dashboard load can trigger many queries: visuals, slicers, semantic model requests, and warehouse calls. If unknown, start with 6-10 for an average BI report.">?</span></label>
+                      <input id="queriesPerView" type="number" min="1" max="250" value="8">
                     </div>
                     <div class="field">
-                      <label for="reportingRate">Fully loaded hourly cost</label>
-                      <input id="reportingRate" type="number" min="1" max="1000" value="95">
+                      <label for="querySeconds">Average wait before tuning, seconds <span class="info" tabindex="0" data-tip="Use the wait customers feel in the BI experience, ideally from Power BI performance analyzer, capacity metrics, query diagnostics, Redshift/Snowflake/Databricks logs, or observed report load time.">?</span></label>
+                      <input id="querySeconds" type="number" min="1" max="900" value="8">
+                    </div>
+                    <div class="field">
+                      <label for="reportingRate">Fully loaded hourly cost <span class="info" tabindex="0" data-tip="The approximate all-in hourly cost of people doing reporting work: salary, benefits, overhead, and contractor cost if relevant. Use a conservative blended rate.">?</span></label>
+                      <input id="reportingRate" type="number" min="1" max="1000" value="85">
                     </div>
                     <div class="field range-field">
                       <div class="range-head">
-                        <label for="eligiblePercent">Percent of reporting effort eligible for automation</label>
-                        <output id="eligibleOut">70%</output>
+                        <label for="eligiblePercent">Reporting effort eligible for automation <span class="info" tabindex="0" data-tip="If unknown, start low. 10-25% means only refresh/publish/reconciliation work is repeatable. 40-60% means recurring prep, QA, and table creation are standardized. 70%+ usually requires strong templates and governance already.">?</span></label>
+                        <output id="eligibleOut">25%</output>
                       </div>
-                      <input id="eligiblePercent" type="range" min="0" max="100" value="70">
+                      <input id="eligiblePercent" type="range" min="0" max="100" value="25">
                     </div>
+                  </div>
+                  <div class="helper-card">
+                    <b>Not sure what to enter?</b>
+                    <span>Use conservative numbers first. If the customer realizes they have more reports, more refresh cycles, longer waits, or more repeatable work than the starter setup, that gap becomes the reason to run an Analytics Foundation Health Assessment.</span>
                   </div>
                 </div>
                 <div class="result-stack">
-                  <div class="result-card"><b id="manualHoursSaved">378</b><span>manual hours saved per month from eligible reporting work</span></div>
-                  <div class="result-card"><b id="manualValue">$35,910</b><span>estimated monthly capacity value returned to the business</span></div>
-                  <div class="result-card"><b id="queryHoursSaved">17</b><span>hours of wait time removed per month using the 25x benchmark</span></div>
-                  <div class="result-card"><b id="storyLine">120 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on customer volume, not a made-up savings slider.</span></div>
+                  <div class="result-card"><b id="manualHoursSaved">9</b><span>manual hours saved per month from eligible reporting work</span></div>
+                  <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly capacity value returned to the business</span></div>
+                  <div class="result-card"><b id="queryHoursSaved">5</b><span>hours of wait time removed per month using dashboard loads x queries per load</span></div>
+                  <div class="result-card"><b id="storyLine">25 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on customer volume, not a made-up savings slider.</span></div>
+                  <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span></div>
                 </div>
               </div>
               <div class="evidence">
@@ -1073,18 +1323,18 @@
               <div class="panel-header">
                 <div>
                   <h2>Readiness Criteria Inputs</h2>
-                  <p>These are the things that make the score real. They can be manually assessed in discovery or populated from systems later.</p>
+                  <p>Each slider has guidance bands. Customers do not need perfect data; they need an honest starting point that reveals whether an Analytics Foundation Health Assessment is warranted.</p>
                 </div>
                 <span class="pill">0-100 scoring</span>
               </div>
               <div class="scenario" style="grid-template-columns:1fr">
                 <div class="input-grid">
-                  <div class="field range-field"><div class="range-head"><label for="metricStandardization">Metric standardization</label><output id="metricStandardizationOut">55%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="55"></div>
-                  <div class="field range-field"><div class="range-head"><label for="automationCoverage">Automation coverage</label><output id="automationCoverageOut">35%</output></div><input id="automationCoverage" type="range" min="0" max="100" value="35"></div>
-                  <div class="field range-field"><div class="range-head"><label for="semanticHealth">Semantic model health</label><output id="semanticHealthOut">48%</output></div><input id="semanticHealth" type="range" min="0" max="100" value="48"></div>
-                  <div class="field range-field"><div class="range-head"><label for="performanceHealth">Performance health</label><output id="performanceHealthOut">42%</output></div><input id="performanceHealth" type="range" min="0" max="100" value="42"></div>
-                  <div class="field range-field"><div class="range-head"><label for="governanceCoverage">Governance coverage</label><output id="governanceCoverageOut">40%</output></div><input id="governanceCoverage" type="range" min="0" max="100" value="40"></div>
-                  <div class="field range-field"><div class="range-head"><label for="adoptionReadiness">Adoption readiness</label><output id="adoptionReadinessOut">60%</output></div><input id="adoptionReadiness" type="range" min="0" max="100" value="60"></div>
+                  <div class="field range-field"><div class="range-head"><label for="metricStandardization">Metric standardization <span class="info" tabindex="0" data-tip="Score how consistently KPIs are defined, owned, and reused across reports. Low means every team defines metrics differently.">?</span></label><output id="metricStandardizationOut">25%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="25"></div>
+                  <div class="field range-field"><div class="range-head"><label for="automationCoverage">Automation coverage <span class="info" tabindex="0" data-tip="Score how much repeatable reporting work is automated: refresh checks, validation, deployment, documentation, and table build patterns.">?</span></label><output id="automationCoverageOut">15%</output></div><input id="automationCoverage" type="range" min="0" max="100" value="15"></div>
+                  <div class="field range-field"><div class="range-head"><label for="semanticHealth">Semantic model health <span class="info" tabindex="0" data-tip="Score whether the model is lean, certified, understood, and not overloaded with duplicate measures, unclear relationships, or report-specific logic.">?</span></label><output id="semanticHealthOut">20%</output></div><input id="semanticHealth" type="range" min="0" max="100" value="20"></div>
+                  <div class="field range-field"><div class="range-head"><label for="performanceHealth">Performance health <span class="info" tabindex="0" data-tip="Score how consistently reports load quickly and whether slow queries are measured, tuned, and prevented from returning.">?</span></label><output id="performanceHealthOut">25%</output></div><input id="performanceHealth" type="range" min="0" max="100" value="25"></div>
+                  <div class="field range-field"><div class="range-head"><label for="governanceCoverage">Governance coverage <span class="info" tabindex="0" data-tip="Score ownership, lineage, access policy, certification, glossary, refresh evidence, and auditability. RLS is a deeper add-on when row-level rules are needed.">?</span></label><output id="governanceCoverageOut">20%</output></div><input id="governanceCoverage" type="range" min="0" max="100" value="20"></div>
+                  <div class="field range-field"><div class="range-head"><label for="adoptionReadiness">Adoption readiness <span class="info" tabindex="0" data-tip="Score whether users trust the reports, know where to go, have training, and are aligned to one operating model.">?</span></label><output id="adoptionReadinessOut">30%</output></div><input id="adoptionReadiness" type="range" min="0" max="100" value="30"></div>
                 </div>
               </div>
             </article>
@@ -1105,25 +1355,36 @@
           <div class="semantic-layout">
             <article class="panel semantic-workspace">
               <h2 class="section-title">Semantic Model Trust Layer</h2>
+              <div class="semantic-controls">
+                <div class="field"><label for="sourceSystems">Source systems <span class="info" tabindex="0" data-tip="Distinct systems feeding analytics: ERP, CRM, HRIS, finance platform, data warehouse marts, files, or operational apps.">?</span></label><input id="sourceSystems" type="number" min="1" max="30" value="3"></div>
+                <div class="field"><label for="factTables">Fact tables <span class="info" tabindex="0" data-tip="Event or transaction tables at a clear grain, such as orders, invoices, tickets, shipments, or monthly balances.">?</span></label><input id="factTables" type="number" min="1" max="80" value="4"></div>
+                <div class="field"><label for="dimensionTables">Dimension tables <span class="info" tabindex="0" data-tip="Descriptive tables used to slice facts: customer, product, region, employee, account, date, or business unit.">?</span></label><input id="dimensionTables" type="number" min="1" max="100" value="6"></div>
+                <div class="field"><label for="measureCount">Measures <span class="info" tabindex="0" data-tip="Reusable calculations exposed to reports: revenue, margin, utilization, retention, SLA, cost, and other KPIs.">?</span></label><input id="measureCount" type="number" min="1" max="1000" value="35"></div>
+                <div class="field"><label for="certifiedMetrics">Certified metrics <span class="info" tabindex="0" data-tip="Measures that have a named owner, definition, lineage, and approval status.">?</span></label><input id="certifiedMetrics" type="number" min="0" max="1000" value="8"></div>
+                <div class="field"><label for="duplicateMeasureInput">Suspected duplicates <span class="info" tabindex="0" data-tip="Measures that appear to calculate the same business concept in multiple ways across reports or datasets.">?</span></label><input id="duplicateMeasureInput" type="number" min="0" max="1000" value="12"></div>
+                <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
+                <div class="field"><label for="refreshJobs">Automated refresh jobs <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
+              </div>
               <p class="section-subtitle">A deeper view of what “trusted semantic model” means: a clean model footprint, certified measures, owned definitions, performance checks, and governed access.</p>
               <div class="semantic-stage">
                 <div class="semantic-column">
-                  <div class="semantic-node"><b>Raw business systems</b><span>ERP, CRM, finance, workforce, operational exports, flat files.</span></div>
-                  <div class="semantic-node"><b>Data product tables</b><span>Curated facts and dimensions with grain, refresh, lineage, and owners.</span></div>
+                  <div class="semantic-node"><b>Raw business systems</b><span id="sourceSystemsText">3 sources feeding the analytics estate.</span></div>
+                  <div class="semantic-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
                 </div>
                 <div class="semantic-node primary">
                   <b>Lean semantic product</b>
-                  <span>Measures are certified, duplicate logic is retired, relationships are intentional, and the model is sized for the reporting experience customers actually need.</span>
+                  <span id="semanticSummary">35 measures, 8 certified, and 12 suspected duplicates create a practical starting point for cleanup.</span>
                   <div class="health-grid">
-                    <div class="health"><b id="modelFootprint">38%</b><span>estimated footprint reduction target</span></div>
-                    <div class="health"><b id="duplicateMeasures">41%</b><span>duplicate measure retirement target</span></div>
+                    <div class="health"><b id="modelFootprint">24%</b><span>estimated footprint reduction opportunity</span></div>
+                    <div class="health"><b id="duplicateMeasures">34%</b><span>duplicate measure retirement opportunity</span></div>
                     <div class="health"><b>25x</b><span>query improvement benchmark</span></div>
-                    <div class="health"><b>Owner-led</b><span>business-approved metric definitions</span></div>
+                    <div class="health"><b id="semanticTrust">23%</b><span>certified metric coverage</span></div>
                   </div>
+                  <div class="model-canvas" id="modelCanvas"></div>
                 </div>
                 <div class="semantic-column">
-                  <div class="semantic-node"><b>Certified reporting</b><span>Reports inherit trusted metrics instead of redefining logic in every dashboard.</span></div>
-                  <div class="semantic-node"><b>Governed access</b><span>Base access policy plus optional RLS design, testing, and evidence.</span></div>
+                  <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
+                  <div class="semantic-node"><b>Governed access</b><span id="accessText">2 sensitive access roles may require RLS package design and testing.</span></div>
                 </div>
               </div>
             </article>
@@ -1168,6 +1429,7 @@
                 <div class="recipe-detail">
                   <div class="detail-box"><b>Customer pain</b><span id="recipePain"></span></div>
                   <div class="detail-box"><b>Parallax mechanism</b><span id="recipeMechanism"></span></div>
+                  <div class="detail-box"><b>Best fit</b><span id="recipeFit"></span></div>
                   <div class="detail-box"><b>Proof artifact</b><span id="recipeProof"></span></div>
                 </div>
               </div>
@@ -1185,10 +1447,10 @@
                 </div>
               </div>
               <div class="package-defs">
-                <div class="package-card"><b>Base</b><span>Minimum trusted reporting foundation: metric glossary, owners, certification status, refresh checks, and core lineage.</span></div>
-                <div class="package-card"><b>Scale</b><span>Operationalize across domains: repeatable onboarding, standardized templates, automated quality gates, and stewardship cadence.</span></div>
-                <div class="package-card"><b>Audit</b><span>Evidence-ready controls: history, approvals, policy traceability, access review, and executive governance readout.</span></div>
-                <div class="package-card"><b>RLS Add-on</b><span>Role and row-level segmentation: policy design, access matrix, implementation support, testing, and audit evidence.</span></div>
+                <div class="package-card"><b>Base</b><span>For teams with scattered reporting that need one trusted foundation: glossary, owners, certified metrics, core lineage, and refresh monitoring.</span><small>Best for: first governed analytics layer</small></div>
+                <div class="package-card"><b>Scale</b><span>For organizations with many domains and repeatable work: onboarding templates, automated report refresh orchestration, quality gates, and stewardship cadence.</span><small>Best for: scaling BI operations</small></div>
+                <div class="package-card"><b>Audit</b><span>For regulated or executive-critical reporting: approval history, control evidence, access review, refresh proof, and governance readout.</span><small>Best for: evidence and compliance</small></div>
+                <div class="package-card"><b>RLS Add-on</b><span>For sensitive row-level segmentation: policy design, role matrix, implementation support, testing, and audit evidence.</span><small>Best for: controlled access by role</small></div>
               </div>
               <div style="padding:20px">
                 <div class="matrix" aria-label="Governance coverage matrix">
@@ -1196,6 +1458,7 @@
                   <div class="cell">Metric glossary and standards</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
                   <div class="cell">Certified semantic model ownership</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
                   <div class="cell">Lineage and refresh evidence</div><div class="cell good">Core</div><div class="cell good">Full</div><div class="cell good">Full</div><div class="cell good">Full</div>
+                  <div class="cell">Automated report refresh operations</div><div class="cell warn">Monitor</div><div class="cell good">Orchestrate</div><div class="cell good">Evidence</div><div class="cell good">Policy-aware</div>
                   <div class="cell">Automated quality gates</div><div class="cell warn">Light</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
                   <div class="cell">Access review and audit pack</div><div class="cell warn">Basic</div><div class="cell warn">Basic</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
                   <div class="cell">Row-level security policy design</div><div class="cell no">No</div><div class="cell no">No</div><div class="cell warn">Optional</div><div class="cell good">Included</div>
@@ -1242,12 +1505,12 @@
     };
 
     const criteria = [
-      { id: "metricStandardization", label: "Metric standards", weight: 18 },
-      { id: "automationCoverage", label: "Automation coverage", weight: 20 },
-      { id: "semanticHealth", label: "Semantic health", weight: 22 },
-      { id: "performanceHealth", label: "Performance health", weight: 15 },
-      { id: "governanceCoverage", label: "Governance coverage", weight: 17 },
-      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8 }
+      { id: "metricStandardization", label: "Metric standards", weight: 18, guidance: "0-20: no shared definitions. 21-40: some team-level standards. 41-60: glossary exists but uneven adoption. 61-80: certified KPIs with owners. 81-100: enterprise metric governance is enforced." },
+      { id: "automationCoverage", label: "Automation coverage", weight: 20, guidance: "0-20: manual refresh and reconciliation dominate. 21-40: scheduled refresh exists but little validation. 41-60: repeatable QA and templates. 61-80: governed workflows for common builds. 81-100: platform-level automation with evidence." },
+      { id: "semanticHealth", label: "Semantic health", weight: 22, guidance: "0-20: report-specific datasets and duplicated logic. 21-40: shared model exists but is messy. 41-60: core model is usable but not fully certified. 61-80: lean model with certified measures. 81-100: optimized semantic product with active ownership." },
+      { id: "performanceHealth", label: "Performance health", weight: 15, guidance: "0-20: slow reports are normal and unmeasured. 21-40: known slow reports but reactive fixes. 41-60: performance is profiled periodically. 61-80: tuning gates before certification. 81-100: performance budgets are monitored continuously." },
+      { id: "governanceCoverage", label: "Governance coverage", weight: 17, guidance: "0-20: ownership and access rules are unclear. 21-40: basic owners and permissions. 41-60: lineage, glossary, and access reviews in progress. 61-80: package-level governance evidence. 81-100: audit-ready governance and policy automation." },
+      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8, guidance: "0-20: users export around reports. 21-40: mixed trust and low enablement. 41-60: training and support exist. 61-80: adoption is measured and guided. 81-100: governed reports are the default operating rhythm." }
     ];
 
     const recipes = [
@@ -1259,6 +1522,7 @@
         steps: ["Intake", "Build", "Validate", "Publish"],
         pain: "Teams rebuild the same tables by hand, then spend time reconciling mismatched numbers.",
         mechanism: "Create reusable table patterns with standard grain, keys, refresh checks, and ownership.",
+        fit: "Recurring tables with stable grain, repeated joins, or monthly/weekly aggregation work.",
         proof: "Certified table inventory, refresh evidence, row count checks, and owner sign-off."
       },
       {
@@ -1269,6 +1533,7 @@
         steps: ["Request", "Template", "Approve", "Deploy"],
         pain: "Analysts need new tables, but every request waits on custom engineering cycles.",
         mechanism: "Use guided templates for naming, grain, PII flags, approval, documentation, and deployment.",
+        fit: "Teams that want self-service analytics without letting unmanaged tables multiply.",
         proof: "Approved table request, generated documentation, lineage, and test results."
       },
       {
@@ -1279,6 +1544,7 @@
         steps: ["Profile", "Tune", "Retest", "Certify"],
         pain: "Customers wait on dashboards, stop trusting reports, and export data to work around performance.",
         mechanism: "Profile slow measures, optimize relationships, add aggregations, and retest against target runtimes.",
+        fit: "Reports where users wait on visuals, capacity is strained, or warehouse queries are expensive.",
         proof: "Before/after runtime evidence, slow query list, optimization notes, and certification status."
       },
       {
@@ -1289,17 +1555,18 @@
         steps: ["Collect", "Review", "Package", "Present"],
         pain: "Governance exists in fragments, so leaders cannot see what is trusted or controlled.",
         mechanism: "Assemble glossary, ownership, lineage, access policy, refresh history, and RLS decisions.",
+        fit: "Leadership, compliance, or data governance teams that need proof of trust and control.",
         proof: "Executive evidence pack with controls, owners, lineage, access review, and RLS scope."
       }
     ];
 
     const catalog = [
-      ["Manual Reporting Reduction", "Recurring report work becomes governed product flow.", "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", "Proof: report inventory, effort baseline, automated refresh log.", "linear-gradient(135deg,#071d54,#1f6ae5)"],
-      ["Query Performance", "Slow dashboards become measurable performance targets.", "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", "Proof: query logs and runtime comparison.", "linear-gradient(135deg,#1f6ae5,#16b5ff)"],
-      ["Unified Standards", "Teams stop debating definitions inside meetings.", "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", "Proof: glossary and certified metric register.", "linear-gradient(135deg,#071d54,#6457c2)"],
-      ["BI Engineering Automation", "Repeatable analytics work becomes templates and checks.", "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", "Proof: workflow history and quality gate results.", "linear-gradient(135deg,#0b2b67,#20845a)"],
-      ["Trusted Semantic Models", "The semantic layer is lean, clean, and sized for reporting.", "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", "Proof: model health checklist and footprint reduction.", "linear-gradient(135deg,#1f6ae5,#071d54)"],
-      ["Governance + RLS", "Trust is packaged into ownership, evidence, and controlled access.", "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", "Proof: role matrix, access tests, evidence pack.", "linear-gradient(135deg,#071d54,#f5b544)"]
+      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", proof: ["Inventory", "Baseline", "Refresh log"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
+      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", proof: ["Runtime", "Slow list", "Before/after"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
+      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", proof: ["Glossary", "Owner", "Certified KPI"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
+      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", proof: ["Workflow", "Tests", "Docs"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
+      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", proof: ["Model map", "Footprint", "Measure audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
+      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", proof: ["Role matrix", "Access test", "Audit pack"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
     ];
 
     const numberFormat = new Intl.NumberFormat("en-US");
@@ -1330,7 +1597,8 @@
       const reportCount = numeric("reportCount");
       const hoursPerReport = numeric("hoursPerReport");
       const cyclesPerMonth = numeric("cyclesPerMonth");
-      const queryRuns = numeric("queryRuns");
+      const dashboardViews = numeric("dashboardViews");
+      const queriesPerView = numeric("queriesPerView");
       const querySeconds = numeric("querySeconds");
       const reportingRate = numeric("reportingRate");
       const eligible = numeric("eligiblePercent");
@@ -1340,16 +1608,21 @@
       const eligibleHours = baselineHours * eligible / 100;
       const savedHours = Math.round(eligibleHours * 0.75);
       const savedValue = savedHours * reportingRate;
+      const queryRuns = dashboardViews * queriesPerView;
       const beforeWaitHours = queryRuns * querySeconds / 3600;
       const afterWaitHours = beforeWaitHours / 25;
       const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
+      const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + Math.max(0, eligible - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
       document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
       document.getElementById("queryHoursSaved").textContent = numberFormat.format(queryHoursSaved);
       document.getElementById("storyLine").textContent = `${numberFormat.format(reportCount)} reports become a governed product backlog.`;
-      document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${eligible}% eligible for automation, using the proven 75% enterprise reduction benchmark.`;
+      document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${numberFormat.format(queryRuns)} query executions, and ${eligible}% eligible effort using the proven 75% enterprise reduction benchmark.`;
+      document.getElementById("assessmentTrigger").textContent = assessmentScore > 85 ? "High-priority health assessment recommended" : assessmentScore > 40 ? "Foundation health assessment recommended" : "Starter environment: keep pressure-testing";
+      document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? "The operating footprint is large enough that manual reporting, query wait, and governance risk are likely hiding material cost." : assessmentScore > 40 ? "The customer has enough recurring analytics work to justify a structured review of architecture, automation, and semantic model health." : "Inputs are still near the conservative starter setup. Increase only what is true for the customer to reveal the gap.";
       updateScore();
+      updateSemanticModel();
     }
 
     function updateScore() {
@@ -1360,7 +1633,7 @@
         const out = document.getElementById(`${criterion.id}Out`);
         if (out) out.textContent = `${value}%`;
         total += value * criterion.weight / 100;
-        return `<div class="criterion"><b>${criterion.label}</b><span>${criterion.weight}% weight | ${value}%</span><div class="bar" style="--value:${value}%"><i></i></div></div>`;
+        return `<div class="criterion"><b>${criterion.label}</b><span>${criterion.weight}% weight | ${value}%</span><div class="bar" style="--value:${value}%"><i></i></div><details><summary>Scoring guidance</summary><p>${criterion.guidance}</p></details></div>`;
       }).join("");
       const score = Math.round(total);
       list.innerHTML = html;
@@ -1392,26 +1665,65 @@
       document.getElementById("recipeVisual").innerHTML = recipe.steps.map((step) => `<div class="recipe-step"><b>${step}</b><span>${recipe.title}</span></div>`).join("");
       document.getElementById("recipePain").textContent = recipe.pain;
       document.getElementById("recipeMechanism").textContent = recipe.mechanism;
+      document.getElementById("recipeFit").textContent = recipe.fit;
       document.getElementById("recipeProof").textContent = recipe.proof;
     }
 
     function buildCatalog() {
-      document.getElementById("catalogGrid").innerHTML = catalog.map(([title, summary, example, proof, image]) => `
+      document.getElementById("catalogGrid").innerHTML = catalog.map((item) => `
         <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="face">
-              <div class="visual" style="--image:${image}"></div>
-              <div class="face-body"><h3>${title}</h3><p>${summary}</p><p><b>Hover or focus for example.</b></p></div>
+              <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
+              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><p><b>Hover or focus for example.</b></p></div>
             </div>
             <div class="face back">
-              <h3>${title}</h3>
-              <p>${example}</p>
-              <ul><li>${proof}</li><li>Can be connected to real source evidence in a later data integration.</li></ul>
+              <h3>${item.title}</h3>
+              <p>${item.example}</p>
+              <div class="proof-grid">${item.proof.map((proof) => `<div class="proof-tile">${proof}</div>`).join("")}</div>
               <span class="tag">Parallax delivery module</span>
             </div>
           </div>
         </article>
       `).join("");
+    }
+
+    function chips(label, count, className) {
+      const visible = Math.min(count, 10);
+      const items = Array.from({ length: visible }, (_, index) => `<span class="model-chip ${className}">${label} ${index + 1}</span>`);
+      if (count > visible) items.push(`<span class="model-chip ${className}">+${count - visible}</span>`);
+      return items.join("");
+    }
+
+    function updateSemanticModel() {
+      if (!document.getElementById("sourceSystems")) return;
+      const sources = numeric("sourceSystems");
+      const facts = numeric("factTables");
+      const dims = numeric("dimensionTables");
+      const measures = numeric("measureCount");
+      const certified = Math.min(numeric("certifiedMetrics"), measures);
+      const duplicates = Math.min(numeric("duplicateMeasureInput"), measures);
+      const roles = numeric("rlsRoles");
+      const refresh = numeric("refreshJobs");
+      const certifiedCoverage = measures ? Math.round(certified / measures * 100) : 0;
+      const duplicateOpportunity = measures ? Math.round(duplicates / measures * 100) : 0;
+      const footprint = Math.min(65, Math.round(duplicateOpportunity * 0.55 + Math.max(0, measures - certified) * 0.18 + Math.max(0, facts + dims - refresh) * 0.8));
+
+      document.getElementById("sourceSystemsText").textContent = `${numberFormat.format(sources)} sources feeding the analytics estate.`;
+      document.getElementById("dataTablesText").textContent = `${numberFormat.format(facts)} facts and ${numberFormat.format(dims)} dimensions with grain, refresh, lineage, and owners.`;
+      document.getElementById("semanticSummary").textContent = `${numberFormat.format(measures)} measures, ${numberFormat.format(certified)} certified, and ${numberFormat.format(duplicates)} suspected duplicates create a practical starting point for cleanup.`;
+      document.getElementById("modelFootprint").textContent = `${footprint}%`;
+      document.getElementById("duplicateMeasures").textContent = `${duplicateOpportunity}%`;
+      document.getElementById("semanticTrust").textContent = `${certifiedCoverage}%`;
+      document.getElementById("certifiedText").textContent = `Reports inherit ${numberFormat.format(certified)} trusted metrics instead of redefining logic in every dashboard.`;
+      document.getElementById("accessText").textContent = roles ? `${roles} sensitive access roles may require RLS package design and testing.` : "No sensitive access roles entered yet; base governance may be enough.";
+      document.getElementById("modelCanvas").innerHTML = `
+        <div class="model-layer"><b>Sources</b><div class="model-chips">${chips("Src", sources, "")}</div></div>
+        <div class="model-layer"><b>Facts</b><div class="model-chips">${chips("Fact", facts, "")}</div></div>
+        <div class="model-layer"><b>Dimensions</b><div class="model-chips">${chips("Dim", dims, "dim")}</div></div>
+        <div class="model-layer"><b>Measures</b><div class="model-chips">${chips("KPI", Math.min(measures, 18), "measure")}</div></div>
+        <div class="model-layer"><b>Access</b><div class="model-chips">${roles ? chips("Role", roles, "role") : '<span class="model-chip role">Base access</span>'}</div></div>
+      `;
     }
 
     function copySummary() {
@@ -1433,8 +1745,9 @@
 
     function resetScenario() {
       const defaults = {
-        reportCount: 120, hoursPerReport: 3, cyclesPerMonth: 2, queryRuns: 1800, querySeconds: 35, reportingRate: 95, eligiblePercent: 70,
-        metricStandardization: 55, automationCoverage: 35, semanticHealth: 48, performanceHealth: 42, governanceCoverage: 40, adoptionReadiness: 60
+        reportCount: 25, hoursPerReport: 1, cyclesPerMonth: 2, dashboardViews: 300, queriesPerView: 8, querySeconds: 8, reportingRate: 85, eligiblePercent: 25,
+        metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30,
+        sourceSystems: 3, factTables: 4, dimensionTables: 6, measureCount: 35, certifiedMetrics: 8, duplicateMeasureInput: 12, rlsRoles: 2, refreshJobs: 4
       };
       Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
       updateCalculator();
@@ -1444,7 +1757,7 @@
     buildNav(document.getElementById("mobileNav"), true);
     buildAutomationQueue();
     buildCatalog();
-    ["reportCount", "hoursPerReport", "cyclesPerMonth", "queryRuns", "querySeconds", "reportingRate", "eligiblePercent", ...criteria.map((item) => item.id)].forEach((id) => {
+    ["reportCount", "hoursPerReport", "cyclesPerMonth", "dashboardViews", "queriesPerView", "querySeconds", "reportingRate", "eligiblePercent", "sourceSystems", "factTables", "dimensionTables", "measureCount", "certifiedMetrics", "duplicateMeasureInput", "rlsRoles", "refreshJobs", ...criteria.map((item) => item.id)].forEach((id) => {
       document.getElementById(id).addEventListener("input", updateCalculator);
       document.getElementById(id).addEventListener("change", updateCalculator);
     });
