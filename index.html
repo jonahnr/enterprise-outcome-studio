@@ -1,0 +1,1456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parallax Data Lab | Enterprise Outcome Studio</title>
+  <style>
+    :root {
+      --navy: #071d54;
+      --blue: #1f6ae5;
+      --sky: #16b5ff;
+      --gold: #f5b544;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e2ef;
+      --wash: #f4f8fd;
+      --panel: #ffffff;
+      --green: #20845a;
+      --red: #be4b49;
+      --violet: #6457c2;
+      --shadow: 0 18px 46px rgba(7, 29, 84, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--wash);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 286px minmax(0, 1fr);
+    }
+
+    .app > section {
+      min-width: 0;
+    }
+
+    .rail {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 22px 18px;
+      color: #f8fbff;
+      background: linear-gradient(180deg, var(--navy), #0b2b67);
+      border-right: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 226px;
+      height: auto;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .product-kicker {
+      color: #c7d8f7;
+      font-size: 12px;
+      line-height: 1.35;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav button {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: #e7efff;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav button[aria-selected="true"] {
+      color: var(--navy);
+      background: var(--gold);
+      box-shadow: 0 8px 22px rgba(245, 181, 68, 0.2);
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .rail-note {
+      margin-top: auto;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .rail-note b,
+    .rail-note span { display: block; }
+
+    .rail-note span {
+      margin-top: 6px;
+      color: #d5e3fb;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    main { min-width: 0; }
+
+    .mobile-tabs {
+      display: none;
+      gap: 8px;
+      overflow-x: auto;
+      width: 100%;
+      max-width: 100vw;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      min-height: 78px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 248, 253, 0.95);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 2.4vw, 36px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .topbar p {
+      margin: 7px 0 0;
+      max-width: 850px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      color: #ffffff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .view {
+      display: none;
+      width: 100%;
+      max-width: 100vw;
+      padding: 28px;
+    }
+
+    .view.active { display: block; }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-header h2,
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel-header p,
+    .section-subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--navy);
+      background: #fff2cc;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .benchmark-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line);
+      background: #fbfdff;
+    }
+
+    .benchmark {
+      min-height: 136px;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .benchmark:last-child { border-right: 0; }
+
+    .benchmark b {
+      display: block;
+      color: var(--navy);
+      font-size: clamp(31px, 4vw, 48px);
+      line-height: 0.95;
+    }
+
+    .benchmark span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .benchmark small {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--blue);
+      font-weight: 850;
+    }
+
+    .scenario {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(310px, 0.82fr);
+      gap: 18px;
+      padding: 20px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .field label {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid #c9d6e8;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fbfdff;
+    }
+
+    .range-field {
+      grid-column: 1 / -1;
+    }
+
+    input[type="range"] {
+      accent-color: var(--blue);
+    }
+
+    .range-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .range-head output {
+      color: var(--blue);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .result-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .result-card b {
+      display: block;
+      font-size: 27px;
+      color: var(--navy);
+      line-height: 1.05;
+    }
+
+    .result-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .result-card strong {
+      color: var(--green);
+    }
+
+    .score-panel {
+      padding: 20px;
+    }
+
+    .score-ring {
+      --score: 0%;
+      width: min(100%, 230px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      margin: 8px auto 16px;
+      border-radius: 50%;
+      background: conic-gradient(var(--blue) var(--score), #e5edf8 0);
+    }
+
+    .score-ring div {
+      width: 72%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .score-ring b {
+      display: block;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--navy);
+    }
+
+    .score-ring span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .criteria {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .criterion span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      grid-column: 1 / -1;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e5edf8;
+    }
+
+    .bar i {
+      display: block;
+      width: var(--value);
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--sky));
+    }
+
+    .evidence {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .evidence-card {
+      min-height: 128px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .evidence-card b,
+    .evidence-card span { display: block; }
+
+    .evidence-card span {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .semantic-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .semantic-workspace {
+      padding: 20px;
+    }
+
+    .semantic-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+
+    .semantic-column {
+      display: grid;
+      gap: 12px;
+    }
+
+    .semantic-node {
+      min-height: 106px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .semantic-node.primary {
+      min-height: 236px;
+      border: 2px solid var(--blue);
+      background: linear-gradient(180deg, #edf6ff, #ffffff);
+    }
+
+    .semantic-node b,
+    .semantic-node span { display: block; }
+
+    .semantic-node span {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .health {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .health b { color: var(--navy); }
+    .health span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .semantic-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .semantic-table th,
+    .semantic-table td {
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .semantic-table th {
+      color: #ffffff;
+      background: var(--navy);
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .status.good { color: #0e5f3e; background: #dff4e9; }
+    .status.warn { color: #8b5b00; background: #fff0c9; }
+    .status.bad { color: #8f2d2c; background: #ffe1df; }
+
+    .automation-layout {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .queue {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .queue button {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 10px;
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .queue button span {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .queue button.active {
+      border-color: var(--blue);
+      background: #edf6ff;
+    }
+
+    .recipe {
+      padding: 20px;
+    }
+
+    .recipe-visual {
+      min-height: 180px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      padding: 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #071d54, #1f6ae5);
+    }
+
+    .recipe-step {
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 8px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .recipe-step b { font-size: 13px; }
+    .recipe-step span {
+      color: #dceaff;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .recipe-detail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .detail-box {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .detail-box b,
+    .detail-box span { display: block; }
+
+    .detail-box span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .governance-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .package-defs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .package-card {
+      min-height: 172px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .package-card b,
+    .package-card span { display: block; }
+
+    .package-card span {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(4, minmax(82px, 1fr));
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .cell {
+      min-height: 56px;
+      display: grid;
+      align-items: center;
+      padding: 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .cell:nth-child(5n) { border-right: 0; }
+
+    .cell.header {
+      color: #ffffff;
+      background: var(--navy);
+      font-weight: 850;
+    }
+
+    .cell.good,
+    .cell.warn,
+    .cell.no {
+      justify-items: center;
+      font-weight: 900;
+    }
+
+    .cell.good { color: var(--green); }
+    .cell.warn { color: #a66a00; }
+    .cell.no { color: var(--red); }
+
+    .side-card {
+      padding: 20px;
+    }
+
+    .side-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .side-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .side-list b {
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .flip-card {
+      min-height: 310px;
+      perspective: 1200px;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 310px;
+      transition: transform 0.55s ease;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-inner,
+    .flip-card:focus-within .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 150px 1fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(7, 29, 84, 0.1);
+      backface-visibility: hidden;
+    }
+
+    .face.back {
+      display: block;
+      padding: 18px;
+      transform: rotateY(180deg);
+    }
+
+    .visual {
+      position: relative;
+      overflow: hidden;
+      background: #edf6ff;
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(7, 29, 84, 0.86), rgba(31, 106, 229, 0.62)),
+        var(--image);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .visual::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 -48px 0 rgba(255, 255, 255, 0.12), 0 -96px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .face-body {
+      padding: 16px;
+    }
+
+    .face h3 {
+      margin: 0;
+      font-size: 17px;
+      color: var(--navy);
+    }
+
+    .face p,
+    .face li {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .face p { margin: 8px 0 0; }
+
+    .face ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .back .tag {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--navy);
+      background: #fff2cc;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    @media (max-width: 1180px) {
+      .app { grid-template-columns: 1fr; }
+      .rail { display: none; }
+      .mobile-tabs {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+      }
+      .outcomes-grid,
+      .semantic-layout,
+      .automation-layout,
+      .governance-layout { grid-template-columns: 1fr; }
+      .package-defs,
+      .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      .topbar,
+      .view { padding: 12px; }
+      .topbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .benchmark-row,
+      .scenario,
+      .input-grid,
+      .evidence-grid,
+      .semantic-stage,
+      .health-grid,
+      .recipe-visual,
+      .recipe-detail,
+      .package-defs,
+      .catalog-grid { grid-template-columns: 1fr; }
+      .benchmark {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .benchmark:last-child { border-bottom: 0; }
+      .matrix {
+        grid-template-columns: minmax(96px, 1.2fr) repeat(4, minmax(42px, 1fr));
+        max-width: 100%;
+      }
+
+      .cell {
+        min-height: 48px;
+        padding: 8px;
+        font-size: 11px;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="rail" aria-label="Product navigation">
+      <div>
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 150" role="img" aria-label="Parallax Data Lab">
+          <defs><linearGradient id="blue" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1F6AE5"/><stop offset="1" stop-color="#16B5FF"/></linearGradient></defs>
+          <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"><path d="M35 55 92 20l58 35v67l-58 27-57-27Z" stroke-width="9"/><path d="M92 20v119M35 122l57 17 58-17" stroke-width="7" opacity=".92"/></g>
+          <rect x="55" y="80" width="24" height="42" rx="4" fill="#1F6AE5"/><rect x="90" y="55" width="24" height="67" rx="4" fill="#1689F5"/><rect x="125" y="24" width="28" height="98" rx="4" fill="url(#blue)"/><path d="M25 118c53 14 105-1 150-59" fill="none" stroke="#F5B544" stroke-width="8" stroke-linecap="round"/>
+          <text x="190" y="80" fill="#F5B544" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="1">PARALLAX</text><text x="193" y="125" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" letter-spacing="8">DATA LAB</text>
+        </svg>
+        <span class="product-kicker">Enterprise Outcome Studio</span>
+      </div>
+      <nav class="nav" id="railNav"></nav>
+      <div class="rail-note">
+        <b>Customer-facing calculator</b>
+        <span>Benchmark feats stay fixed. Customer outcomes are calculated from their reporting volume, query pain, model health, automation coverage, and governance maturity.</span>
+      </div>
+    </aside>
+
+    <section>
+      <div class="mobile-tabs" id="mobileNav" aria-label="Mobile navigation"></div>
+      <main>
+        <header class="topbar">
+          <div>
+            <h1 id="pageTitle">Enterprise Transformation Outcomes</h1>
+            <p id="pageSubtitle">A Parallax Data Lab product demo that converts customer-entered operating facts into estimated reporting savings, performance value, readiness, and governance packaging.</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn" id="resetBtn" type="button" title="Reset scenario">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/></svg>
+              Reset
+            </button>
+            <button class="btn primary" id="copyBtn" type="button" title="Copy executive summary">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy summary
+            </button>
+          </div>
+        </header>
+
+        <section class="view active" data-view="outcomes">
+          <div class="outcomes-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Customer Outcome Calculator</h2>
+                  <p>The four large numbers are enterprise-level proof points. The savings below are calculated from inputs a customer can answer without guessing at the outcome.</p>
+                </div>
+                <span class="pill">Evidence-led</span>
+              </div>
+              <div class="benchmark-row">
+                <div class="benchmark"><b>75%</b><span>proven reduction in eligible manual reporting effort</span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>25x</b><span>query optimization and dashboard performance lift</span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>10x</b><span>analytics delivery scale through BI engineering automation</span><small>enterprise benchmark</small></div>
+                <div class="benchmark"><b>RLS+</b><span>governance package for sensitive role and row-level access</span><small>optional package</small></div>
+              </div>
+              <div class="scenario">
+                <div>
+                  <div class="input-grid">
+                    <div class="field">
+                      <label for="reportCount">Recurring reports maintained</label>
+                      <input id="reportCount" type="number" min="1" max="5000" value="120">
+                    </div>
+                    <div class="field">
+                      <label for="hoursPerReport">Average hours per report cycle</label>
+                      <input id="hoursPerReport" type="number" min="0.25" max="120" step="0.25" value="3">
+                    </div>
+                    <div class="field">
+                      <label for="cyclesPerMonth">Report cycles per month</label>
+                      <input id="cyclesPerMonth" type="number" min="1" max="60" value="2">
+                    </div>
+                    <div class="field">
+                      <label for="queryRuns">Dashboard/query runs per month</label>
+                      <input id="queryRuns" type="number" min="1" max="1000000" value="1800">
+                    </div>
+                    <div class="field">
+                      <label for="querySeconds">Average wait time before tuning, seconds</label>
+                      <input id="querySeconds" type="number" min="1" max="900" value="35">
+                    </div>
+                    <div class="field">
+                      <label for="reportingRate">Fully loaded hourly cost</label>
+                      <input id="reportingRate" type="number" min="1" max="1000" value="95">
+                    </div>
+                    <div class="field range-field">
+                      <div class="range-head">
+                        <label for="eligiblePercent">Percent of reporting effort eligible for automation</label>
+                        <output id="eligibleOut">70%</output>
+                      </div>
+                      <input id="eligiblePercent" type="range" min="0" max="100" value="70">
+                    </div>
+                  </div>
+                </div>
+                <div class="result-stack">
+                  <div class="result-card"><b id="manualHoursSaved">378</b><span>manual hours saved per month from eligible reporting work</span></div>
+                  <div class="result-card"><b id="manualValue">$35,910</b><span>estimated monthly capacity value returned to the business</span></div>
+                  <div class="result-card"><b id="queryHoursSaved">17</b><span>hours of wait time removed per month using the 25x benchmark</span></div>
+                  <div class="result-card"><b id="storyLine">120 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on customer volume, not a made-up savings slider.</span></div>
+                </div>
+              </div>
+              <div class="evidence">
+                <h2 class="section-title">What Customers Can Bring As Evidence</h2>
+                <p class="section-subtitle">The calculator can later connect to real data sources. For now, it asks for facts customers can pull from report inventories, usage logs, model metadata, and governance records.</p>
+                <div class="evidence-grid">
+                  <div class="evidence-card"><b>Report inventory</b><span>Recurring reports, owners, cycle frequency, and effort by domain.</span></div>
+                  <div class="evidence-card"><b>Usage and performance logs</b><span>Query count, average wait time, slow dashboard list, refresh history.</span></div>
+                  <div class="evidence-card"><b>Semantic model metadata</b><span>Tables, measures, duplicates, certified metrics, relationship health.</span></div>
+                  <div class="evidence-card"><b>Governance records</b><span>Ownership, glossary, lineage, access policy, and RLS coverage.</span></div>
+                </div>
+              </div>
+            </article>
+
+            <aside class="panel score-panel">
+              <div class="panel-header" style="padding:0 0 14px;border-bottom:0">
+                <div>
+                  <h2>Readiness Score</h2>
+                  <p>Weighted from observable criteria. A customer can score anywhere from 0 to 100.</p>
+                </div>
+              </div>
+              <div class="score-ring" id="scoreRing">
+                <div><b id="scoreValue">0</b><span>out of 100</span></div>
+              </div>
+              <div class="criteria" id="criteriaList"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view="readiness">
+          <div class="outcomes-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Readiness Criteria Inputs</h2>
+                  <p>These are the things that make the score real. They can be manually assessed in discovery or populated from systems later.</p>
+                </div>
+                <span class="pill">0-100 scoring</span>
+              </div>
+              <div class="scenario" style="grid-template-columns:1fr">
+                <div class="input-grid">
+                  <div class="field range-field"><div class="range-head"><label for="metricStandardization">Metric standardization</label><output id="metricStandardizationOut">55%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="55"></div>
+                  <div class="field range-field"><div class="range-head"><label for="automationCoverage">Automation coverage</label><output id="automationCoverageOut">35%</output></div><input id="automationCoverage" type="range" min="0" max="100" value="35"></div>
+                  <div class="field range-field"><div class="range-head"><label for="semanticHealth">Semantic model health</label><output id="semanticHealthOut">48%</output></div><input id="semanticHealth" type="range" min="0" max="100" value="48"></div>
+                  <div class="field range-field"><div class="range-head"><label for="performanceHealth">Performance health</label><output id="performanceHealthOut">42%</output></div><input id="performanceHealth" type="range" min="0" max="100" value="42"></div>
+                  <div class="field range-field"><div class="range-head"><label for="governanceCoverage">Governance coverage</label><output id="governanceCoverageOut">40%</output></div><input id="governanceCoverage" type="range" min="0" max="100" value="40"></div>
+                  <div class="field range-field"><div class="range-head"><label for="adoptionReadiness">Adoption readiness</label><output id="adoptionReadinessOut">60%</output></div><input id="adoptionReadiness" type="range" min="0" max="100" value="60"></div>
+                </div>
+              </div>
+            </article>
+            <aside class="panel side-card">
+              <h2 class="section-title">Score Interpretation</h2>
+              <p class="section-subtitle" id="scoreInterpretation">Move the criteria to see the maturity band.</p>
+              <div class="side-list">
+                <div><span>0-39</span><b>Fragmented</b></div>
+                <div><span>40-59</span><b>Foundation</b></div>
+                <div><span>60-79</span><b>Scaling</b></div>
+                <div><span>80-100</span><b>Optimized</b></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view="semantic">
+          <div class="semantic-layout">
+            <article class="panel semantic-workspace">
+              <h2 class="section-title">Semantic Model Trust Layer</h2>
+              <p class="section-subtitle">A deeper view of what “trusted semantic model” means: a clean model footprint, certified measures, owned definitions, performance checks, and governed access.</p>
+              <div class="semantic-stage">
+                <div class="semantic-column">
+                  <div class="semantic-node"><b>Raw business systems</b><span>ERP, CRM, finance, workforce, operational exports, flat files.</span></div>
+                  <div class="semantic-node"><b>Data product tables</b><span>Curated facts and dimensions with grain, refresh, lineage, and owners.</span></div>
+                </div>
+                <div class="semantic-node primary">
+                  <b>Lean semantic product</b>
+                  <span>Measures are certified, duplicate logic is retired, relationships are intentional, and the model is sized for the reporting experience customers actually need.</span>
+                  <div class="health-grid">
+                    <div class="health"><b id="modelFootprint">38%</b><span>estimated footprint reduction target</span></div>
+                    <div class="health"><b id="duplicateMeasures">41%</b><span>duplicate measure retirement target</span></div>
+                    <div class="health"><b>25x</b><span>query improvement benchmark</span></div>
+                    <div class="health"><b>Owner-led</b><span>business-approved metric definitions</span></div>
+                  </div>
+                </div>
+                <div class="semantic-column">
+                  <div class="semantic-node"><b>Certified reporting</b><span>Reports inherit trusted metrics instead of redefining logic in every dashboard.</span></div>
+                  <div class="semantic-node"><b>Governed access</b><span>Base access policy plus optional RLS design, testing, and evidence.</span></div>
+                </div>
+              </div>
+            </article>
+            <aside class="panel side-card">
+              <h2 class="section-title">Model Health Checklist</h2>
+              <p class="section-subtitle">Use this as a customer-facing inspection list during discovery.</p>
+              <table class="semantic-table">
+                <thead><tr><th>Signal</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Metric owner assigned</td><td><span class="status good">Required</span></td></tr>
+                  <tr><td>Duplicate measures identified</td><td><span class="status warn">Assess</span></td></tr>
+                  <tr><td>Slow queries profiled</td><td><span class="status warn">Assess</span></td></tr>
+                  <tr><td>Model size budget defined</td><td><span class="status good">Required</span></td></tr>
+                  <tr><td>RLS need confirmed</td><td><span class="status bad">Package</span></td></tr>
+                </tbody>
+              </table>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view="automation">
+          <div class="automation-layout">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Automation Recipes</h2>
+                  <p>No code required for the customer. Each recipe explains the business process, what gets automated, and what evidence proves it worked.</p>
+                </div>
+              </div>
+              <div class="queue" id="automationQueue"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2 id="recipeTitle">Aggregate Table Factory</h2>
+                  <p id="recipeSubtitle">Turn repeated table prep into a reusable governed workflow.</p>
+                </div>
+                <span class="pill" id="recipeImpact">reduces recurring prep</span>
+              </div>
+              <div class="recipe">
+                <div class="recipe-visual" id="recipeVisual"></div>
+                <div class="recipe-detail">
+                  <div class="detail-box"><b>Customer pain</b><span id="recipePain"></span></div>
+                  <div class="detail-box"><b>Parallax mechanism</b><span id="recipeMechanism"></span></div>
+                  <div class="detail-box"><b>Proof artifact</b><span id="recipeProof"></span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="governance">
+          <div class="governance-layout">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Governance Packaging</h2>
+                  <p>The matrix is useful, but customers also need to understand what each package means before comparing rows.</p>
+                </div>
+              </div>
+              <div class="package-defs">
+                <div class="package-card"><b>Base</b><span>Minimum trusted reporting foundation: metric glossary, owners, certification status, refresh checks, and core lineage.</span></div>
+                <div class="package-card"><b>Scale</b><span>Operationalize across domains: repeatable onboarding, standardized templates, automated quality gates, and stewardship cadence.</span></div>
+                <div class="package-card"><b>Audit</b><span>Evidence-ready controls: history, approvals, policy traceability, access review, and executive governance readout.</span></div>
+                <div class="package-card"><b>RLS Add-on</b><span>Role and row-level segmentation: policy design, access matrix, implementation support, testing, and audit evidence.</span></div>
+              </div>
+              <div style="padding:20px">
+                <div class="matrix" aria-label="Governance coverage matrix">
+                  <div class="cell header">Capability</div><div class="cell header">Base</div><div class="cell header">Scale</div><div class="cell header">Audit</div><div class="cell header">RLS Add-on</div>
+                  <div class="cell">Metric glossary and standards</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
+                  <div class="cell">Certified semantic model ownership</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
+                  <div class="cell">Lineage and refresh evidence</div><div class="cell good">Core</div><div class="cell good">Full</div><div class="cell good">Full</div><div class="cell good">Full</div>
+                  <div class="cell">Automated quality gates</div><div class="cell warn">Light</div><div class="cell good">Yes</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
+                  <div class="cell">Access review and audit pack</div><div class="cell warn">Basic</div><div class="cell warn">Basic</div><div class="cell good">Yes</div><div class="cell good">Yes</div>
+                  <div class="cell">Row-level security policy design</div><div class="cell no">No</div><div class="cell no">No</div><div class="cell warn">Optional</div><div class="cell good">Included</div>
+                </div>
+              </div>
+            </article>
+            <aside class="panel side-card">
+              <h2 class="section-title">When RLS Becomes Its Own Package</h2>
+              <p class="section-subtitle">RLS is not just a checkbox. It needs policy choices, testing, evidence, and ongoing ownership.</p>
+              <div class="side-list">
+                <div><span>Regional restrictions</span><b>RLS fit</b></div>
+                <div><span>Executive-only metrics</span><b>RLS fit</b></div>
+                <div><span>Employee or customer level data</span><b>RLS fit</b></div>
+                <div><span>Audit-ready access proof</span><b>RLS fit</b></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view="catalog">
+          <div class="catalog-grid" id="catalogGrid"></div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <script>
+    const tabs = [
+      { id: "outcomes", label: "Outcomes", icon: "chart", title: "Enterprise Transformation Outcomes", subtitle: "A Parallax Data Lab product demo that converts customer-entered operating facts into estimated reporting savings, performance value, readiness, and governance packaging." },
+      { id: "readiness", label: "Readiness Score", icon: "gauge", title: "Readiness Score Builder", subtitle: "A real 0-100 score based on weighted criteria customers can assess or connect to system data later." },
+      { id: "semantic", label: "Semantic Model", icon: "cube", title: "Trusted Semantic Model", subtitle: "A deeper inspection layer for model trust, footprint, certification, performance, and governed access." },
+      { id: "automation", label: "Automation", icon: "flow", title: "Automation Recipes", subtitle: "Plain-language automation examples that show what changes in the business process and what proof is produced." },
+      { id: "governance", label: "Governance + RLS", icon: "shield", title: "Governance and RLS Packaging", subtitle: "Clear package definitions plus the coverage matrix for base, scale, audit, and RLS add-on." },
+      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Flip cards with examples, proof artifacts, and the customer-facing value behind each capability." }
+    ];
+
+    const icons = {
+      chart: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-8"/></svg>',
+      gauge: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14a8 8 0 1 1 16 0"/><path d="m12 14 4-4"/><path d="M7 14h.01M17 14h.01"/></svg>',
+      cube: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/></svg>',
+      flow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v6"/><path d="M18 15v6"/><rect x="3" y="9" width="6" height="6" rx="1"/><rect x="15" y="9" width="6" height="6" rx="1"/><path d="M9 12h6"/></svg>',
+      shield: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>',
+      grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+    };
+
+    const criteria = [
+      { id: "metricStandardization", label: "Metric standards", weight: 18 },
+      { id: "automationCoverage", label: "Automation coverage", weight: 20 },
+      { id: "semanticHealth", label: "Semantic health", weight: 22 },
+      { id: "performanceHealth", label: "Performance health", weight: 15 },
+      { id: "governanceCoverage", label: "Governance coverage", weight: 17 },
+      { id: "adoptionReadiness", label: "Adoption readiness", weight: 8 }
+    ];
+
+    const recipes = [
+      {
+        title: "Aggregate Table Factory",
+        subtitle: "Turn repeated table prep into a reusable governed workflow.",
+        impact: "reduces recurring prep",
+        queue: "Automate repeated table aggregation and refresh checks.",
+        steps: ["Intake", "Build", "Validate", "Publish"],
+        pain: "Teams rebuild the same tables by hand, then spend time reconciling mismatched numbers.",
+        mechanism: "Create reusable table patterns with standard grain, keys, refresh checks, and ownership.",
+        proof: "Certified table inventory, refresh evidence, row count checks, and owner sign-off."
+      },
+      {
+        title: "Analyst Table Builder",
+        subtitle: "Give analysts a safe path to create tables through templates.",
+        impact: "scales analytics 10x",
+        queue: "Enable governed self-service table creation.",
+        steps: ["Request", "Template", "Approve", "Deploy"],
+        pain: "Analysts need new tables, but every request waits on custom engineering cycles.",
+        mechanism: "Use guided templates for naming, grain, PII flags, approval, documentation, and deployment.",
+        proof: "Approved table request, generated documentation, lineage, and test results."
+      },
+      {
+        title: "Performance Recovery",
+        subtitle: "Convert slow dashboards into optimized reporting products.",
+        impact: "targets 25x lift",
+        queue: "Find and fix slow queries before certification.",
+        steps: ["Profile", "Tune", "Retest", "Certify"],
+        pain: "Customers wait on dashboards, stop trusting reports, and export data to work around performance.",
+        mechanism: "Profile slow measures, optimize relationships, add aggregations, and retest against target runtimes.",
+        proof: "Before/after runtime evidence, slow query list, optimization notes, and certification status."
+      },
+      {
+        title: "Governance Evidence Pack",
+        subtitle: "Package the proof that reporting is owned, trusted, and controlled.",
+        impact: "audit-ready proof",
+        queue: "Collect governance proof into a customer-ready package.",
+        steps: ["Collect", "Review", "Package", "Present"],
+        pain: "Governance exists in fragments, so leaders cannot see what is trusted or controlled.",
+        mechanism: "Assemble glossary, ownership, lineage, access policy, refresh history, and RLS decisions.",
+        proof: "Executive evidence pack with controls, owners, lineage, access review, and RLS scope."
+      }
+    ];
+
+    const catalog = [
+      ["Manual Reporting Reduction", "Recurring report work becomes governed product flow.", "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", "Proof: report inventory, effort baseline, automated refresh log.", "linear-gradient(135deg,#071d54,#1f6ae5)"],
+      ["Query Performance", "Slow dashboards become measurable performance targets.", "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", "Proof: query logs and runtime comparison.", "linear-gradient(135deg,#1f6ae5,#16b5ff)"],
+      ["Unified Standards", "Teams stop debating definitions inside meetings.", "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", "Proof: glossary and certified metric register.", "linear-gradient(135deg,#071d54,#6457c2)"],
+      ["BI Engineering Automation", "Repeatable analytics work becomes templates and checks.", "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", "Proof: workflow history and quality gate results.", "linear-gradient(135deg,#0b2b67,#20845a)"],
+      ["Trusted Semantic Models", "The semantic layer is lean, clean, and sized for reporting.", "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", "Proof: model health checklist and footprint reduction.", "linear-gradient(135deg,#1f6ae5,#071d54)"],
+      ["Governance + RLS", "Trust is packaged into ownership, evidence, and controlled access.", "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", "Proof: role matrix, access tests, evidence pack.", "linear-gradient(135deg,#071d54,#f5b544)"]
+    ];
+
+    const numberFormat = new Intl.NumberFormat("en-US");
+    const moneyFormat = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+    function buildNav(container, compact = false) {
+      container.innerHTML = tabs.map((tab) => `
+        <button type="button" data-tab="${tab.id}" aria-selected="${tab.id === "outcomes"}" class="${compact ? "btn" : ""}">
+          ${icons[tab.icon]} <span>${tab.label}</span>
+        </button>
+      `).join("");
+      container.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => setView(button.dataset.tab)));
+    }
+
+    function setView(id) {
+      const tab = tabs.find((item) => item.id === id);
+      document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.dataset.view === id));
+      document.querySelectorAll("[data-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.tab === id)));
+      document.getElementById("pageTitle").textContent = tab.title;
+      document.getElementById("pageSubtitle").textContent = tab.subtitle;
+    }
+
+    function numeric(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function updateCalculator() {
+      const reportCount = numeric("reportCount");
+      const hoursPerReport = numeric("hoursPerReport");
+      const cyclesPerMonth = numeric("cyclesPerMonth");
+      const queryRuns = numeric("queryRuns");
+      const querySeconds = numeric("querySeconds");
+      const reportingRate = numeric("reportingRate");
+      const eligible = numeric("eligiblePercent");
+      document.getElementById("eligibleOut").textContent = `${eligible}%`;
+
+      const baselineHours = reportCount * hoursPerReport * cyclesPerMonth;
+      const eligibleHours = baselineHours * eligible / 100;
+      const savedHours = Math.round(eligibleHours * 0.75);
+      const savedValue = savedHours * reportingRate;
+      const beforeWaitHours = queryRuns * querySeconds / 3600;
+      const afterWaitHours = beforeWaitHours / 25;
+      const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
+
+      document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
+      document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
+      document.getElementById("queryHoursSaved").textContent = numberFormat.format(queryHoursSaved);
+      document.getElementById("storyLine").textContent = `${numberFormat.format(reportCount)} reports become a governed product backlog.`;
+      document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${eligible}% eligible for automation, using the proven 75% enterprise reduction benchmark.`;
+      updateScore();
+    }
+
+    function updateScore() {
+      let total = 0;
+      const list = document.getElementById("criteriaList");
+      const html = criteria.map((criterion) => {
+        const value = numeric(criterion.id);
+        const out = document.getElementById(`${criterion.id}Out`);
+        if (out) out.textContent = `${value}%`;
+        total += value * criterion.weight / 100;
+        return `<div class="criterion"><b>${criterion.label}</b><span>${criterion.weight}% weight | ${value}%</span><div class="bar" style="--value:${value}%"><i></i></div></div>`;
+      }).join("");
+      const score = Math.round(total);
+      list.innerHTML = html;
+      document.getElementById("scoreValue").textContent = score;
+      document.getElementById("scoreRing").style.setProperty("--score", `${score}%`);
+      const band = score < 40 ? "Fragmented" : score < 60 ? "Foundation" : score < 80 ? "Scaling" : "Optimized";
+      document.getElementById("scoreInterpretation").textContent = `${score}/100: ${band}. This is calculated from metric standards, automation, semantic health, performance, governance, and adoption readiness.`;
+    }
+
+    function buildAutomationQueue() {
+      const queue = document.getElementById("automationQueue");
+      queue.innerHTML = recipes.map((recipe, index) => `
+        <button type="button" class="${index === 0 ? "active" : ""}" data-recipe="${index}">
+          <b>${recipe.title}</b>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <span>${recipe.queue}</span>
+        </button>
+      `).join("");
+      queue.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => setRecipe(Number(button.dataset.recipe))));
+      setRecipe(0);
+    }
+
+    function setRecipe(index) {
+      const recipe = recipes[index];
+      document.querySelectorAll("[data-recipe]").forEach((button) => button.classList.toggle("active", Number(button.dataset.recipe) === index));
+      document.getElementById("recipeTitle").textContent = recipe.title;
+      document.getElementById("recipeSubtitle").textContent = recipe.subtitle;
+      document.getElementById("recipeImpact").textContent = recipe.impact;
+      document.getElementById("recipeVisual").innerHTML = recipe.steps.map((step) => `<div class="recipe-step"><b>${step}</b><span>${recipe.title}</span></div>`).join("");
+      document.getElementById("recipePain").textContent = recipe.pain;
+      document.getElementById("recipeMechanism").textContent = recipe.mechanism;
+      document.getElementById("recipeProof").textContent = recipe.proof;
+    }
+
+    function buildCatalog() {
+      document.getElementById("catalogGrid").innerHTML = catalog.map(([title, summary, example, proof, image]) => `
+        <article class="flip-card" tabindex="0">
+          <div class="flip-inner">
+            <div class="face">
+              <div class="visual" style="--image:${image}"></div>
+              <div class="face-body"><h3>${title}</h3><p>${summary}</p><p><b>Hover or focus for example.</b></p></div>
+            </div>
+            <div class="face back">
+              <h3>${title}</h3>
+              <p>${example}</p>
+              <ul><li>${proof}</li><li>Can be connected to real source evidence in a later data integration.</li></ul>
+              <span class="tag">Parallax delivery module</span>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function copySummary() {
+      const score = document.getElementById("scoreValue").textContent;
+      const text = [
+        "Parallax Data Lab Enterprise Outcome Studio",
+        `Estimated monthly manual hours saved: ${document.getElementById("manualHoursSaved").textContent}`,
+        `Estimated monthly capacity value: ${document.getElementById("manualValue").textContent}`,
+        `Estimated query wait hours removed: ${document.getElementById("queryHoursSaved").textContent}`,
+        `Readiness score: ${score}/100`,
+        document.getElementById("storyDetail").textContent
+      ].join("\\n");
+      navigator.clipboard?.writeText(text);
+      const button = document.getElementById("copyBtn");
+      const original = button.innerHTML;
+      button.textContent = "Copied";
+      setTimeout(() => { button.innerHTML = original; }, 1200);
+    }
+
+    function resetScenario() {
+      const defaults = {
+        reportCount: 120, hoursPerReport: 3, cyclesPerMonth: 2, queryRuns: 1800, querySeconds: 35, reportingRate: 95, eligiblePercent: 70,
+        metricStandardization: 55, automationCoverage: 35, semanticHealth: 48, performanceHealth: 42, governanceCoverage: 40, adoptionReadiness: 60
+      };
+      Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
+      updateCalculator();
+    }
+
+    buildNav(document.getElementById("railNav"));
+    buildNav(document.getElementById("mobileNav"), true);
+    buildAutomationQueue();
+    buildCatalog();
+    ["reportCount", "hoursPerReport", "cyclesPerMonth", "queryRuns", "querySeconds", "reportingRate", "eligiblePercent", ...criteria.map((item) => item.id)].forEach((id) => {
+      document.getElementById(id).addEventListener("input", updateCalculator);
+      document.getElementById(id).addEventListener("change", updateCalculator);
+    });
+    document.getElementById("copyBtn").addEventListener("click", copySummary);
+    document.getElementById("resetBtn").addEventListener("click", resetScenario);
+    updateCalculator();
+  </script>
+</body>
+</html>
