@@ -656,6 +656,55 @@
       background: #fbfdff;
     }
 
+    .readiness-gate {
+      margin: 20px;
+      padding: 18px;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--navy);
+    }
+
+    .readiness-gate b,
+    .readiness-gate span {
+      display: block;
+    }
+
+    .readiness-gate b {
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    .readiness-gate span {
+      margin-top: 6px;
+      color: #e6efff;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .readiness-gate .mini-btn {
+      margin-top: 12px;
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    .readiness-fields.locked {
+      opacity: 0.55;
+    }
+
+    .field.locked-section {
+      position: relative;
+      border-style: dashed;
+    }
+
+    .field.locked-section::after {
+      content: "Take this section test to unlock";
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
     .score-actions {
       display: flex;
       flex-wrap: wrap;
@@ -903,6 +952,11 @@
     .semantic-column {
       display: grid;
       gap: 12px;
+    }
+
+    .source-pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-column: 1 / -1;
     }
 
     .semantic-node {
@@ -1223,6 +1277,46 @@
     .relationship-svg .rel-label {
       fill: var(--navy);
       font-size: 11px;
+    }
+
+    .table-definition-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .table-definition-card {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+    }
+
+    .table-definition-card b,
+    .table-definition-card span {
+      display: block;
+    }
+
+    .table-definition-card b {
+      color: var(--navy);
+      font-size: 12px;
+    }
+
+    .table-definition-card span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .table-definition-card.active {
+      border-color: var(--gold);
+      background: #fff9eb;
     }
 
     .relationship-row {
@@ -1727,6 +1821,27 @@
       box-shadow: 0 -48px 0 rgba(255, 255, 255, 0.12), 0 -96px 0 rgba(255, 255, 255, 0.08);
     }
 
+    .visual-label {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 1;
+      display: grid;
+      gap: 5px;
+    }
+
+    .visual-label span {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 7px;
+      color: var(--navy);
+      background: rgba(255,255,255,.86);
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
     .visual[data-art="reports"]::after {
       height: 16px;
       background: var(--gold);
@@ -1944,6 +2059,7 @@
       .automation-value,
       .ops-drivers,
       .workflow-steps,
+      .table-definition-list,
       .package-defs,
       .catalog-grid { grid-template-columns: 1fr; }
 
@@ -1972,6 +2088,7 @@
         overflow-wrap: anywhere;
       }
     }
+
   </style>
 </head>
 <body>
@@ -2137,7 +2254,6 @@
               <div class="score-breakdown">
                 <div class="break-row"><b>Self-assess</b><div class="break-track"><i id="selfAssessBar"></i></div><span id="selfAssessText">0/80</span></div>
                 <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
-                <div class="break-row"><b>100 state</b><div class="break-track"><i style="--value:100%;background:var(--green)"></i></div><span>100/100</span></div>
               </div>
               <div class="ops-drivers">
                 <button class="ops-driver active" type="button" data-ops-driver="manual"><b id="manualPressureText">0%</b><span>Manual reporting pressure</span></button>
@@ -2165,14 +2281,20 @@
                 </div>
                 <span class="pill">0-100 scoring</span>
               </div>
+              <div class="readiness-gate" id="readinessGate">
+                <b>Start with the readiness test</b>
+                <span>Answer the 20 evidence checks for each section first. Once a section is submitted, its slider unlocks for review and fine-tuning.</span>
+                <span id="readinessProgress">0 of 6 sections complete</span>
+                <button class="mini-btn" type="button" id="startReadinessTestBtn">Take readiness test</button>
+              </div>
               <div class="scenario" style="grid-template-columns:1fr">
-                <div class="input-grid">
-                  <div class="field range-field"><div class="range-head"><label for="metricStandardization">Metric standardization <span class="info" tabindex="0" data-tip="Score how consistently KPIs are defined, owned, and reused across reports. Low means every team defines metrics differently.">?</span></label><output id="metricStandardizationOut">25%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="25"></div>
-                  <div class="field range-field"><div class="range-head"><label for="automationCoverage">Automation coverage <span class="info" tabindex="0" data-tip="Score how much repeatable reporting work is automated: refresh checks, validation, deployment, documentation, and table build patterns.">?</span></label><output id="automationCoverageOut">15%</output></div><input id="automationCoverage" type="range" min="0" max="100" value="15"></div>
-                  <div class="field range-field"><div class="range-head"><label for="semanticHealth">Semantic model health <span class="info" tabindex="0" data-tip="Score whether the model is lean, certified, understood, and not overloaded with duplicate measures, unclear relationships, or report-specific logic.">?</span></label><output id="semanticHealthOut">20%</output></div><input id="semanticHealth" type="range" min="0" max="100" value="20"></div>
-                  <div class="field range-field"><div class="range-head"><label for="performanceHealth">Performance health <span class="info" tabindex="0" data-tip="Score how consistently reports load quickly and whether slow queries are measured, tuned, and prevented from returning.">?</span></label><output id="performanceHealthOut">25%</output></div><input id="performanceHealth" type="range" min="0" max="100" value="25"></div>
-                  <div class="field range-field"><div class="range-head"><label for="governanceCoverage">Governance coverage <span class="info" tabindex="0" data-tip="Score ownership, lineage, access policy, certification, glossary, refresh evidence, and auditability. RLS is a deeper add-on when row-level rules are needed.">?</span></label><output id="governanceCoverageOut">20%</output></div><input id="governanceCoverage" type="range" min="0" max="100" value="20"></div>
-                  <div class="field range-field"><div class="range-head"><label for="adoptionReadiness">Adoption readiness <span class="info" tabindex="0" data-tip="Score whether users trust the reports, know where to go, have training, and are aligned to one operating model.">?</span></label><output id="adoptionReadinessOut">30%</output></div><input id="adoptionReadiness" type="range" min="0" max="100" value="30"></div>
+                <div class="input-grid readiness-fields locked" id="readinessInputGrid">
+                  <div class="field range-field locked-section" data-readiness-field="metricStandardization"><div class="range-head"><label for="metricStandardization">Metric standardization <span class="info" tabindex="0" data-tip="Score how consistently KPIs are defined, owned, and reused across reports. Low means every team defines metrics differently.">?</span></label><output id="metricStandardizationOut">25%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="25"></div>
+                  <div class="field range-field locked-section" data-readiness-field="automationCoverage"><div class="range-head"><label for="automationCoverage">Automation coverage <span class="info" tabindex="0" data-tip="Score how much repeatable reporting work is automated: refresh checks, validation, deployment, documentation, and table build patterns.">?</span></label><output id="automationCoverageOut">15%</output></div><input id="automationCoverage" type="range" min="0" max="100" value="15"></div>
+                  <div class="field range-field locked-section" data-readiness-field="semanticHealth"><div class="range-head"><label for="semanticHealth">Semantic model health <span class="info" tabindex="0" data-tip="Score whether the model is lean, certified, understood, and not overloaded with duplicate measures, unclear relationships, or report-specific logic.">?</span></label><output id="semanticHealthOut">20%</output></div><input id="semanticHealth" type="range" min="0" max="100" value="20"></div>
+                  <div class="field range-field locked-section" data-readiness-field="performanceHealth"><div class="range-head"><label for="performanceHealth">Performance health <span class="info" tabindex="0" data-tip="Score how consistently reports load quickly and whether slow queries are measured, tuned, and prevented from returning.">?</span></label><output id="performanceHealthOut">25%</output></div><input id="performanceHealth" type="range" min="0" max="100" value="25"></div>
+                  <div class="field range-field locked-section" data-readiness-field="governanceCoverage"><div class="range-head"><label for="governanceCoverage">Governance coverage <span class="info" tabindex="0" data-tip="Score ownership, lineage, access policy, certification, glossary, refresh evidence, and auditability. RLS is a deeper add-on when row-level rules are needed.">?</span></label><output id="governanceCoverageOut">20%</output></div><input id="governanceCoverage" type="range" min="0" max="100" value="20"></div>
+                  <div class="field range-field locked-section" data-readiness-field="adoptionReadiness"><div class="range-head"><label for="adoptionReadiness">Adoption readiness <span class="info" tabindex="0" data-tip="Score whether users trust the reports, know where to go, have training, and are aligned to one operating model.">?</span></label><output id="adoptionReadinessOut">30%</output></div><input id="adoptionReadiness" type="range" min="0" max="100" value="30"></div>
                 </div>
               </div>
             </article>
@@ -2186,7 +2308,7 @@
                 <p class="section-subtitle">Take the selected section test. Each section has 20 evidence checks, and the slider score is the number checked out of 20.</p>
                 <div id="criterionChecklist"></div>
                 <div class="evidence-quality" id="evidenceQuality">Select evidence and submit to see quality guidance.</div>
-                <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit autoscore</button>
+                <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit section score</button>
               </div>
             </aside>
           </div>
@@ -2200,7 +2322,7 @@
                   <h2>Semantic Model Trust Layer</h2>
                   <p>This turns abstract semantic modeling into a concrete product: smaller Power BI models, cleaner DAX logic, certified measures, intentional relationships, and governed access.</p>
                 </div>
-                <button class="mini-btn" type="button" id="exportSemanticBtn">Export semantic product</button>
+                <button class="mini-btn" type="button" id="exportSemanticBtn">Export semantic CSV</button>
               </div>
               <div class="semantic-controls">
                 <div class="field"><label for="sourceSystems">Source systems <span class="info" tabindex="0" data-tip="Distinct systems feeding analytics: ERP, CRM, HRIS, finance platform, data warehouse marts, files, or operational apps.">?</span></label><input id="sourceSystems" type="number" min="1" max="30" value="3"></div>
@@ -2217,7 +2339,7 @@
                 <div class="semantic-node"><b>Governed access</b><span id="accessText">2 sensitive access roles may require RLS package design and testing.</span></div>
               </div>
               <div class="semantic-stage">
-                <div class="semantic-column">
+                <div class="semantic-column source-pair">
                   <div class="semantic-node dark-node"><b>Raw business systems</b><span id="sourceSystemsText">3 sources feeding the analytics estate.</span></div>
                   <div class="semantic-node dark-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
                 </div>
@@ -2401,6 +2523,8 @@
     let selectedAdviceId = "metricStandardization";
     let currentFacts = { reportCount: 25, baselineHours: 50, queryRuns: 2400, beforeWaitHours: 5, eligibleRate: 25 };
     let currentFinancials = { savedValue: 0, modelValue: 0, reportingValue: 0, savedHours: 0, queryHoursSaved: 0 };
+    const completedReadiness = new Set();
+    let readinessStarted = false;
     const detailedReports = [
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
@@ -2542,6 +2666,7 @@
       document.querySelectorAll("[data-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.tab === id)));
       document.getElementById("pageTitle").textContent = tab.title;
       document.getElementById("pageSubtitle").textContent = tab.subtitle;
+      if (id === "readiness") showAdvice(selectedAdviceId);
     }
 
     function numeric(id) {
@@ -2742,6 +2867,26 @@
       wrap.innerHTML = criteria.map((criterion) => `<div><span>${criterion.weight}% weight</span><b>${criterion.label}</b></div>`).join("");
     }
 
+    function updateReadinessLocks() {
+      document.querySelectorAll("[data-readiness-field]").forEach((field) => {
+        const id = field.dataset.readinessField;
+        const unlocked = completedReadiness.has(id);
+        field.classList.toggle("locked-section", !unlocked);
+        const input = field.querySelector("input");
+        if (input) input.disabled = !unlocked;
+      });
+      document.getElementById("readinessInputGrid").classList.toggle("locked", completedReadiness.size < criteria.length);
+      document.getElementById("readinessProgress").textContent = `${completedReadiness.size} of ${criteria.length} sections complete`;
+    }
+
+    function startReadinessTest() {
+      readinessStarted = true;
+      document.getElementById("readinessGate").querySelector("b").textContent = "Readiness test in progress";
+      document.getElementById("startReadinessTestBtn").textContent = "Continue test";
+      showAdvice(selectedAdviceId);
+      updateReadinessLocks();
+    }
+
     const opsDriverCopy = {
       manual: ["Manual reporting pressure", "Driven by recurring report count and monthly baseline hours. Higher recurring effort lowers ops health because the analytics operating model is carrying too much manual work."],
       model: ["Model and logic pressure", "Driven by Power BI model size, known logic issues, and duplicate measures. Large or messy models lower ops health because they slow delivery, refresh, trust, and future scale."],
@@ -2765,6 +2910,7 @@
     function showAdvice(id) {
       const criterion = criteria.find((item) => item.id === id);
       if (!criterion) return;
+      if (!readinessStarted && document.querySelector('.view.active')?.dataset.view === "readiness") startReadinessTest();
       selectedAdviceId = id;
       const value = numeric(id);
       const bandIndex = value < 21 ? 0 : value < 41 ? 1 : value < 61 ? 2 : value < 81 ? 3 : 4;
@@ -2802,6 +2948,8 @@
       document.getElementById(criterion.id).value = score;
       const quality = score >= 80 ? "Strong evidence quality: this section has broad operating proof." : score >= 60 ? "Moderate evidence quality: enough proof for a scaling score, with some gaps remaining." : score >= 40 ? "Foundation evidence quality: useful proof exists, but the section is not yet reliable at scale." : "Early evidence quality: too many proof points are missing for a confident operating score.";
       document.getElementById("evidenceQuality").textContent = `${criterion.label} score set to ${score}/100 from ${checkedTotal}/20 checked items. ${quality}`;
+      completedReadiness.add(criterion.id);
+      updateReadinessLocks();
       updateCalculator();
       showAdvice(criterion.id);
     }
@@ -2840,7 +2988,9 @@
         <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="face">
-              <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
+              <div class="visual" data-art="${item.art}" style="--image:${item.image}">
+                <div class="visual-label">${catalogDetails[item.title].preview.map((artifact) => `<span>${artifact}</span>`).join("")}</div>
+              </div>
               <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><div class="meaning-box"><b>What it does:</b><p>${catalogDetails[item.title].meaning}</p></div></div>
             </div>
             <div class="face back">
@@ -2916,6 +3066,11 @@
     }
 
     function relationshipWeb(title, fact, dims, role) {
+      const definitions = [
+        { name: fact, type: "Fact table", detail: "Many-side table at a defined grain. This is where events, amounts, counts, and business activity are measured." },
+        ...dims.map((dim) => ({ name: dim, type: "Dimension table", detail: `One-side lookup table. ${dim} filters ${fact} through a 1:* relationship and carries business-friendly attributes.` })),
+        { name: role, type: "Access rule", detail: "Security layer that decides which rows a department, role, region, account team, or executive group can see." }
+      ];
       return `<div class="model-example"><h3>${title}</h3><div class="model-web"><svg class="relationship-svg" viewBox="0 0 520 250" role="img" aria-label="${title}">
         <line x1="260" y1="120" x2="96" y2="50" stroke="#f5b544" stroke-width="3"/>
         <line x1="260" y1="120" x2="424" y2="50" stroke="#f5b544" stroke-width="3"/>
@@ -2923,12 +3078,18 @@
         <line x1="260" y1="120" x2="424" y2="198" stroke="#f5b544" stroke-width="3"/>
         <line x1="260" y1="120" x2="260" y2="212" stroke="#6457c2" stroke-width="3"/>
         <rect x="200" y="92" width="120" height="56" rx="8" fill="#071d54" stroke="#f5b544" stroke-width="3"/><text x="260" y="120">${fact}</text>
-        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${dims[0]}</text><text class="rel-label" x="158" y="72">1 to many</text>
-        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${dims[1]}</text><text class="rel-label" x="334" y="72">1 to many</text>
-        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${dims[2]}</text>
-        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${dims[3]}</text>
+        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${dims[0]}</text><text class="rel-label" x="158" y="72">1:*</text>
+        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${dims[1]}</text><text class="rel-label" x="334" y="72">1:*</text>
+        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${dims[2]}</text><text class="rel-label" x="158" y="174">1:*</text>
+        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${dims[3]}</text><text class="rel-label" x="334" y="174">1:*</text>
         <rect x="200" y="212" width="120" height="30" rx="8" fill="#6457c2"/><text x="260" y="227">${role}</text>
-      </svg></div></div>`;
+      </svg></div><div class="table-definition-list">${definitions.map((item, index) => `
+        <button class="table-definition-card ${index === 0 ? "active" : ""}" type="button">
+          <b>${item.name}</b>
+          <span>${item.type}</span>
+          <span>${item.detail}</span>
+        </button>
+      `).join("")}</div></div>`;
     }
 
     function updateSemanticModel() {
@@ -2973,6 +3134,12 @@
         ? relationshipWeb("Example 2: Department Cost Model", "Fact Cost", ["Dim Date", "Dim Department", "Dim Vendor", "Dim GL Account"], roles ? "Finance Role" : "Base Access")
         : relationshipWeb("Example 1: Executive Revenue Model", "Fact Sales", ["Dim Date", "Dim Account", "Dim Product", "Dim Region"], roles ? "Role Access" : "Base Access");
       document.getElementById("relationshipMap").innerHTML = html;
+      document.querySelectorAll("#relationshipMap .table-definition-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          document.querySelectorAll("#relationshipMap .table-definition-card").forEach((item) => item.classList.remove("active"));
+          card.classList.add("active");
+        });
+      });
     }
 
     function exportBrief() {
@@ -2995,28 +3162,35 @@
     function exportSemanticProduct() {
       const badLogic = Array.from(document.querySelectorAll("#badLogicList input")).map((input) => input.value.trim()).filter(Boolean);
       const rows = [
-        ["Source systems", numeric("sourceSystems")],
-        ["Fact tables", numeric("factTables")],
-        ["Dimension tables", numeric("dimensionTables")],
-        ["Measures", numeric("measureCount")],
-        ["Certified metrics", numeric("certifiedMetrics")],
-        ["Suspected duplicates", numeric("duplicateMeasureInput")],
-        ["Sensitive access roles", numeric("rlsRoles")],
-        ["Automated refresh jobs", numeric("refreshJobs")],
-        ["Power BI model size MB", numeric("modelSizeMb")],
-        ["Known logic issues", numeric("logicIssueCount")]
+        ["category", "metric", "value", "definition"],
+        ["semantic input", "Source systems", numeric("sourceSystems"), "Distinct systems feeding analytics such as ERP, CRM, HRIS, finance, files, warehouse, or operational apps."],
+        ["semantic input", "Fact tables", numeric("factTables"), "Event or transaction tables at a defined grain."],
+        ["semantic input", "Dimension tables", numeric("dimensionTables"), "Descriptive tables used to filter and group facts."],
+        ["semantic input", "Measures", numeric("measureCount"), "Reusable calculations exposed to reports."],
+        ["semantic input", "Certified metrics", numeric("certifiedMetrics"), "Measures with owner, definition, lineage, and approval status."],
+        ["semantic input", "Suspected duplicates", numeric("duplicateMeasureInput"), "Measures that calculate the same business concept in multiple ways."],
+        ["semantic input", "Sensitive access roles", numeric("rlsRoles"), "Roles that need different row visibility."],
+        ["semantic input", "Automated refresh jobs", numeric("refreshJobs"), "Scheduled refresh or pipeline jobs that run without manual work."],
+        ["semantic input", "Power BI model size MB", numeric("modelSizeMb"), "Dataset or PBIX model size used to estimate footprint and capacity pressure."],
+        ["semantic input", "Known logic issues", numeric("logicIssueCount"), "Known DAX, relationship, grain, duplicate, or report-specific logic problems."],
+        ["relationship example", "Executive Revenue Model", "Fact Sales", "Fact table related 1:* to Date, Account, Product, and Region dimensions."],
+        ["relationship example", "Department Cost Model", "Fact Cost", "Fact table related 1:* to Date, Department, Vendor, and GL Account dimensions."]
       ];
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Semantic Product Export</title><style>body{font-family:Arial,sans-serif;color:#172033;background:#f4f8fd;margin:0}.wrap{max-width:900px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{background:white;border:1px solid #d9e2ef;border-radius:8px;padding:14px}.card b{display:block;color:#071d54;font-size:13px}.card span{display:block;margin-top:5px;font-size:24px;font-weight:800}.logic{margin-top:18px;background:white;border:1px solid #d9e2ef;border-radius:8px;padding:16px}.logic li{margin:8px 0}.gold{color:#071d54;background:#fff9eb;border-color:#f0d08a}</style></head><body><div class="wrap"><div class="hero"><h1>Lean Semantic Product Export</h1><p>${document.getElementById("semanticSummary").textContent}</p></div><div class="grid">${rows.map((row) => `<div class="card"><b>${row[0]}</b><span>${row[1]}</span></div>`).join("")}</div><div class="logic gold"><h2>Bad Logic Items</h2><ul>${(badLogic.length ? badLogic : ["No bad logic items entered yet."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div><div class="logic"><h2>Finished-State Proof</h2><ul><li>Certified owners for priority measures</li><li>Plain-language definitions with grain and lineage</li><li>Relationship web for reusable fact and dimension modeling</li><li>Access role map for sensitive reporting use cases</li></ul></div></div></body></html>`;
-      const blob = new Blob([html], { type: "text/html" });
+      badLogic.forEach((item, index) => rows.push(["bad logic item", `Item ${index + 1}`, item, "User-entered logic issue to inspect during semantic model cleanup."]));
+      if (!badLogic.length) rows.push(["bad logic item", "None entered", "", "No bad logic items entered yet."]);
+      const csv = rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "parallax-semantic-product.html";
+      link.download = "parallax-semantic-product.csv";
       link.click();
       URL.revokeObjectURL(link.href);
     }
 
     function resetScenario() {
       clearOpsOverride();
+      completedReadiness.clear();
+      readinessStarted = false;
       const defaults = {
         reportCount: 25, hoursPerReport: 1, cyclesPerMonth: 2, dashboardViews: 300, queriesPerView: 8, querySeconds: 8, reportingRate: 85, eligiblePercent: 25, modelSizeMb: 350, logicIssueCount: 8,
         metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30,
@@ -3024,12 +3198,16 @@
       };
       Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
       document.getElementById("badLogicList").dataset.count = "";
+      document.getElementById("readinessGate").querySelector("b").textContent = "Start with the readiness test";
+      document.getElementById("startReadinessTestBtn").textContent = "Take readiness test";
+      updateReadinessLocks();
       updateCalculator();
     }
 
     buildNav(document.getElementById("railNav"));
     buildNav(document.getElementById("mobileNav"), true);
     buildReadinessSections();
+    updateReadinessLocks();
     buildReportRows();
     buildAutomationQueue();
     buildCatalog();
@@ -3066,6 +3244,7 @@
     document.getElementById("copyBtn").addEventListener("click", exportBrief);
     document.getElementById("exportSemanticBtn").addEventListener("click", exportSemanticProduct);
     document.getElementById("resetBtn").addEventListener("click", resetScenario);
+    document.getElementById("startReadinessTestBtn").addEventListener("click", startReadinessTest);
     document.querySelectorAll("[data-ops-driver]").forEach((button) => button.addEventListener("click", () => showOpsDriver(button.dataset.opsDriver)));
     document.querySelectorAll("[data-relationship-example]").forEach((button) => button.addEventListener("click", () => showRelationshipExample(button.dataset.relationshipExample)));
     updateCalculator();
