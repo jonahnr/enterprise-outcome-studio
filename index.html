@@ -433,6 +433,12 @@
       background: #f7fbff;
     }
 
+    .field.driver-highlight {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(245, 181, 68, 0.22);
+      background: #fff9eb;
+    }
+
     .field label {
       display: flex;
       align-items: center;
@@ -914,6 +920,24 @@
       background: linear-gradient(180deg, #edf6ff, #ffffff);
     }
 
+    .semantic-node.dark-node {
+      color: #ffffff;
+      background: var(--navy);
+      border-color: #244982;
+    }
+
+    .semantic-node.dark-node b,
+    .semantic-node.dark-node span {
+      color: #ffffff;
+    }
+
+    .semantic-summary-nodes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
     .semantic-node b,
     .semantic-node span { display: block; }
 
@@ -950,7 +974,25 @@
     .bad-logic-list {
       display: grid;
       gap: 8px;
+    }
+
+    .bad-logic-drawer {
       margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .bad-logic-drawer summary {
+      padding: 11px 12px;
+      color: var(--blue);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .bad-logic-drawer .bad-logic-list {
+      padding: 0 12px 12px;
     }
 
     .bad-logic-list label {
@@ -1151,38 +1193,36 @@
     }
 
     .model-web {
-      position: relative;
-      min-height: 230px;
+      min-height: 250px;
       border: 1px dashed #b9c9e5;
       border-radius: 8px;
       background: #ffffff;
     }
 
-    .web-node {
-      position: absolute;
-      width: 104px;
-      min-height: 44px;
-      display: grid;
-      place-items: center;
-      padding: 7px;
-      border-radius: 8px;
-      color: #ffffff;
-      background: var(--blue);
-      text-align: center;
-      font-size: 12px;
-      font-weight: 850;
-      line-height: 1.15;
+    .relationship-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
     }
 
-    .web-node.dim { background: #0878be; }
-    .web-node.role { background: var(--violet); }
-    .web-node.fact { background: var(--navy); border: 2px solid var(--gold); }
+    .relationship-svg {
+      width: 100%;
+      min-height: 250px;
+      display: block;
+    }
 
-    .web-line {
-      position: absolute;
-      height: 2px;
-      background: var(--gold);
-      transform-origin: left center;
+    .relationship-svg text {
+      fill: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    .relationship-svg .rel-label {
+      fill: var(--navy);
+      font-size: 11px;
     }
 
     .relationship-row {
@@ -1654,6 +1694,7 @@
     .face.back {
       display: block;
       padding: 18px;
+      overflow: auto;
       transform: rotateY(180deg);
     }
 
@@ -1728,6 +1769,16 @@
       background: rgba(255,255,255,.18);
       box-shadow: -86px 24px 0 rgba(22,181,255,.65), 86px 24px 0 rgba(245,181,68,.7), 0 -42px 0 rgba(255,255,255,.24);
       transform: translateX(-50%) rotate(45deg);
+    }
+
+    .visual[data-art="model"]::after {
+      height: 18px;
+      left: 28px;
+      right: 28px;
+      bottom: 72px;
+      background: var(--gold);
+      box-shadow: 0 -42px 0 rgba(255,255,255,.28), 72px -20px 0 rgba(22,181,255,.72), 144px 24px 0 rgba(255,255,255,.2);
+      transform: rotate(-8deg);
     }
 
     .visual[data-art="governance"]::after {
@@ -1883,6 +1934,7 @@
       .input-grid,
       .evidence-grid,
       .semantic-stage,
+      .semantic-summary-nodes,
       .semantic-controls,
       .semantic-proof-grid,
       .health-grid,
@@ -2131,7 +2183,7 @@
               <div class="advice-card"><b id="adviceTitle">Select a metric</b><span id="adviceBody">Choose a readiness metric to see what the current score means and what to improve next.</span></div>
               <div class="criteria-assessor">
                 <h3>Evidence-Based Autoset</h3>
-                <p class="section-subtitle">Check the statements that are true for the selected metric, then submit. The highest band with at least half of its boxes checked sets the slider.</p>
+                <p class="section-subtitle">Take the selected section test. Each section has 20 evidence checks, and the slider score is the number checked out of 20.</p>
                 <div id="criterionChecklist"></div>
                 <div class="evidence-quality" id="evidenceQuality">Select evidence and submit to see quality guidance.</div>
                 <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit autoscore</button>
@@ -2160,10 +2212,14 @@
                 <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
                 <div class="field"><label for="refreshJobs">Automated refresh jobs <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
               </div>
+              <div class="semantic-summary-nodes">
+                <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
+                <div class="semantic-node"><b>Governed access</b><span id="accessText">2 sensitive access roles may require RLS package design and testing.</span></div>
+              </div>
               <div class="semantic-stage">
                 <div class="semantic-column">
-                  <div class="semantic-node"><b>Raw business systems</b><span id="sourceSystemsText">3 sources feeding the analytics estate.</span></div>
-                  <div class="semantic-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
+                  <div class="semantic-node dark-node"><b>Raw business systems</b><span id="sourceSystemsText">3 sources feeding the analytics estate.</span></div>
+                  <div class="semantic-node dark-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
                 </div>
                 <div class="semantic-node primary">
                   <b>Lean semantic product</b>
@@ -2174,17 +2230,16 @@
                     <div class="health"><b id="badLogicScore">8</b><span>bad logic items to inspect</span></div>
                     <div class="health"><b id="semanticTrust">23%</b><span>certified metric coverage</span></div>
                   </div>
-                  <div class="bad-logic-list" id="badLogicList"></div>
+                  <details class="bad-logic-drawer">
+                    <summary>Open bad logic item capture</summary>
+                    <div class="bad-logic-list" id="badLogicList"></div>
+                  </details>
                   <div class="model-canvas" id="modelCanvas"></div>
                   <div class="semantic-proof-grid">
                     <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Certified Owners</b><span>Revenue, margin, and forecast accuracy have named accountable owners.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Owner: Finance Analytics. Approver: CFO delegate. Review cadence: monthly close and quarterly planning.</span></div></div></article>
                     <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Definitions</b><span>Trusted metrics carry plain-language definitions, formulas, and grain.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Revenue = posted invoice amount net of credit memos, recognized by invoice date, filtered by active customer.</span></div></div></article>
                     <article class="proof-card" tabindex="0"><div class="proof-card-inner"><div class="proof-face"><b>Trusted Metrics</b><span>Reports pull certified measures instead of rebuilding DAX in each file.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Certified: Revenue, Gross Margin %, Forecast Accuracy, Active Customers. Deprecated duplicates are hidden.</span></div></div></article>
                   </div>
-                </div>
-                <div class="semantic-column">
-                  <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
-                  <div class="semantic-node"><b>Governed access</b><span id="accessText">2 sensitive access roles may require RLS package design and testing.</span></div>
                 </div>
               </div>
             </article>
@@ -2203,11 +2258,12 @@
               </table>
               <div class="hierarchy">
                 <h2 class="section-title">Example Model Relationships</h2>
-                <p class="section-subtitle">Facts sit on the many side. Shared dimensions sit on the one side so reports reuse the same Date, Account, Region, Product, and role filters.</p>
+                <p class="section-subtitle">Flip between two finished model examples. Facts sit in the center, while dimensions and roles filter the model around the outside.</p>
+                <div class="relationship-tabs">
+                  <button class="mini-btn active" type="button" data-relationship-example="revenue">Example 1</button>
+                  <button class="mini-btn" type="button" data-relationship-example="cost">Example 2</button>
+                </div>
                 <div class="relationship-map" id="relationshipMap"></div>
-                <h2 class="section-title" style="margin-top:16px">Department Cost Model</h2>
-                <p class="section-subtitle">A second finished model example: cost facts connect to department, vendor, date, and role access dimensions.</p>
-                <div class="relationship-map" id="relationshipMapAlt"></div>
               </div>
             </aside>
           </div>
@@ -2442,7 +2498,7 @@
     const catalog = [
       { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "You can see which recurring hours are actually removable instead of arguing from averages. The module turns hidden reporting labor into a monthly capacity number and a delivery backlog.", proof: ["Report count by cadence", "Eligible hours baseline", "Saved-hours model"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
       { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "Every slow report creates repeated wait time and pushes users toward extracts. This module shows where 25x tuning applies and where the bottleneck is report render, semantic model, or warehouse query time.", proof: ["Before/after seconds", "Slow query inventory", "Tuning evidence"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
-      { title: "Power BI Model Slimdown", art: "semantic", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "Large models become expensive before they become obviously broken. This module gives you a model-size risk signal tied to refresh, publishing, development speed, and premium-capacity pressure.", proof: ["Model size delta", "Retired objects", "Capacity risk"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
+      { title: "Power BI Model Slimdown", art: "model", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "Large models become expensive before they become obviously broken. This module gives you a model-size risk signal tied to refresh, publishing, development speed, and premium-capacity pressure.", proof: ["Model size delta", "Retired objects", "Capacity risk"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
       { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "Transformation breaks down when the meeting becomes a definitions debate. This module shows which KPIs are certified, who owns them, and where logic still conflicts.", proof: ["Definition owner", "Lineage path", "Conflict list"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
       { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "Scale does not come from asking analysts to move faster by hand. This module identifies repeatable builds that can be templated, validated, documented, and released with evidence.", proof: ["Intake flow", "Validation checks", "Release evidence"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
       { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "The semantic model is the product boundary between raw data and trusted reporting. This module shows the table relationships, certified measures, duplicate logic, and access rules that make reporting reusable.", proof: ["Relationship map", "Measure coverage", "Duplicate audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
@@ -2457,6 +2513,15 @@
       "BI Engineering Automation": { meaning: "Convert common analytics requests into guided intake, templates, tests, documentation, and repeatable deployment.", flow: ["Request", "Generate", "Release"], preview: ["Intake form", "Validation results", "Release evidence"] },
       "Trusted Semantic Models": { meaning: "Create the governed layer where facts, dimensions, certified measures, relationships, and access rules become reusable reporting products.", flow: ["Model", "Certify", "Reuse"], preview: ["Relationship web", "Measure dictionary", "Access role map"] },
       "Governance + RLS": { meaning: "Package ownership, lineage, refresh proof, access review, and row-level security tests so trust can be inspected.", flow: ["Policy", "Test roles", "Audit pack"], preview: ["Role test matrix", "Access evidence", "Policy owner"] }
+    };
+
+    const readinessQuestions = {
+      metricStandardization: ["Priority KPIs have written definitions", "Each KPI has a named business owner", "Metric grain is documented", "Metric formula is documented", "Lineage is visible from source to report", "Certified metrics are marked in reports", "Conflicting KPI versions are logged", "Change requests have approval flow", "Definitions are reviewed on a cadence", "Revenue is standardized", "Margin is standardized", "Utilization or productivity is standardized", "SLA or service metrics are standardized", "Users know where certified metrics live", "New reports reuse certified metrics", "Metric exceptions are documented", "Glossary terms are searchable", "Owners can approve changes", "Definitions are tested against source data", "Leadership uses the certified version"],
+      automationCoverage: ["Scheduled refresh exists for priority reports", "Refresh failures alert owners", "Row-count checks exist", "Reconciliation checks exist", "Report publishing is repeatable", "Documentation is generated or templated", "Table build patterns are reusable", "Analyst requests follow intake", "Quality gates run before release", "Deployment has approval", "Refresh evidence is retained", "Validation evidence is retained", "Manual exports are tracked", "Repeatable spreadsheet prep is identified", "Recurring joins are standardized", "Automated tests cover critical assets", "Ownership is assigned to automations", "Failures create follow-up tasks", "Templates include naming standards", "Automation outputs are reviewable"],
+      semanticHealth: ["Facts have clear grain", "Dimensions are shared across reports", "Relationships are documented", "Duplicate measures are identified", "Unused fields are flagged", "Large columns are reviewed", "Calculated columns are justified", "DAX measures have owners", "Certified measures are exposed", "Deprecated measures are hidden", "Model size is tracked", "Refresh time is tracked", "Report-specific datasets are being reduced", "Measure folders are organized", "Role filters are documented", "Ambiguous relationships are resolved", "High-cardinality fields are reviewed", "Business definitions are attached", "Performance is tested before release", "Model changes follow review"],
+      performanceHealth: ["Target load time is defined", "Slow reports are inventoried", "Slow visuals are identified", "DAX query time is measured", "Warehouse query time is measured", "Report render time is measured", "Before/after tuning is retained", "Aggregations are considered", "Model relationships are tuned", "High-cost measures are flagged", "Capacity impact is monitored", "Refresh duration is monitored", "Performance regressions are tracked", "Certified reports have performance gates", "Users can report slowness", "Owners receive slow report alerts", "Query plans are reviewed when needed", "Caching strategy is understood", "Export workarounds are tracked", "Performance evidence is shared"],
+      governanceCoverage: ["Report owners are assigned", "Data owners are assigned", "Access owners are assigned", "Lineage exists for priority reports", "Refresh evidence is retained", "Certification status is visible", "Glossary is connected to reports", "Access reviews occur on schedule", "RLS need is explicitly decided", "Sensitive fields are tagged", "Policy exceptions are documented", "Approval history is retained", "Audit pack can be produced", "Quality gates are documented", "Governance roles are clear", "Stewardship cadence exists", "Critical reports have evidence", "Permissions are not tribal knowledge", "Ownership changes are tracked", "Governance status is reportable"],
+      adoptionReadiness: ["Certified reports are easy to find", "Users know which report to trust", "Training exists for priority reports", "Support owner is clear", "Usage is measured", "Low-usage reports are reviewed", "Shadow reports are tracked", "Export behavior is tracked", "Metric debates are decreasing", "Leaders use certified reports", "Release notes are shared", "Report changes are communicated", "User feedback is captured", "Frequently asked questions are documented", "Duplicate reports are retired", "Business process uses certified reports", "Adoption targets exist", "New users are onboarded", "Trust issues are logged", "Reports have product owners"]
     };
 
     const numberFormat = new Intl.NumberFormat("en-US");
@@ -2606,8 +2671,9 @@
       const modelOpportunity = Math.min(70, Math.round(modelSize / 80 + logicIssues * 1.8 + duplicateMeasures * 0.8));
       const premiumPressure = Math.max(0, modelSize - 1000);
       const premiumRiskValue = Math.round(Math.pow(premiumPressure / 1000, 1.18) * 5200);
-      const logicValue = logicIssues * 720 + duplicateMeasures * 190;
-      const modelValue = Math.round((queryHoursSaved * reportingRate) + (modelSize * 1.35) + logicValue + premiumRiskValue + (modelOpportunity * 85));
+      const logicValue = logicIssues * 520 + duplicateMeasures * 150;
+      const queryValue = queryHoursSaved * reportingRate * 1.35;
+      const modelValue = Math.round(queryValue + (modelSize * 1.35) + logicValue + premiumRiskValue + (modelOpportunity * 85));
       const reportingValue = savedHours * reportingRate;
       const savedValue = reportingValue + modelValue;
       currentFinancials = { savedValue, modelValue, reportingValue, savedHours, queryHoursSaved };
@@ -2687,6 +2753,13 @@
       document.querySelectorAll("[data-ops-driver]").forEach((button) => button.classList.toggle("active", button.dataset.opsDriver === id));
       document.getElementById("opsDriverTitle").textContent = copy[0];
       document.getElementById("opsDriverBody").textContent = copy[1];
+      const fields = {
+        manual: ["reportCount", "hoursPerReport", "cyclesPerMonth", "eligiblePercent"],
+        model: ["modelSizeMb", "logicIssueCount", "duplicateMeasureInput"],
+        query: ["dashboardViews", "queriesPerView", "querySeconds"]
+      };
+      document.querySelectorAll(".field.driver-highlight").forEach((field) => field.classList.remove("driver-highlight"));
+      (fields[id] || []).forEach((fieldId) => document.getElementById(fieldId)?.closest(".field")?.classList.add("driver-highlight"));
     }
 
     function showAdvice(id) {
@@ -2707,18 +2780,15 @@
     function renderCriterionChecklist(criterion) {
       const wrap = document.getElementById("criterionChecklist");
       if (!wrap) return;
-      wrap.innerHTML = criterion.bands.map((band, bandIndex) => `
-        <div class="check-band">
-          <strong>${band[0]}: ${band[1]}</strong>
-          ${[...band[2], `There is evidence you can show for the ${band[0]} state`].map((item, itemIndex) => `
-            <label><input type="checkbox" data-check-band="${bandIndex}" data-check-item="${itemIndex}"> ${item}</label>
-          `).join("")}
-        </div>
-      `).join("");
+      const questions = readinessQuestions[criterion.id] || [];
+      wrap.innerHTML = `<div class="check-band"><strong>${criterion.label} readiness test: 0 of 20 checked</strong>${questions.map((item, itemIndex) => `
+        <label><input type="checkbox" data-readiness-question="${itemIndex}"> ${item}</label>
+      `).join("")}</div>`;
       wrap.querySelectorAll(".check-band input").forEach((input) => {
         input.addEventListener("change", () => {
           const band = input.closest(".check-band");
           const checked = band.querySelectorAll("input:checked").length;
+          band.querySelector("strong").textContent = `${criterion.label} readiness test: ${checked} of 20 checked`;
           band.classList.toggle("active-band", checked > 0);
         });
       });
@@ -2727,24 +2797,11 @@
     function applyChecklistScore() {
       const criterion = criteria.find((item) => item.id === selectedAdviceId);
       if (!criterion) return;
-      const values = [10, 30, 50, 70, 90];
-      let weighted = 0;
-      let checkedTotal = 0;
-      const checkedByBand = criterion.bands.map((band, bandIndex) => {
-        const checked = document.querySelectorAll(`[data-check-band="${bandIndex}"]:checked`).length;
-        weighted += values[bandIndex] * checked;
-        checkedTotal += checked;
-        return checked;
-      });
-      if (!checkedTotal) return;
-      const highestIndex = checkedByBand.reduce((highest, checked, index) => checked ? index : highest, 0);
-      const supportingChecks = checkedByBand.slice(0, highestIndex).reduce((sum, checked) => sum + checked, 0);
-      let score = Math.round(weighted / checkedTotal);
-      if (highestIndex >= 4 && supportingChecks < 2) score = Math.min(score, 70);
-      else if (highestIndex >= 3 && supportingChecks < 1) score = Math.min(score, 60);
+      const checkedTotal = document.querySelectorAll("[data-readiness-question]:checked").length;
+      const score = Math.round(checkedTotal / 20 * 100);
       document.getElementById(criterion.id).value = score;
-      const quality = score >= 80 ? "Strong evidence quality: high-band evidence is supported by lower-band operating proof." : score >= 60 ? "Moderate evidence quality: this supports a scaling score, but the top maturity state needs broader proof across lower bands." : "Early evidence quality: useful starting signal, but the score stays conservative until more operating proof is checked.";
-      document.getElementById("evidenceQuality").textContent = `${criterion.label} autoset to ${score}. ${quality}`;
+      const quality = score >= 80 ? "Strong evidence quality: this section has broad operating proof." : score >= 60 ? "Moderate evidence quality: enough proof for a scaling score, with some gaps remaining." : score >= 40 ? "Foundation evidence quality: useful proof exists, but the section is not yet reliable at scale." : "Early evidence quality: too many proof points are missing for a confident operating score.";
+      document.getElementById("evidenceQuality").textContent = `${criterion.label} score set to ${score}/100 from ${checkedTotal}/20 checked items. ${quality}`;
       updateCalculator();
       showAdvice(criterion.id);
     }
@@ -2859,18 +2916,19 @@
     }
 
     function relationshipWeb(title, fact, dims, role) {
-      const nodes = [
-        { text: fact, cls: "fact", x: 50, y: 50 },
-        { text: dims[0], cls: "dim", x: 8, y: 12 },
-        { text: dims[1], cls: "dim", x: 69, y: 12 },
-        { text: dims[2], cls: "dim", x: 8, y: 72 },
-        { text: dims[3], cls: "dim", x: 69, y: 72 },
-        { text: role, cls: "role", x: 39, y: 82 }
-      ];
-      const lines = [
-        [28, 26, 48, 46, -34], [70, 27, 56, 46, 132], [30, 75, 47, 57, 34], [70, 75, 57, 57, -132], [50, 80, 50, 63, -90]
-      ];
-      return `<div class="model-example"><h3>${title}</h3><div class="model-web">${lines.map((line) => `<i class="web-line" style="left:${line[0]}%;top:${line[1]}%;width:28%;transform:rotate(${line[4]}deg)"></i>`).join("")}${nodes.map((node) => `<span class="web-node ${node.cls}" style="left:${node.x}%;top:${node.y}%;transform:translate(-50%,-50%)">${node.text}</span>`).join("")}</div></div>`;
+      return `<div class="model-example"><h3>${title}</h3><div class="model-web"><svg class="relationship-svg" viewBox="0 0 520 250" role="img" aria-label="${title}">
+        <line x1="260" y1="120" x2="96" y2="50" stroke="#f5b544" stroke-width="3"/>
+        <line x1="260" y1="120" x2="424" y2="50" stroke="#f5b544" stroke-width="3"/>
+        <line x1="260" y1="120" x2="96" y2="198" stroke="#f5b544" stroke-width="3"/>
+        <line x1="260" y1="120" x2="424" y2="198" stroke="#f5b544" stroke-width="3"/>
+        <line x1="260" y1="120" x2="260" y2="212" stroke="#6457c2" stroke-width="3"/>
+        <rect x="200" y="92" width="120" height="56" rx="8" fill="#071d54" stroke="#f5b544" stroke-width="3"/><text x="260" y="120">${fact}</text>
+        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${dims[0]}</text><text class="rel-label" x="158" y="72">1 to many</text>
+        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${dims[1]}</text><text class="rel-label" x="334" y="72">1 to many</text>
+        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${dims[2]}</text>
+        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${dims[3]}</text>
+        <rect x="200" y="212" width="120" height="30" rx="8" fill="#6457c2"/><text x="260" y="227">${role}</text>
+      </svg></div></div>`;
     }
 
     function updateSemanticModel() {
@@ -2904,8 +2962,17 @@
         <div class="model-layer"><b>Measures</b><div class="model-chips">${chips("KPI", Math.min(measures, 18), "measure", examples.measures)}</div></div>
         <div class="model-layer"><b>Access</b><div class="model-chips">${roles ? chips("Role", roles, "role", examples.roles) : '<span class="model-chip role">Base access</span>'}</div></div>
       `;
-      document.getElementById("relationshipMap").innerHTML = relationshipWeb("Example 1: Executive Revenue Model", "Fact Sales", ["Dim Date", "Dim Account", "Dim Product", "Dim Region"], roles ? "Role Access" : "Base Access");
-      document.getElementById("relationshipMapAlt").innerHTML = relationshipWeb("Example 2: Department Cost Model", "Fact Cost", ["Dim Date", "Dim Department", "Dim Vendor", "Dim GL Account"], roles ? "Finance Role" : "Base Access");
+      const activeExample = document.querySelector("[data-relationship-example].active")?.dataset.relationshipExample || "revenue";
+      showRelationshipExample(activeExample);
+    }
+
+    function showRelationshipExample(id) {
+      document.querySelectorAll("[data-relationship-example]").forEach((button) => button.classList.toggle("active", button.dataset.relationshipExample === id));
+      const roles = numeric("rlsRoles");
+      const html = id === "cost"
+        ? relationshipWeb("Example 2: Department Cost Model", "Fact Cost", ["Dim Date", "Dim Department", "Dim Vendor", "Dim GL Account"], roles ? "Finance Role" : "Base Access")
+        : relationshipWeb("Example 1: Executive Revenue Model", "Fact Sales", ["Dim Date", "Dim Account", "Dim Product", "Dim Region"], roles ? "Role Access" : "Base Access");
+      document.getElementById("relationshipMap").innerHTML = html;
     }
 
     function exportBrief() {
@@ -3000,6 +3067,7 @@
     document.getElementById("exportSemanticBtn").addEventListener("click", exportSemanticProduct);
     document.getElementById("resetBtn").addEventListener("click", resetScenario);
     document.querySelectorAll("[data-ops-driver]").forEach((button) => button.addEventListener("click", () => showOpsDriver(button.dataset.opsDriver)));
+    document.querySelectorAll("[data-relationship-example]").forEach((button) => button.addEventListener("click", () => showRelationshipExample(button.dataset.relationshipExample)));
     updateCalculator();
   </script>
 </body>
