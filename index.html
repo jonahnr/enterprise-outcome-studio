@@ -699,7 +699,7 @@
     }
 
     .field.locked-section::after {
-      content: "Take this section test to unlock";
+      content: "Complete section tests in order to unlock";
       color: var(--muted);
       font-size: 11px;
       font-weight: 800;
@@ -1065,6 +1065,71 @@
       border-radius: 7px;
       color: var(--ink);
       background: #ffffff;
+    }
+
+    .semantic-term-editor {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .semantic-term-editor h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .semantic-term-editor p {
+      margin: 5px 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .term-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .term-row {
+      display: grid;
+      grid-template-columns: 94px minmax(110px, .7fr) minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr);
+      gap: 8px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .term-row .term-type {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      border-radius: 7px;
+      color: #ffffff;
+      background: var(--navy);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .term-row input {
+      width: 100%;
+      min-height: 34px;
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      font: inherit;
+      font-size: 12px;
+    }
+
+    .term-row input:focus {
+      outline: 2px solid rgba(31,106,229,.22);
+      border-color: var(--blue);
     }
 
     .semantic-proof-grid {
@@ -1664,6 +1729,41 @@
       text-align: right;
     }
 
+    .side-list button {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .side-list button b {
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .side-list button span:last-child {
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .side-list button.active b,
+    .side-list button.active span:last-child {
+      color: var(--blue);
+    }
+
+    .side-list button.locked {
+      cursor: not-allowed;
+      opacity: .58;
+    }
+
     .advice-buttons {
       display: grid;
       gap: 8px;
@@ -2059,6 +2159,7 @@
       .automation-value,
       .ops-drivers,
       .workflow-steps,
+      .term-row,
       .table-definition-list,
       .package-defs,
       .catalog-grid { grid-template-columns: 1fr; }
@@ -2285,7 +2386,14 @@
                 <b>Start with the readiness test</b>
                 <span>Answer the 20 evidence checks for each section first. Once a section is submitted, its slider unlocks for review and fine-tuning.</span>
                 <span id="readinessProgress">0 of 6 sections complete</span>
-                <button class="mini-btn" type="button" id="startReadinessTestBtn">Take readiness test</button>
+                <button class="mini-btn" type="button" id="startReadinessTestBtn">Start test</button>
+              </div>
+              <div class="criteria-assessor">
+                <h3>Evidence-Based Autoset</h3>
+                <p class="section-subtitle">Take each section in order. Every section has 20 evidence checks, and the slider score becomes the number checked out of 20.</p>
+                <div id="criterionChecklist"></div>
+                <div class="evidence-quality" id="evidenceQuality">Start the test to begin with Metric standards.</div>
+                <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit section score</button>
               </div>
               <div class="scenario" style="grid-template-columns:1fr">
                 <div class="input-grid readiness-fields locked" id="readinessInputGrid">
@@ -2303,13 +2411,6 @@
               <p class="section-subtitle" id="scoreInterpretation">Move the criteria to see the maturity band.</p>
               <div class="side-list" id="readinessSections"></div>
               <div class="advice-card"><b id="adviceTitle">Select a metric</b><span id="adviceBody">Choose a readiness metric to see what the current score means and what to improve next.</span></div>
-              <div class="criteria-assessor">
-                <h3>Evidence-Based Autoset</h3>
-                <p class="section-subtitle">Take the selected section test. Each section has 20 evidence checks, and the slider score is the number checked out of 20.</p>
-                <div id="criterionChecklist"></div>
-                <div class="evidence-quality" id="evidenceQuality">Select evidence and submit to see quality guidance.</div>
-                <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit section score</button>
-              </div>
             </aside>
           </div>
         </section>
@@ -2333,6 +2434,11 @@
                 <div class="field"><label for="duplicateMeasureInput">Suspected duplicates <span class="info" tabindex="0" data-tip="Measures that appear to calculate the same business concept in multiple ways across reports or datasets.">?</span></label><input id="duplicateMeasureInput" type="number" min="0" max="1000" value="12"></div>
                 <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
                 <div class="field"><label for="refreshJobs">Automated refresh jobs <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
+              </div>
+              <div class="semantic-term-editor">
+                <h3>Editable Semantic Product Terms</h3>
+                <p>Name the source systems, facts, dimensions, and measures in business language. These terms, definitions, grain examples, and usage examples export to CSV.</p>
+                <div class="term-grid" id="semanticTermGrid"></div>
               </div>
               <div class="semantic-summary-nodes">
                 <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
@@ -2864,10 +2970,34 @@
     function buildReadinessSections() {
       const wrap = document.getElementById("readinessSections");
       if (!wrap) return;
-      wrap.innerHTML = criteria.map((criterion) => `<div><span>${criterion.weight}% weight</span><b>${criterion.label}</b></div>`).join("");
+      const currentIndex = getCurrentReadinessIndex();
+      wrap.innerHTML = criteria.map((criterion, index) => {
+        const done = completedReadiness.has(criterion.id);
+        const available = readinessStarted && (done || index === currentIndex);
+        const status = done ? "Complete" : available ? "Active" : index === 0 && !readinessStarted ? "Start here" : "Locked";
+        return `<button type="button" data-readiness-step="${criterion.id}" class="${criterion.id === selectedAdviceId ? "active" : ""} ${available || (!readinessStarted && index === 0) ? "" : "locked"}" ${available || (!readinessStarted && index === 0) ? "" : "disabled"}>
+          <span>${criterion.weight}% weight</span><b>${criterion.label}</b><span>${status}</span>
+        </button>`;
+      }).join("");
+      wrap.querySelectorAll("[data-readiness-step]").forEach((button) => button.addEventListener("click", () => {
+        if (!readinessStarted) startReadinessTest();
+        showAdvice(button.dataset.readinessStep);
+      }));
+    }
+
+    function getCurrentReadinessIndex() {
+      const next = criteria.findIndex((criterion) => !completedReadiness.has(criterion.id));
+      return next === -1 ? criteria.length - 1 : next;
+    }
+
+    function canAccessReadiness(id) {
+      const index = criteria.findIndex((criterion) => criterion.id === id);
+      if (index < 0) return false;
+      return readinessStarted && (completedReadiness.has(id) || index === getCurrentReadinessIndex());
     }
 
     function updateReadinessLocks() {
+      const currentIndex = getCurrentReadinessIndex();
       document.querySelectorAll("[data-readiness-field]").forEach((field) => {
         const id = field.dataset.readinessField;
         const unlocked = completedReadiness.has(id);
@@ -2877,14 +3007,19 @@
       });
       document.getElementById("readinessInputGrid").classList.toggle("locked", completedReadiness.size < criteria.length);
       document.getElementById("readinessProgress").textContent = `${completedReadiness.size} of ${criteria.length} sections complete`;
+      document.getElementById("startReadinessTestBtn").textContent = readinessStarted ? "Resume active section" : "Start test";
+      document.getElementById("readinessGate").querySelector("b").textContent = readinessStarted ? "Readiness test active" : "Start with the readiness test";
+      buildReadinessSections();
+      if (readinessStarted && !completedReadiness.has(selectedAdviceId) && criteria.findIndex((item) => item.id === selectedAdviceId) !== currentIndex) {
+        selectedAdviceId = criteria[currentIndex].id;
+      }
     }
 
     function startReadinessTest() {
       readinessStarted = true;
-      document.getElementById("readinessGate").querySelector("b").textContent = "Readiness test in progress";
-      document.getElementById("startReadinessTestBtn").textContent = "Continue test";
-      showAdvice(selectedAdviceId);
+      selectedAdviceId = criteria[getCurrentReadinessIndex()].id;
       updateReadinessLocks();
+      showAdvice(selectedAdviceId);
     }
 
     const opsDriverCopy = {
@@ -2910,25 +3045,40 @@
     function showAdvice(id) {
       const criterion = criteria.find((item) => item.id === id);
       if (!criterion) return;
-      if (!readinessStarted && document.querySelector('.view.active')?.dataset.view === "readiness") startReadinessTest();
+      if (document.querySelector('.view.active')?.dataset.view === "readiness") {
+        if (!readinessStarted) {
+          selectedAdviceId = criteria[0].id;
+          document.getElementById("adviceTitle").textContent = "Start with Metric standards";
+          document.getElementById("adviceBody").textContent = "Use the Start test button to begin. The sections unlock in order so the score is evidence-led before it becomes customizable.";
+          renderCriterionChecklist(criteria[0], true);
+          buildReadinessSections();
+          return;
+        }
+        if (!canAccessReadiness(id)) {
+          id = criteria[getCurrentReadinessIndex()].id;
+        }
+      }
+      const activeCriterion = criteria.find((item) => item.id === id);
+      if (!activeCriterion) return;
       selectedAdviceId = id;
       const value = numeric(id);
       const bandIndex = value < 21 ? 0 : value < 41 ? 1 : value < 61 ? 2 : value < 81 ? 3 : 4;
-      const band = criterion.bands[bandIndex];
+      const band = activeCriterion.bands[bandIndex];
       document.querySelectorAll("[data-criterion]").forEach((row) => row.classList.toggle("active", row.dataset.criterion === id));
+      document.querySelectorAll("[data-readiness-step]").forEach((row) => row.classList.toggle("active", row.dataset.readinessStep === id));
       document.querySelectorAll(".field.active-input").forEach((field) => field.classList.remove("active-input"));
       document.getElementById(id)?.closest(".field")?.classList.add("active-input");
-      document.getElementById("adviceTitle").textContent = `${criterion.label}: ${band[0]}`;
-      document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${criterion.advice}`;
-      renderCriterionChecklist(criterion);
+      document.getElementById("adviceTitle").textContent = `${activeCriterion.label}: ${band[0]}`;
+      document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${activeCriterion.advice}`;
+      renderCriterionChecklist(activeCriterion);
     }
 
-    function renderCriterionChecklist(criterion) {
+    function renderCriterionChecklist(criterion, locked = false) {
       const wrap = document.getElementById("criterionChecklist");
       if (!wrap) return;
       const questions = readinessQuestions[criterion.id] || [];
-      wrap.innerHTML = `<div class="check-band"><strong>${criterion.label} readiness test: 0 of 20 checked</strong>${questions.map((item, itemIndex) => `
-        <label><input type="checkbox" data-readiness-question="${itemIndex}"> ${item}</label>
+      wrap.innerHTML = `<div class="check-band"><strong>${locked ? "Start the test to unlock Metric standards" : `${criterion.label} readiness test: 0 of 20 checked`}</strong>${questions.map((item, itemIndex) => `
+        <label><input type="checkbox" data-readiness-question="${itemIndex}" ${locked ? "disabled" : ""}> ${item}</label>
       `).join("")}</div>`;
       wrap.querySelectorAll(".check-band input").forEach((input) => {
         input.addEventListener("change", () => {
@@ -2942,7 +3092,7 @@
 
     function applyChecklistScore() {
       const criterion = criteria.find((item) => item.id === selectedAdviceId);
-      if (!criterion) return;
+      if (!criterion || !readinessStarted || !canAccessReadiness(criterion.id)) return;
       const checkedTotal = document.querySelectorAll("[data-readiness-question]:checked").length;
       const score = Math.round(checkedTotal / 20 * 100);
       document.getElementById(criterion.id).value = score;
@@ -2951,7 +3101,9 @@
       completedReadiness.add(criterion.id);
       updateReadinessLocks();
       updateCalculator();
-      showAdvice(criterion.id);
+      const nextIndex = getCurrentReadinessIndex();
+      const nextCriterion = completedReadiness.size === criteria.length ? criterion : criteria[nextIndex];
+      showAdvice(nextCriterion.id);
     }
 
     function buildAutomationQueue() {
@@ -2988,9 +3140,7 @@
         <article class="flip-card" tabindex="0">
           <div class="flip-inner">
             <div class="face">
-              <div class="visual" data-art="${item.art}" style="--image:${item.image}">
-                <div class="visual-label">${catalogDetails[item.title].preview.map((artifact) => `<span>${artifact}</span>`).join("")}</div>
-              </div>
+              <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
               <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><div class="meaning-box"><b>What it does:</b><p>${catalogDetails[item.title].meaning}</p></div></div>
             </div>
             <div class="face back">
@@ -3043,6 +3193,93 @@
       roles: ["Executive", "Region", "Finance", "Manager", "HR", "Sales", "Ops", "Audit"]
     };
 
+    const semanticDefaults = {
+      source: [
+        ["ERP Finance", "Posted invoices, credit memos, payments, and close-period finance data.", "System grain: transaction and document line records.", "Used to reconcile revenue and margin back to finance."],
+        ["CRM Pipeline", "Accounts, opportunities, territories, bookings, and forecast stages.", "System grain: one opportunity or account record.", "Used to connect sales pipeline to recognized revenue."],
+        ["Service Operations", "Tickets, SLA status, queues, resolution dates, and support ownership.", "System grain: one service ticket event.", "Used to measure SLA, backlog, and operational throughput."],
+        ["HRIS", "Employees, departments, managers, cost centers, and workforce attributes.", "System grain: one employee assignment per effective period.", "Used for department security, labor cost, and productivity reporting."]
+      ],
+      fact: [
+        ["Fact Sales", "Revenue activity from posted invoice lines.", "One row per posted invoice line by invoice date, customer, product, and legal entity.", "Example: a monthly executive revenue report sums invoice line amount by region and product."],
+        ["Fact Cost", "Cost activity from GL postings, vendor spend, and allocated department expense.", "One row per GL posting or allocation by accounting period, department, vendor, and account.", "Example: Finance reviews department expense vs budget by month and GL account."],
+        ["Fact Ticket", "Service ticket lifecycle measurements including opened, resolved, breached, and aged tickets.", "One row per ticket status event by ticket, date, queue, and owner.", "Example: Operations tracks backlog, SLA breach rate, and average resolution time."],
+        ["Fact Forecast", "Forecast snapshots captured across planning cycles.", "One row per forecast version, account, product, month, and scenario.", "Example: Leadership compares current forecast to prior commit and actuals."]
+      ],
+      dimension: [
+        ["Dim Date", "Certified calendar with fiscal period, week, quarter, year, and close status.", "One row per calendar date.", "Filters every fact consistently by invoice date, accounting period, or ticket date."],
+        ["Dim Account", "Customer or account master with segment, industry, owner, and territory.", "One row per account at the current reporting state.", "Lets sales and finance see the same customer hierarchy."],
+        ["Dim Product", "Product catalog with category, family, SKU, status, and launch attributes.", "One row per product or SKU.", "Enables revenue, margin, and support metrics by product family."],
+        ["Dim Region", "Sales or operating territory with region, market, and leader assignment.", "One row per territory or region.", "Supports regional scorecards and role-based access."],
+        ["Dim Department", "Department and cost center hierarchy used for finance and workforce reporting.", "One row per department or cost center.", "Filters cost and headcount reporting for Finance and HR."],
+        ["Dim Vendor", "Vendor master with parent, category, risk tier, and payment terms.", "One row per vendor.", "Used to analyze spend concentration and vendor performance."],
+        ["Dim GL Account", "Chart of accounts with account type, financial statement grouping, and rollup hierarchy.", "One row per general ledger account.", "Used to report cost, revenue, expense, and balance sheet activity consistently."]
+      ],
+      measure: [
+        ["Revenue", "Posted invoice amount net of credit memos using the certified finance definition.", "Calculated at invoice-line grain, aggregated by certified dimensions.", "Used in executive scorecards, close packs, and sales performance reporting."],
+        ["Gross Margin %", "Revenue less cost divided by revenue, using certified revenue and cost measures.", "Calculated after filtering facts to the same fiscal period and product/account scope.", "Used to compare margin by product family, region, and customer segment."],
+        ["SLA Breach Rate", "Resolved or open tickets breaching SLA divided by total in-scope tickets.", "Calculated at ticket-event grain with queue and priority filters.", "Used by Operations to identify service risk and staffing needs."],
+        ["Forecast Accuracy", "Actual revenue compared to forecast snapshot for the same period and account/product scope.", "Calculated by joining actuals to forecast version grain.", "Used in leadership planning and sales accountability reviews."]
+      ]
+    };
+
+    let semanticTerms = {};
+    let semanticTermSignature = "";
+
+    function cloneDefaultTerm(type, index) {
+      const fallback = semanticDefaults[type][index % semanticDefaults[type].length];
+      return { type, name: fallback[0], definition: fallback[1], grain: fallback[2], example: fallback[3] };
+    }
+
+    function ensureSemanticTerms() {
+      const desired = {
+        source: Math.min(numeric("sourceSystems"), 8),
+        fact: Math.min(numeric("factTables"), 8),
+        dimension: Math.min(numeric("dimensionTables"), 10),
+        measure: Math.min(numeric("measureCount"), 8)
+      };
+      Object.entries(desired).forEach(([type, count]) => {
+        semanticTerms[type] = semanticTerms[type] || [];
+        while (semanticTerms[type].length < count) semanticTerms[type].push(cloneDefaultTerm(type, semanticTerms[type].length));
+        semanticTerms[type] = semanticTerms[type].slice(0, count);
+      });
+      return Object.entries(desired).map(([type, count]) => `${type}:${count}`).join("|");
+    }
+
+    function updateSemanticTerm(event) {
+      const target = event.target;
+      const group = semanticTerms[target.dataset.termType];
+      if (!group) return;
+      const term = group[Number(target.dataset.termIndex)];
+      if (!term) return;
+      term[target.dataset.termField] = target.value;
+      updateSemanticModel();
+    }
+
+    function renderSemanticTerms(force = false) {
+      const signature = ensureSemanticTerms();
+      const wrap = document.getElementById("semanticTermGrid");
+      if (!wrap) return;
+      if (!force && semanticTermSignature === signature && wrap.children.length) return;
+      semanticTermSignature = signature;
+      const labels = { source: "Source", fact: "Fact", dimension: "Dim", measure: "Metric" };
+      const order = ["source", "fact", "dimension", "measure"];
+      wrap.innerHTML = order.flatMap((type) => semanticTerms[type].map((term, index) => `
+        <div class="term-row">
+          <span class="term-type">${labels[type]}</span>
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="name" value="${escapeHtml(term.name)}" aria-label="${labels[type]} name">
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="definition" value="${escapeHtml(term.definition)}" aria-label="${labels[type]} definition">
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="grain" value="${escapeHtml(term.grain)}" aria-label="${labels[type]} grain">
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="example" value="${escapeHtml(term.example)}" aria-label="${labels[type]} business example">
+        </div>
+      `)).join("");
+      wrap.querySelectorAll("input").forEach((input) => input.addEventListener("input", updateSemanticTerm));
+    }
+
+    function termNames(type, fallback) {
+      return (semanticTerms[type] || []).map((term) => term.name).filter(Boolean).concat(fallback);
+    }
+
     function chips(label, count, className, names = []) {
       const visible = Math.min(count, 10);
       const items = Array.from({ length: visible }, (_, index) => `<span class="model-chip ${className}">${names[index % names.length] || `${label} ${index + 1}`}</span>`);
@@ -3065,10 +3302,13 @@
       wrap.dataset.count = String(count);
     }
 
-    function relationshipWeb(title, fact, dims, role) {
+    function relationshipWeb(title, factTerm, dimTerms, role) {
+      const fact = factTerm.name;
+      const dims = dimTerms.map((term) => term.name);
+      const cleanExample = (text) => String(text || "").replace(/^Example:\s*/i, "");
       const definitions = [
-        { name: fact, type: "Fact table", detail: "Many-side table at a defined grain. This is where events, amounts, counts, and business activity are measured." },
-        ...dims.map((dim) => ({ name: dim, type: "Dimension table", detail: `One-side lookup table. ${dim} filters ${fact} through a 1:* relationship and carries business-friendly attributes.` })),
+        { name: factTerm.name, type: "Fact table", detail: `${factTerm.definition} Grain: ${factTerm.grain} Business example: ${cleanExample(factTerm.example)}` },
+        ...dimTerms.map((dim) => ({ name: dim.name, type: "Dimension table", detail: `${dim.definition} Grain: ${dim.grain} Business example: ${cleanExample(dim.example)}` })),
         { name: role, type: "Access rule", detail: "Security layer that decides which rows a department, role, region, account team, or executive group can see." }
       ];
       return `<div class="model-example"><h3>${title}</h3><div class="model-web"><svg class="relationship-svg" viewBox="0 0 520 250" role="img" aria-label="${title}">
@@ -3077,23 +3317,25 @@
         <line x1="260" y1="120" x2="96" y2="198" stroke="#f5b544" stroke-width="3"/>
         <line x1="260" y1="120" x2="424" y2="198" stroke="#f5b544" stroke-width="3"/>
         <line x1="260" y1="120" x2="260" y2="212" stroke="#6457c2" stroke-width="3"/>
-        <rect x="200" y="92" width="120" height="56" rx="8" fill="#071d54" stroke="#f5b544" stroke-width="3"/><text x="260" y="120">${fact}</text>
-        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${dims[0]}</text><text class="rel-label" x="158" y="72">1:*</text>
-        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${dims[1]}</text><text class="rel-label" x="334" y="72">1:*</text>
-        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${dims[2]}</text><text class="rel-label" x="158" y="174">1:*</text>
-        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${dims[3]}</text><text class="rel-label" x="334" y="174">1:*</text>
-        <rect x="200" y="212" width="120" height="30" rx="8" fill="#6457c2"/><text x="260" y="227">${role}</text>
+        <rect x="200" y="92" width="120" height="56" rx="8" fill="#071d54" stroke="#f5b544" stroke-width="3"/><text x="260" y="120">${escapeHtml(fact)}</text>
+        <text class="rel-label" x="232" y="90">*</text><text class="rel-label" x="288" y="90">*</text><text class="rel-label" x="232" y="152">*</text><text class="rel-label" x="288" y="152">*</text>
+        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${escapeHtml(dims[0])}</text><text class="rel-label" x="162" y="46">1</text>
+        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${escapeHtml(dims[1])}</text><text class="rel-label" x="358" y="46">1</text>
+        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${escapeHtml(dims[2])}</text><text class="rel-label" x="162" y="198">1</text>
+        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${escapeHtml(dims[3])}</text><text class="rel-label" x="358" y="198">1</text>
+        <rect x="200" y="212" width="120" height="30" rx="8" fill="#6457c2"/><text x="260" y="227">${escapeHtml(role)}</text>
       </svg></div><div class="table-definition-list">${definitions.map((item, index) => `
         <button class="table-definition-card ${index === 0 ? "active" : ""}" type="button">
-          <b>${item.name}</b>
-          <span>${item.type}</span>
-          <span>${item.detail}</span>
+          <b>${escapeHtml(item.name)}</b>
+          <span>${escapeHtml(item.type)}</span>
+          <span>${escapeHtml(item.detail)}</span>
         </button>
       `).join("")}</div></div>`;
     }
 
     function updateSemanticModel() {
       if (!document.getElementById("sourceSystems")) return;
+      renderSemanticTerms();
       const sources = numeric("sourceSystems");
       const facts = numeric("factTables");
       const dims = numeric("dimensionTables");
@@ -3117,10 +3359,10 @@
       document.getElementById("certifiedText").textContent = `Reports inherit ${numberFormat.format(certified)} trusted metrics instead of redefining logic in every dashboard.`;
       document.getElementById("accessText").textContent = roles ? `${roles} sensitive access roles may require RLS package design and testing.` : "No sensitive access roles entered yet; base governance may be enough.";
       document.getElementById("modelCanvas").innerHTML = `
-        <div class="model-layer"><b>Sources</b><div class="model-chips">${chips("Src", sources, "", examples.sources)}</div></div>
-        <div class="model-layer"><b>Facts</b><div class="model-chips">${chips("Fact", facts, "", examples.facts)}</div></div>
-        <div class="model-layer"><b>Dimensions</b><div class="model-chips">${chips("Dim", dims, "dim", examples.dims)}</div></div>
-        <div class="model-layer"><b>Measures</b><div class="model-chips">${chips("KPI", Math.min(measures, 18), "measure", examples.measures)}</div></div>
+        <div class="model-layer"><b>Sources</b><div class="model-chips">${chips("Src", sources, "", termNames("source", examples.sources))}</div></div>
+        <div class="model-layer"><b>Facts</b><div class="model-chips">${chips("Fact", facts, "", termNames("fact", examples.facts))}</div></div>
+        <div class="model-layer"><b>Dimensions</b><div class="model-chips">${chips("Dim", dims, "dim", termNames("dimension", examples.dims))}</div></div>
+        <div class="model-layer"><b>Measures</b><div class="model-chips">${chips("KPI", Math.min(measures, 18), "measure", termNames("measure", examples.measures))}</div></div>
         <div class="model-layer"><b>Access</b><div class="model-chips">${roles ? chips("Role", roles, "role", examples.roles) : '<span class="model-chip role">Base access</span>'}</div></div>
       `;
       const activeExample = document.querySelector("[data-relationship-example].active")?.dataset.relationshipExample || "revenue";
@@ -3130,9 +3372,13 @@
     function showRelationshipExample(id) {
       document.querySelectorAll("[data-relationship-example]").forEach((button) => button.classList.toggle("active", button.dataset.relationshipExample === id));
       const roles = numeric("rlsRoles");
+      ensureSemanticTerms();
+      const factTerms = semanticTerms.fact.length ? semanticTerms.fact : semanticDefaults.fact.map((item, index) => cloneDefaultTerm("fact", index));
+      const dimTerms = semanticTerms.dimension.length ? semanticTerms.dimension : semanticDefaults.dimension.map((item, index) => cloneDefaultTerm("dimension", index));
+      const pickDims = (indexes) => indexes.map((index) => dimTerms[index % dimTerms.length]);
       const html = id === "cost"
-        ? relationshipWeb("Example 2: Department Cost Model", "Fact Cost", ["Dim Date", "Dim Department", "Dim Vendor", "Dim GL Account"], roles ? "Finance Role" : "Base Access")
-        : relationshipWeb("Example 1: Executive Revenue Model", "Fact Sales", ["Dim Date", "Dim Account", "Dim Product", "Dim Region"], roles ? "Role Access" : "Base Access");
+        ? relationshipWeb("Example 2: Department Cost Model", factTerms[1] || factTerms[0], pickDims([0, 4, 5, 6]), roles ? "Finance Role" : "Base Access")
+        : relationshipWeb("Example 1: Executive Revenue Model", factTerms[0], pickDims([0, 1, 2, 3]), roles ? "Role Access" : "Base Access");
       document.getElementById("relationshipMap").innerHTML = html;
       document.querySelectorAll("#relationshipMap .table-definition-card").forEach((card) => {
         card.addEventListener("click", () => {
@@ -3160,6 +3406,7 @@
     }
 
     function exportSemanticProduct() {
+      ensureSemanticTerms();
       const badLogic = Array.from(document.querySelectorAll("#badLogicList input")).map((input) => input.value.trim()).filter(Boolean);
       const rows = [
         ["category", "metric", "value", "definition"],
@@ -3173,9 +3420,14 @@
         ["semantic input", "Automated refresh jobs", numeric("refreshJobs"), "Scheduled refresh or pipeline jobs that run without manual work."],
         ["semantic input", "Power BI model size MB", numeric("modelSizeMb"), "Dataset or PBIX model size used to estimate footprint and capacity pressure."],
         ["semantic input", "Known logic issues", numeric("logicIssueCount"), "Known DAX, relationship, grain, duplicate, or report-specific logic problems."],
-        ["relationship example", "Executive Revenue Model", "Fact Sales", "Fact table related 1:* to Date, Account, Product, and Region dimensions."],
-        ["relationship example", "Department Cost Model", "Fact Cost", "Fact table related 1:* to Date, Department, Vendor, and GL Account dimensions."]
+        ["relationship example", "Executive Revenue Model", semanticTerms.fact[0]?.name || "Fact Sales", "Dimensions are the one side and the fact table is the many side for Date, Account, Product, and Region style reporting."],
+        ["relationship example", "Department Cost Model", semanticTerms.fact[1]?.name || "Fact Cost", "Dimensions are the one side and the fact table is the many side for Date, Department, Vendor, and GL Account style reporting."]
       ];
+      ["source", "fact", "dimension", "measure"].forEach((type) => {
+        (semanticTerms[type] || []).forEach((term, index) => {
+          rows.push(["semantic term", `${type} ${index + 1}: ${term.name}`, term.grain, `${term.definition} Example: ${term.example}`]);
+        });
+      });
       badLogic.forEach((item, index) => rows.push(["bad logic item", `Item ${index + 1}`, item, "User-entered logic issue to inspect during semantic model cleanup."]));
       if (!badLogic.length) rows.push(["bad logic item", "None entered", "", "No bad logic items entered yet."]);
       const csv = rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
@@ -3198,8 +3450,9 @@
       };
       Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
       document.getElementById("badLogicList").dataset.count = "";
-      document.getElementById("readinessGate").querySelector("b").textContent = "Start with the readiness test";
-      document.getElementById("startReadinessTestBtn").textContent = "Take readiness test";
+      semanticTerms = {};
+      semanticTermSignature = "";
+      renderSemanticTerms(true);
       updateReadinessLocks();
       updateCalculator();
     }
