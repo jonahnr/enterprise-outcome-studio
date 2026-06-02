@@ -281,6 +281,81 @@
       background: #fbfdff;
     }
 
+    .business-case-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(220px, .9fr);
+      gap: 14px;
+      align-items: stretch;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      background: linear-gradient(135deg, var(--navy), #0b3a7d);
+      color: #ffffff;
+    }
+
+    .business-case-hero b,
+    .business-case-hero span {
+      display: block;
+    }
+
+    .business-case-hero b {
+      color: var(--gold);
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1;
+    }
+
+    .business-case-hero span {
+      margin-top: 8px;
+      color: #e6efff;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .case-metrics {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .case-metric {
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .case-metric b {
+      font-size: 24px;
+    }
+
+    .case-formula {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 8px;
+      color: #e6efff;
+      background: rgba(255,255,255,.08);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .input-section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 14px 0 8px;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .input-section-label span {
+      color: var(--muted);
+      font-weight: 800;
+      text-transform: none;
+    }
+
     .benchmark {
       min-height: 136px;
       padding: 18px;
@@ -449,7 +524,8 @@
       line-height: 1.3;
     }
 
-    .info {
+    .info,
+    .band-hint {
       position: relative;
       width: 18px;
       height: 18px;
@@ -465,7 +541,8 @@
       cursor: help;
     }
 
-    .info::after {
+    .info::after,
+    .band-hint::after {
       content: attr(data-tip);
       position: absolute;
       left: 50%;
@@ -488,7 +565,9 @@
     }
 
     .info:hover::after,
-    .info:focus::after {
+    .info:focus::after,
+    .band-hint:hover::after,
+    .band-hint:focus::after {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
@@ -636,6 +715,26 @@
       color: var(--navy);
     }
 
+    .score-panel.score-locked .score-ring,
+    .score-panel.score-locked .score-breakdown,
+    .score-panel.score-locked .criteria {
+      filter: blur(4px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .score-lock-note {
+      margin-top: 10px;
+      padding: 12px;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff9eb;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
     .score-status {
       display: inline-flex;
       justify-content: center;
@@ -687,6 +786,48 @@
       background: var(--gold);
       border-color: var(--gold);
       color: var(--navy);
+    }
+
+    .band-hint {
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      margin-left: 6px;
+      border-radius: 50%;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 11px;
+      font-weight: 900;
+      cursor: help;
+    }
+
+    .criteria-assessor.locked-test {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .criteria-assessor.locked-test #criterionChecklist,
+    .criteria-assessor.locked-test #applyChecklistBtn {
+      filter: blur(3px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .criteria-assessor.locked-test::after {
+      content: "Start the test to reveal the first maturity question";
+      position: absolute;
+      inset: 58px 14px 48px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      color: var(--navy);
+      background: rgba(255,249,235,.92);
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
     }
 
     .readiness-fields.locked {
@@ -1068,11 +1209,41 @@
     }
 
     .semantic-term-editor {
+      position: relative;
       margin-top: 14px;
-      padding: 14px;
+      min-height: 520px;
+      padding: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #ffffff;
+      max-height: 520px;
+      overflow: auto;
+      perspective: 1000px;
+    }
+
+    .semantic-flip-inner {
+      min-height: 520px;
+      transition: transform .55s ease;
+      transform-style: preserve-3d;
+    }
+
+    .semantic-term-editor.show-result .semantic-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .semantic-face {
+      min-height: 520px;
+      padding: 14px;
+      background: #ffffff;
+      backface-visibility: hidden;
+    }
+
+    .semantic-face.result {
+      position: absolute;
+      inset: 0;
+      overflow: auto;
+      transform: rotateY(180deg);
+      background: linear-gradient(180deg, #edf6ff, #ffffff);
     }
 
     .semantic-term-editor h3 {
@@ -1088,6 +1259,125 @@
       line-height: 1.4;
     }
 
+    .term-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .term-actions.add-actions {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .term-actions.flip-actions {
+      justify-content: flex-end;
+      margin-top: -2px;
+    }
+
+    .term-actions.flip-actions .mini-btn {
+      color: var(--navy);
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .lean-result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .lean-result-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .lean-result-card b,
+    .lean-result-card span {
+      display: block;
+    }
+
+    .lean-result-card b { color: var(--navy); }
+
+    .lean-result-card span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .lean-dictionary {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .lean-dictionary details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .lean-dictionary summary {
+      padding: 11px 12px;
+      color: var(--navy);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .lean-term-list {
+      display: grid;
+      gap: 8px;
+      max-height: 320px;
+      overflow: auto;
+      max-width: 100%;
+      padding: 0 12px 12px;
+    }
+
+    .lean-term-item {
+      display: grid;
+      grid-template-columns: minmax(120px, .8fr) minmax(190px, 1fr) minmax(160px, .9fr);
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid #d9e2ef;
+      border-radius: 8px;
+      background: #fbfdff;
+      font-size: 12px;
+      line-height: 1.35;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .lean-term-item > * {
+      min-width: 0;
+    }
+
+    .lean-term-item b,
+    .lean-term-item span {
+      display: block;
+    }
+
+    .lean-term-item b { color: var(--navy); }
+    .lean-term-item span { color: var(--muted); }
+
+    .term-header {
+      display: grid;
+      grid-template-columns: 70px minmax(120px, .8fr) minmax(170px, 1fr) minmax(160px, 1fr) minmax(160px, 1fr) minmax(120px, .8fr) minmax(120px, .8fr) 92px 42px;
+      gap: 8px;
+      min-width: 1280px;
+      padding: 0 10px 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
     .term-grid {
       display: grid;
       gap: 10px;
@@ -1095,13 +1385,25 @@
 
     .term-row {
       display: grid;
-      grid-template-columns: 94px minmax(110px, .7fr) minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr);
+      grid-template-columns: 70px minmax(120px, .8fr) minmax(170px, 1fr) minmax(160px, 1fr) minmax(160px, 1fr) minmax(120px, .8fr) minmax(120px, .8fr) 92px 42px;
       gap: 8px;
+      min-width: 1280px;
       align-items: start;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfdff;
+    }
+
+    .term-row.new-term {
+      animation: termFlash 2.4s ease;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(245,181,68,.22);
+    }
+
+    @keyframes termFlash {
+      0%, 55% { background: #fff5d8; }
+      100% { background: #fbfdff; }
     }
 
     .term-row .term-type {
@@ -1117,7 +1419,8 @@
       text-transform: uppercase;
     }
 
-    .term-row input {
+    .term-row input,
+    .term-row select {
       width: 100%;
       min-height: 34px;
       padding: 8px 9px;
@@ -1125,11 +1428,34 @@
       border-radius: 7px;
       font: inherit;
       font-size: 12px;
+      background: #ffffff;
     }
 
-    .term-row input:focus {
+    .term-row input:focus,
+    .term-row select:focus {
       outline: 2px solid rgba(31,106,229,.22);
       border-color: var(--blue);
+    }
+
+    .term-delete {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--red);
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .semantic-side-section {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .semantic-side-section + .semantic-side-section {
+      margin-top: 14px;
     }
 
     .semantic-proof-grid {
@@ -1266,11 +1592,23 @@
       background: var(--blue);
       font-size: 12px;
       font-weight: 800;
+      max-width: 100%;
+      overflow-wrap: anywhere;
     }
 
     .model-chip.dim { background: #0878be; color: #ffffff; }
     .model-chip.measure { background: #9f6a00; color: #ffffff; }
     .model-chip.role { background: var(--violet); color: #ffffff; }
+    .model-chip.selected-chip { background: var(--gold); color: var(--navy); }
+
+    #modelCanvas .model-layer:nth-child(1) .model-chip:not(.selected-chip),
+    #modelCanvas .model-layer:nth-child(2) .model-chip:not(.selected-chip),
+    #modelCanvas .model-layer:nth-child(1) b,
+    #modelCanvas .model-layer:nth-child(2) b,
+    .semantic-node.dark-node b,
+    .semantic-node.dark-node span {
+      color: #ffffff;
+    }
 
     .hierarchy {
       display: grid;
@@ -1312,10 +1650,22 @@
     }
 
     .model-web {
-      min-height: 250px;
+      min-height: 330px;
       border: 1px dashed #b9c9e5;
       border-radius: 8px;
       background: #ffffff;
+      overflow: hidden;
+    }
+
+    .relationship-note {
+      margin: 8px 0 10px;
+      padding: 10px;
+      border: 1px solid #d9e2ef;
+      border-radius: 8px;
+      color: var(--muted);
+      background: #ffffff;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .relationship-tabs {
@@ -1327,13 +1677,13 @@
 
     .relationship-svg {
       width: 100%;
-      min-height: 250px;
+      min-height: 330px;
       display: block;
     }
 
     .relationship-svg text {
       fill: #ffffff;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       text-anchor: middle;
       dominant-baseline: middle;
@@ -1353,6 +1703,7 @@
 
     .table-definition-card {
       width: 100%;
+      min-height: 150px;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -1360,6 +1711,28 @@
       cursor: pointer;
       text-align: left;
       font: inherit;
+      perspective: 800px;
+      overflow: hidden;
+    }
+
+    .definition-inner {
+      display: grid;
+      min-height: 126px;
+      transition: transform .45s ease;
+      transform-style: preserve-3d;
+    }
+
+    .table-definition-card:hover .definition-inner {
+      transform: rotateY(180deg);
+    }
+
+    .definition-face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+    }
+
+    .definition-face.back {
+      transform: rotateY(180deg);
     }
 
     .table-definition-card b,
@@ -1380,6 +1753,11 @@
     }
 
     .table-definition-card.active {
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
+    .table-definition-card:hover {
       border-color: var(--gold);
       background: #fff9eb;
     }
@@ -1708,6 +2086,11 @@
       padding: 20px;
     }
 
+    .catalog-intro {
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
     .side-list {
       display: grid;
       gap: 10px;
@@ -1851,6 +2234,126 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
+    }
+
+    .recommendation-strip,
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .recommendation-tile,
+    .path-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .recommendation-tile b,
+    .recommendation-tile span,
+    .path-card b,
+    .path-card span {
+      display: block;
+    }
+
+    .recommendation-tile b,
+    .path-card b {
+      color: var(--navy);
+      font-size: 14px;
+    }
+
+    .recommendation-tile span,
+    .path-card span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .catalog-grid .flip-card.recommended {
+      outline: 5px solid var(--gold);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 8px rgba(245,181,68,.18), 0 18px 34px rgba(7,29,84,.18);
+    }
+
+    .catalog-grid .flip-card.recommended::before {
+      content: "Recommended";
+      position: absolute;
+      z-index: 3;
+      top: -12px;
+      left: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--navy);
+      background: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .recommendation-locked {
+      grid-column: 1 / -1;
+      padding: 12px 14px;
+      border: 2px dashed var(--gold);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff9eb;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
+    .path-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, .6fr);
+      gap: 16px;
+      padding: 20px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--navy), #0b3a7d);
+      border-radius: 8px;
+    }
+
+    .path-hero b {
+      display: block;
+      color: var(--gold);
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1;
+    }
+
+    .path-hero span {
+      display: block;
+      margin-top: 8px;
+      color: #e6efff;
+      line-height: 1.45;
+    }
+
+    .path-panel.path-locked .path-hero {
+      color: #3f4d63;
+      background: linear-gradient(135deg, #d7deeb, #edf2f8);
+      border: 1px solid #c6d2e2;
+    }
+
+    .path-panel.path-locked .path-hero b,
+    .path-panel.path-locked .path-hero span {
+      color: #66748a;
+    }
+
+    .path-panel.path-locked .case-metric {
+      background: rgba(255,255,255,.62);
+      border-color: #d4deec;
+    }
+
+    .path-card.locked {
+      grid-column: 1 / -1;
+      border: 2px dashed #b8c3d3;
+      color: #66748a;
+      background: #eef3f8;
+    }
+
+    .path-card.locked b,
+    .path-card.locked span {
+      color: #66748a;
     }
 
     .flip-card {
@@ -2146,6 +2649,8 @@
       }
       .benchmark-row,
       .scenario,
+      .business-case-hero,
+      .case-metrics,
       .input-grid,
       .evidence-grid,
       .semantic-stage,
@@ -2159,6 +2664,10 @@
       .automation-value,
       .ops-drivers,
       .workflow-steps,
+      .recommendation-strip,
+      .path-grid,
+      .path-hero,
+      .term-header,
       .term-row,
       .table-definition-list,
       .package-defs,
@@ -2252,12 +2761,23 @@
                 <div class="benchmark"><b>10x</b><span>analytics delivery scale through BI engineering automation <span class="info" tabindex="0" data-tip="10x is represented through automation recipes and readiness, not as a blanket multiplier on dollars. It measures repeatability: templates, checks, deployment, documentation, and proof.">?</span></span><small>enterprise benchmark</small></div>
                 <div class="benchmark"><b>RLS+</b><span>governance package for sensitive role and row-level access <span class="info" tabindex="0" data-tip="RLS becomes a package when row-level access needs policy design, role testing, and audit evidence for department-specific or sensitive data.">?</span></span><small>optional package</small></div>
               </div>
+              <div class="business-case-hero">
+                <div>
+                  <b id="businessCaseHeadline">$0 annual opportunity</b>
+                  <span id="businessCaseDetail">Based on your inputs, this shows the estimated value of capacity returned, performance lift, model cleanup, and governance risk reduction.</span>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric"><b id="caseHours">0</b><span>hours/month recoverable</span></div>
+                  <div class="case-formula" id="caseFormula">Recoverable hours = monthly baseline report hours x eligible automation share x 75% proven reduction benchmark.</div>
+                </div>
+              </div>
               <div class="scenario">
                 <div>
                   <div class="mode-switch" aria-label="Reporting input mode">
                     <button type="button" class="active" id="quickModeBtn">Quick estimate</button>
                     <button type="button" id="detailedModeBtn">Detailed report inventory</button>
                   </div>
+                  <div class="input-section-label">Estimate inputs <span>These drive hours, ROI, and operational pressure.</span></div>
                   <div class="input-grid quick-inputs" id="quickInputs">
                     <div class="field">
                       <label for="reportCount">Recurring reports maintained <span class="info" tabindex="0" data-tip="A recurring report is any dashboard, spreadsheet, paginated report, or scheduled output that someone maintains on a repeated cadence for business consumption.">?</span></label>
@@ -2317,6 +2837,7 @@
                     <b>Not sure what to enter?</b>
                     <span>Use conservative numbers first. If your team has more reports, more refresh cycles, longer waits, larger Power BI models, or more repeatable work than the starter setup, that gap is the reason to run an Analytics Foundation Health Assessment.</span>
                   </div>
+                  <div class="input-section-label">Proof inputs <span>Use report inventories, usage logs, model metadata, and governance records to validate the estimate.</span></div>
                 </div>
                 <div class="result-stack">
                   <div class="result-card roi-card"><b id="annualRoiValue">$0</b><span>estimated 12 month ROI opportunity from reporting capacity, model cleanup, logic cleanup, performance, and premium-capacity risk avoidance</span></div>
@@ -2326,7 +2847,7 @@
                   <div class="result-card"><b id="modelOpportunity">18%</b><span>estimated Power BI model and logic cleanup opportunity</span></div>
                   <div class="result-card"><b id="modelValue">$0</b><span>monthly value from model-size, logic, and performance cleanup</span></div>
                   <div class="result-card"><b id="storyLine">25 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on your volume, not a made-up savings slider.</span></div>
-                  <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span></div>
+                  <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span><button class="mini-btn" type="button" id="continueReadinessBtn" style="margin-top:10px">Continue to readiness score</button></div>
                 </div>
               </div>
               <div class="evidence">
@@ -2341,7 +2862,7 @@
               </div>
             </article>
 
-            <aside class="panel score-panel">
+            <aside class="panel score-panel score-locked" id="scorePanel">
               <div class="panel-header" style="padding:0 0 14px;border-bottom:0">
                 <div>
                   <h2>Readiness Score</h2>
@@ -2352,9 +2873,14 @@
                 <div><b id="scoreValue">0</b><span>out of 100</span></div>
               </div>
               <span class="score-status" id="scoreStatus">Needs attention</span>
+              <div class="score-lock-note" id="scoreLockNote">Take the readiness test to unlock the final score and recommendations.</div>
               <div class="score-breakdown">
                 <div class="break-row"><b>Self-assess</b><div class="break-track"><i id="selfAssessBar"></i></div><span id="selfAssessText">0/80</span></div>
                 <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
+              </div>
+              <div class="helper-card">
+                <b>Scoring methodology</b>
+                <span>80 points come from the evidence-based readiness sections. 20 points come from operational pressure: manual reporting volume, query wait, Power BI model size, duplicate measures, and known logic issues.</span>
               </div>
               <div class="ops-drivers">
                 <button class="ops-driver active" type="button" data-ops-driver="manual"><b id="manualPressureText">0%</b><span>Manual reporting pressure</span></button>
@@ -2384,13 +2910,14 @@
               </div>
               <div class="readiness-gate" id="readinessGate">
                 <b>Start with the readiness test</b>
-                <span>Answer the 20 evidence checks for each section first. Once a section is submitted, its slider unlocks for review and fine-tuning.</span>
+                <span>Answer one maturity question at a time. If the current level describes your environment, advance to the next level; the highest passed level sets the score.</span>
                 <span id="readinessProgress">0 of 6 sections complete</span>
                 <button class="mini-btn" type="button" id="startReadinessTestBtn">Start test</button>
+                <button class="mini-btn" type="button" id="returnOutcomesBtn" style="display:none">Return to outcomes</button>
               </div>
-              <div class="criteria-assessor">
+              <div class="criteria-assessor locked-test" id="readinessAssessor">
                 <h3>Evidence-Based Autoset</h3>
-                <p class="section-subtitle">Take each section in order. Every section has 20 evidence checks, and the slider score becomes the number checked out of 20.</p>
+                <p class="section-subtitle">Take each section in order. Start at 0-20, then advance only when that standard is true for your environment.</p>
                 <div id="criterionChecklist"></div>
                 <div class="evidence-quality" id="evidenceQuality">Start the test to begin with Metric standards.</div>
                 <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit section score</button>
@@ -2423,7 +2950,7 @@
                   <h2>Semantic Model Trust Layer</h2>
                   <p>This turns abstract semantic modeling into a concrete product: smaller Power BI models, cleaner DAX logic, certified measures, intentional relationships, and governed access.</p>
                 </div>
-                <button class="mini-btn" type="button" id="exportSemanticBtn">Export semantic CSV</button>
+                <button class="mini-btn" type="button" id="exportSemanticBtn">Export semantic workbook</button>
               </div>
               <div class="semantic-controls">
                 <div class="field"><label for="sourceSystems">Source systems <span class="info" tabindex="0" data-tip="Distinct systems feeding analytics: ERP, CRM, HRIS, finance platform, data warehouse marts, files, or operational apps.">?</span></label><input id="sourceSystems" type="number" min="1" max="30" value="3"></div>
@@ -2436,9 +2963,29 @@
                 <div class="field"><label for="refreshJobs">Automated refresh jobs <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
               </div>
               <div class="semantic-term-editor">
-                <h3>Editable Semantic Product Terms</h3>
-                <p>Name the source systems, facts, dimensions, and measures in business language. These terms, definitions, grain examples, and usage examples export to CSV.</p>
-                <div class="term-grid" id="semanticTermGrid"></div>
+                <div class="semantic-flip-inner">
+                  <div class="semantic-face">
+                    <h3>Editable Semantic Product Terms</h3>
+                    <p>Name the source systems, facts, dimensions, and measures in business language. These terms, definitions, grain examples, and usage examples export to the workbook.</p>
+                    <div class="term-actions add-actions">
+                      <button class="mini-btn" type="button" data-add-term="source">Add source</button>
+                      <button class="mini-btn" type="button" data-add-term="fact">Add fact</button>
+                      <button class="mini-btn" type="button" data-add-term="dimension">Add dimension</button>
+                      <button class="mini-btn" type="button" data-add-term="measure">Add metric</button>
+                    </div>
+                    <div class="term-actions flip-actions">
+                      <button class="mini-btn" type="button" id="semanticFlipBtn">View lean product result</button>
+                    </div>
+                    <div class="term-header"><span>Type</span><span>Name</span><span>Definition</span><span>Grain</span><span>Business example</span><span>Business owner</span><span>Technical owner</span><span>Status</span><span></span></div>
+                    <div class="term-grid" id="semanticTermGrid"></div>
+                  </div>
+                  <div class="semantic-face result">
+                    <h3>Lean Semantic Product Result</h3>
+                    <p>This is the after-state generated from the editable terms: certified measures, governed owners, cleaner model structure, and reusable reporting definitions.</p>
+                    <button class="mini-btn" type="button" id="semanticEditBtn">Back to editable terms</button>
+                    <div class="lean-result-grid" id="leanResultGrid"></div>
+                  </div>
+                </div>
               </div>
               <div class="semantic-summary-nodes">
                 <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
@@ -2450,7 +2997,7 @@
                   <div class="semantic-node dark-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
                 </div>
                 <div class="semantic-node primary">
-                  <b>Lean semantic product</b>
+                  <b>Lean semantic product health</b>
                   <span id="semanticSummary">35 measures, 8 certified, and 12 suspected duplicates create a practical starting point for cleanup.</span>
                   <div class="health-grid">
                     <div class="health"><b id="modelFootprint">24%</b><span>estimated footprint reduction opportunity</span></div>
@@ -2472,24 +3019,26 @@
               </div>
             </article>
             <aside class="panel side-card">
-              <h2 class="section-title">Model Health Checklist</h2>
-              <p class="section-subtitle">Use this as an inspection list during discovery.</p>
-              <table class="semantic-table">
-                <thead><tr><th>Signal</th><th>Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Metric owner assigned</td><td><span class="status good">Required</span></td></tr>
-                  <tr><td>Duplicate measures identified</td><td><span class="status warn">Assess</span></td></tr>
-                  <tr><td>Slow queries profiled</td><td><span class="status warn">Assess</span></td></tr>
-                  <tr><td>Model size budget defined</td><td><span class="status good">Required</span></td></tr>
-                  <tr><td>RLS need confirmed</td><td><span class="status bad">Package</span></td></tr>
-                </tbody>
-              </table>
-              <div class="hierarchy">
+              <div class="semantic-side-section">
+                <h2 class="section-title">Model Health Checklist</h2>
+                <p class="section-subtitle">Use this as an inspection list during discovery.</p>
+                <table class="semantic-table">
+                  <thead><tr><th>Signal</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Metric owner assigned</td><td><span class="status good">Required</span></td></tr>
+                    <tr><td>Duplicate measures identified</td><td><span class="status warn">Assess</span></td></tr>
+                    <tr><td>Slow queries profiled</td><td><span class="status warn">Assess</span></td></tr>
+                    <tr><td>Model size budget defined</td><td><span class="status good">Required</span></td></tr>
+                    <tr><td>RLS need confirmed</td><td><span class="status bad">Package</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="hierarchy semantic-side-section">
                 <h2 class="section-title">Example Model Relationships</h2>
-                <p class="section-subtitle">Flip between two finished model examples. Facts sit in the center, while dimensions and roles filter the model around the outside.</p>
+                <p class="section-subtitle">Flip between two finished model examples. Dimensions filter facts. Facts store transactional activity at the defined grain.</p>
                 <div class="relationship-tabs">
-                  <button class="mini-btn active" type="button" data-relationship-example="revenue">Example 1</button>
-                  <button class="mini-btn" type="button" data-relationship-example="cost">Example 2</button>
+                  <button class="mini-btn active" type="button" data-relationship-example="revenue">Clinic Revenue Model</button>
+                  <button class="mini-btn" type="button" data-relationship-example="cost">Revenue Cycle Model</button>
                 </div>
                 <div class="relationship-map" id="relationshipMap"></div>
               </div>
@@ -2586,11 +3135,34 @@
         </section>
 
         <section class="view" data-view="catalog">
-          <div class="panel side-card" style="margin-bottom:18px">
+          <div class="panel catalog-intro">
             <h2 class="section-title">How To Use This Catalog</h2>
             <p class="section-subtitle">Use this page to connect the assessment results to a delivery module. Each card explains the business problem, the proof artifact you receive, and where it fits in a transformation roadmap.</p>
+            <div class="recommendation-strip" id="catalogRecommendations"></div>
           </div>
           <div class="catalog-grid" id="catalogGrid"></div>
+        </section>
+
+        <section class="view" data-view="path">
+          <article class="panel path-panel path-locked" id="pathPanel">
+            <div class="path-hero">
+              <div>
+                <b id="pathRoi">$0</b>
+                <span id="pathSummary">Estimated 12 month opportunity and recommended first steps will update from your inputs.</span>
+              </div>
+              <div class="case-metrics">
+                <div class="case-metric"><b id="pathScore">0/100</b><span>readiness score</span></div>
+                <div class="case-metric"><b id="pathHours">0</b><span>hours/month recoverable</span></div>
+              </div>
+            </div>
+            <div class="path-grid" id="recommendedPathGrid">
+              <div class="path-card"><b>1. Outcome brief anchor</b><span>Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case.</span></div>
+              <div class="path-card"><b>2. Analytics Foundation Health Assessment</b><span>Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and readiness scoring.</span></div>
+              <div class="path-card"><b>3. Capability modules</b><span>Recommended modules unlock after the readiness test and map directly to manual reporting, query performance, semantic model, governance, automation, and RLS pressure.</span></div>
+              <div class="path-card"><b>Semantic product workbook</b><span>Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind.</span></div>
+              <div class="path-card"><b>Final sales asset package</b><span>Pair the Parallax outcome brief with the recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook.</span></div>
+            </div>
+          </article>
         </section>
       </main>
     </section>
@@ -2603,7 +3175,8 @@
       { id: "semantic", label: "Semantic Model", icon: "cube", title: "Trusted Semantic Model", subtitle: "A deeper inspection layer for model trust, footprint, certification, performance, and governed access." },
       { id: "automation", label: "Automation", icon: "flow", title: "Automation Recipes", subtitle: "Plain-language automation examples that show what changes in the business process and what proof is produced." },
       { id: "governance", label: "Governance + RLS", icon: "shield", title: "Governance and RLS Packaging", subtitle: "Clear package definitions plus the coverage matrix for base, scale, audit, and RLS add-on." },
-      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Flip cards with examples, proof artifacts, and the value behind each capability." }
+      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Flip cards with examples, proof artifacts, and the value behind each capability." },
+      { id: "path", label: "Recommended Path", icon: "path", title: "Recommended Transformation Path", subtitle: "A prioritized roadmap from your estimate, readiness evidence, semantic model signals, and governance needs." }
     ];
 
     const icons = {
@@ -2612,7 +3185,8 @@
       cube: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/></svg>',
       flow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v6"/><path d="M18 15v6"/><rect x="3" y="9" width="6" height="6" rx="1"/><rect x="15" y="9" width="6" height="6" rx="1"/><path d="M9 12h6"/></svg>',
       shield: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>',
-      grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+      grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      path: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M8.5 15.5 15.5 8.5"/><path d="M6 3v6"/><path d="M18 15v6"/></svg>'
     };
 
     const criteria = [
@@ -2631,6 +3205,8 @@
     let currentFinancials = { savedValue: 0, modelValue: 0, reportingValue: 0, savedHours: 0, queryHoursSaved: 0 };
     const completedReadiness = new Set();
     let readinessStarted = false;
+    const readinessBandSelections = {};
+    let lastAddedTerm = null;
     const detailedReports = [
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
@@ -2726,13 +3302,13 @@
     ];
 
     const catalog = [
-      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "You can see which recurring hours are actually removable instead of arguing from averages. The module turns hidden reporting labor into a monthly capacity number and a delivery backlog.", proof: ["Report count by cadence", "Eligible hours baseline", "Saved-hours model"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
-      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "Every slow report creates repeated wait time and pushes users toward extracts. This module shows where 25x tuning applies and where the bottleneck is report render, semantic model, or warehouse query time.", proof: ["Before/after seconds", "Slow query inventory", "Tuning evidence"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
-      { title: "Power BI Model Slimdown", art: "model", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "Large models become expensive before they become obviously broken. This module gives you a model-size risk signal tied to refresh, publishing, development speed, and premium-capacity pressure.", proof: ["Model size delta", "Retired objects", "Capacity risk"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
-      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "Transformation breaks down when the meeting becomes a definitions debate. This module shows which KPIs are certified, who owns them, and where logic still conflicts.", proof: ["Definition owner", "Lineage path", "Conflict list"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
-      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "Scale does not come from asking analysts to move faster by hand. This module identifies repeatable builds that can be templated, validated, documented, and released with evidence.", proof: ["Intake flow", "Validation checks", "Release evidence"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
-      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "The semantic model is the product boundary between raw data and trusted reporting. This module shows the table relationships, certified measures, duplicate logic, and access rules that make reporting reusable.", proof: ["Relationship map", "Measure coverage", "Duplicate audit"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
-      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "Access control is only useful when you can prove it works. This module separates base governance from RLS package work when HR, Finance, Legal, account, or territory rows need role-specific visibility.", proof: ["Role test matrix", "Access evidence", "Policy owner"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
+      { title: "Manual Reporting Reduction", art: "reports", summary: "Recurring report work becomes governed product flow.", example: "Example: 120 monthly reports are rationalized, automated where eligible, and moved into owner-backed reporting products.", why: "You can see which recurring hours are actually removable instead of arguing from averages. The module turns hidden reporting labor into a monthly capacity number and a delivery backlog.", proof: ["420 hrs/month baseline", "315 hrs/month removed at 75%", "$26.8k/month capacity returned"], image: "linear-gradient(135deg,#071d54,#1f6ae5)" },
+      { title: "Query Performance", art: "performance", summary: "Slow dashboards become measurable performance targets.", example: "Example: profile a sales dashboard, retire expensive measures, add aggregates, and prove before/after runtime.", why: "Every slow report creates repeated wait time and pushes users toward extracts. This module shows where 25x tuning applies and where the bottleneck is report render, semantic model, or warehouse query time.", proof: ["42 sec to 1.7 sec runtime", "18k monthly loads improved", "$9.4k/month wait cost removed"], image: "linear-gradient(135deg,#1f6ae5,#16b5ff)" },
+      { title: "Power BI Model Slimdown", art: "model", summary: "Large PBIX and dataset models become smaller, cleaner, and easier to refresh.", example: "Example: remove unused tables, retire duplicate DAX, reduce high-cardinality columns, and prove model-size reduction.", why: "Large models become expensive before they become obviously broken. This module gives you a model-size risk signal tied to refresh, publishing, development speed, and premium-capacity pressure.", proof: ["6.2GB to 1.4GB model", "84 duplicate measures retired", "$18k/month capacity risk avoided"], image: "linear-gradient(135deg,#174ea6,#16b5ff)" },
+      { title: "Unified Standards", art: "standards", summary: "Teams stop debating definitions inside meetings.", example: "Example: revenue, margin, and utilization are certified with owners, lineage, and approval status.", why: "Transformation breaks down when the meeting becomes a definitions debate. This module shows which KPIs are certified, who owns them, and where logic still conflicts.", proof: ["38 KPIs certified", "11 conflicting formulas retired", "6 executive scorecards aligned"], image: "linear-gradient(135deg,#071d54,#6457c2)" },
+      { title: "BI Engineering Automation", art: "automation", summary: "Repeatable analytics work becomes templates and checks.", example: "Example: analyst table requests generate documentation, lineage, validation, and deployment tasks.", why: "Scale does not come from asking analysts to move faster by hand. This module identifies repeatable builds that can be templated, validated, documented, and released with evidence.", proof: ["14 table patterns templated", "32 validations automated", "10x faster repeat table delivery"], image: "linear-gradient(135deg,#0b2b67,#20845a)" },
+      { title: "Trusted Semantic Models", art: "semantic", summary: "The semantic layer is lean, clean, and sized for reporting.", example: "Example: duplicate measures are retired and model relationships are optimized around certified use cases.", why: "The semantic model is the product boundary between raw data and trusted reporting. This module shows the table relationships, certified measures, duplicate logic, and access rules that make reporting reusable.", proof: ["4 fact tables certified", "27 measures owned", "62% duplicate logic retired"], image: "linear-gradient(135deg,#1f6ae5,#071d54)" },
+      { title: "Governance + RLS", art: "governance", summary: "Trust is packaged into ownership, evidence, and controlled access.", example: "Example: sensitive workforce metrics get RLS policy design, testing, and audit evidence.", why: "Access control is only useful when you can prove it works. This module separates base governance from RLS package work when HR, Finance, Legal, account, or territory rows need role-specific visibility.", proof: ["12 role tests passed", "4 sensitive domains governed", "100% access evidence captured"], image: "linear-gradient(135deg,#071d54,#f5b544)" }
     ];
 
     const catalogDetails = {
@@ -2773,6 +3349,11 @@
       document.getElementById("pageTitle").textContent = tab.title;
       document.getElementById("pageSubtitle").textContent = tab.subtitle;
       if (id === "readiness") showAdvice(selectedAdviceId);
+      if (id === "path") updateRecommendedPath();
+      if (id === "semantic") {
+        updateSemanticModel();
+        updateLeanResultGrid();
+      }
     }
 
     function numeric(id) {
@@ -2781,6 +3362,34 @@
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+
+    function idSafe(value) {
+      return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    }
+
+    function shortLabel(value, max = 18) {
+      const text = String(value || "");
+      return text.length > max ? `${text.slice(0, max - 1)}…` : text;
+    }
+
+    function svgLabel(text, x, y, width = 22) {
+      const words = String(text || "").split(/\s+/).filter(Boolean);
+      const lines = [];
+      let current = "";
+      words.forEach((word) => {
+        const next = current ? `${current} ${word}` : word;
+        if (next.length > width && current) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = next;
+        }
+      });
+      if (current) lines.push(current);
+      const shown = lines.slice(0, 3);
+      const start = y - ((shown.length - 1) * 7);
+      return `<text x="${x}" y="${start}">${shown.map((line, index) => `<tspan x="${x}" dy="${index ? 14 : 0}">${escapeHtml(line)}</tspan>`).join("")}</text>`;
     }
 
     function setQuickPreset(value) {
@@ -2913,6 +3522,10 @@
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
       document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
       document.getElementById("annualRoiValue").textContent = moneyFormat.format(savedValue * 12);
+      document.getElementById("businessCaseHeadline").textContent = `${moneyFormat.format(savedValue * 12)} annual opportunity`;
+      document.getElementById("businessCaseDetail").textContent = `Based on your inputs, ${numberFormat.format(savedHours)} hours/month are recoverable from reporting work, with additional value from performance, Power BI model cleanup, bad logic reduction, and capacity risk avoidance.`;
+      document.getElementById("caseHours").textContent = numberFormat.format(savedHours);
+      document.getElementById("caseFormula").textContent = `Recoverable hours = ${numberFormat.format(Math.round(baselineHours))} monthly baseline hours x ${eligibleRate}% eligible effort x 75% proven reduction = ${numberFormat.format(savedHours)} hours/month.`;
       document.getElementById("queryHoursSaved").textContent = numberFormat.format(queryHoursSaved);
       document.getElementById("modelOpportunity").textContent = `${modelOpportunity}%`;
       document.getElementById("modelValue").textContent = moneyFormat.format(modelValue);
@@ -2922,6 +3535,9 @@
       document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? "Your operating footprint is large enough that manual reporting, query wait, model bloat, bad logic, and governance risk are likely hiding material cost." : assessmentScore > 40 ? "You have enough recurring analytics work to justify a structured review of architecture, automation, and semantic model health." : "Inputs are still near the conservative starter setup. Increase only what is true for your environment to reveal the gap.";
       updateScore();
       updateSemanticModel();
+      buildCatalog();
+      updateRecommendedPath();
+      updateLeanResultGrid();
     }
 
     function updateScore() {
@@ -2996,8 +3612,13 @@
       return readinessStarted && (completedReadiness.has(id) || index === getCurrentReadinessIndex());
     }
 
+    function readinessComplete() {
+      return completedReadiness.size === criteria.length;
+    }
+
     function updateReadinessLocks() {
       const currentIndex = getCurrentReadinessIndex();
+      const complete = readinessComplete();
       document.querySelectorAll("[data-readiness-field]").forEach((field) => {
         const id = field.dataset.readinessField;
         const unlocked = completedReadiness.has(id);
@@ -3006,9 +3627,15 @@
         if (input) input.disabled = !unlocked;
       });
       document.getElementById("readinessInputGrid").classList.toggle("locked", completedReadiness.size < criteria.length);
-      document.getElementById("readinessProgress").textContent = `${completedReadiness.size} of ${criteria.length} sections complete`;
+      const scoreText = document.getElementById("scoreValue")?.textContent || "0";
+      document.getElementById("readinessProgress").textContent = complete ? `Complete: final readiness score ${scoreText}/100` : `${completedReadiness.size} of ${criteria.length} sections complete`;
+      document.getElementById("startReadinessTestBtn").style.display = complete ? "none" : "";
+      document.getElementById("returnOutcomesBtn").style.display = complete ? "" : "none";
       document.getElementById("startReadinessTestBtn").textContent = readinessStarted ? "Resume active section" : "Start test";
-      document.getElementById("readinessGate").querySelector("b").textContent = readinessStarted ? "Readiness test active" : "Start with the readiness test";
+      document.getElementById("readinessGate").querySelector("b").textContent = complete ? "Readiness score complete" : readinessStarted ? "Readiness test active" : "Start with the readiness test";
+      document.getElementById("readinessAssessor")?.classList.toggle("locked-test", !readinessStarted);
+      document.getElementById("scorePanel")?.classList.toggle("score-locked", !complete);
+      document.getElementById("scoreLockNote").style.display = complete ? "none" : "";
       buildReadinessSections();
       if (readinessStarted && !completedReadiness.has(selectedAdviceId) && criteria.findIndex((item) => item.id === selectedAdviceId) !== currentIndex) {
         selectedAdviceId = criteria[currentIndex].id;
@@ -3076,16 +3703,20 @@
     function renderCriterionChecklist(criterion, locked = false) {
       const wrap = document.getElementById("criterionChecklist");
       if (!wrap) return;
-      const questions = readinessQuestions[criterion.id] || [];
-      wrap.innerHTML = `<div class="check-band"><strong>${locked ? "Start the test to unlock Metric standards" : `${criterion.label} readiness test: 0 of 20 checked`}</strong>${questions.map((item, itemIndex) => `
-        <label><input type="checkbox" data-readiness-question="${itemIndex}" ${locked ? "disabled" : ""}> ${item}</label>
-      `).join("")}</div>`;
-      wrap.querySelectorAll(".check-band input").forEach((input) => {
+      const selected = readinessBandSelections[criterion.id] ?? -1;
+      wrap.innerHTML = `<div class="check-band ${selected >= 0 ? "active-band" : ""}"><strong>${locked ? "Start the test to unlock Metric standards" : `${criterion.label}: pass each maturity level that accurately describes you`}</strong>${criterion.bands.map((band, index) => {
+        const unlocked = !locked && index <= selected + 1;
+        const passed = selected >= index;
+        const example = band[2]?.join(" | ") || band[1];
+        return `<label class="${passed ? "active-band" : ""}">
+          <input type="radio" name="readiness-band-${criterion.id}" data-readiness-band="${index}" ${passed ? "checked" : ""} ${unlocked ? "" : "disabled"}>
+          <span><b>${band[0]}</b> ${band[1]} <i class="band-hint" tabindex="0" data-tip="${escapeHtml(example)}">?</i> ${unlocked ? "" : "Complete the prior level first."}</span>
+        </label>`;
+      }).join("")}</div>`;
+      wrap.querySelectorAll("[data-readiness-band]").forEach((input) => {
         input.addEventListener("change", () => {
-          const band = input.closest(".check-band");
-          const checked = band.querySelectorAll("input:checked").length;
-          band.querySelector("strong").textContent = `${criterion.label} readiness test: ${checked} of 20 checked`;
-          band.classList.toggle("active-band", checked > 0);
+          readinessBandSelections[criterion.id] = Number(input.dataset.readinessBand);
+          renderCriterionChecklist(criterion);
         });
       });
     }
@@ -3093,17 +3724,25 @@
     function applyChecklistScore() {
       const criterion = criteria.find((item) => item.id === selectedAdviceId);
       if (!criterion || !readinessStarted || !canAccessReadiness(criterion.id)) return;
-      const checkedTotal = document.querySelectorAll("[data-readiness-question]:checked").length;
-      const score = Math.round(checkedTotal / 20 * 100);
+      const selectedBand = readinessBandSelections[criterion.id] ?? -1;
+      const score = selectedBand < 0 ? 0 : [20, 40, 60, 80, 100][selectedBand];
       document.getElementById(criterion.id).value = score;
       const quality = score >= 80 ? "Strong evidence quality: this section has broad operating proof." : score >= 60 ? "Moderate evidence quality: enough proof for a scaling score, with some gaps remaining." : score >= 40 ? "Foundation evidence quality: useful proof exists, but the section is not yet reliable at scale." : "Early evidence quality: too many proof points are missing for a confident operating score.";
-      document.getElementById("evidenceQuality").textContent = `${criterion.label} score set to ${score}/100 from ${checkedTotal}/20 checked items. ${quality}`;
+      const bandLabel = selectedBand < 0 ? "0-20 not yet passed" : criterion.bands[selectedBand][0];
+      document.getElementById("evidenceQuality").textContent = `${criterion.label} score set to ${score}/100 from the ${bandLabel} maturity level. ${quality}`;
       completedReadiness.add(criterion.id);
-      updateReadinessLocks();
       updateCalculator();
+      updateReadinessLocks();
       const nextIndex = getCurrentReadinessIndex();
       const nextCriterion = completedReadiness.size === criteria.length ? criterion : criteria[nextIndex];
-      showAdvice(nextCriterion.id);
+      if (completedReadiness.size === criteria.length) {
+        const finalScore = document.getElementById("scoreValue").textContent;
+        document.getElementById("adviceTitle").textContent = `Final readiness score: ${finalScore}/100`;
+        document.getElementById("adviceBody").textContent = "Your readiness score is complete. Return to Outcomes to see the updated business case, score, and recommended path.";
+        document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Assessment complete</strong><p class="section-subtitle">All six readiness sections are scored. Use Return to outcomes to continue the workflow.</p></div>`;
+      } else {
+        showAdvice(nextCriterion.id);
+      }
     }
 
     function buildAutomationQueue() {
@@ -3136,8 +3775,9 @@
     }
 
     function buildCatalog() {
+      const recommended = readinessComplete() ? moduleRecommendations().map((item) => item.title) : [];
       document.getElementById("catalogGrid").innerHTML = catalog.map((item) => `
-        <article class="flip-card" tabindex="0">
+        <article class="flip-card ${recommended.includes(item.title) ? "recommended" : ""}" tabindex="0">
           <div class="flip-inner">
             <div class="face">
               <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
@@ -3146,15 +3786,118 @@
             <div class="face back">
               <h3>${item.title}</h3>
               <p>${item.example}</p>
-              <div class="workflow-steps">${catalogDetails[item.title].flow.map((step) => `<span>${step}</span>`).join("")}</div>
-              <div class="artifact-preview">${catalogDetails[item.title].preview.map((artifact) => `<span>${artifact}</span>`).join("")}</div>
               <p><b>Why this matters:</b> ${item.why}</p>
-              <div class="proof-grid">${item.proof.map((proof) => `<div class="proof-tile">${proof}</div>`).join("")}</div>
-              <span class="tag">Parallax delivery module</span>
+              <p><b>Numerical proof example:</b> ${item.proof.join(", ")}.</p>
             </div>
           </div>
         </article>
       `).join("");
+      renderCatalogRecommendations();
+    }
+
+    function moduleRecommendations() {
+      const recommendations = [];
+      const add = (title, reason) => {
+        if (!recommendations.some((item) => item.title === title)) recommendations.push({ title, reason });
+      };
+      if (currentFacts.baselineHours > 40 || currentFinancials.savedHours > 20) add("Manual Reporting Reduction", "Recurring reporting capacity is large enough to justify an automation backlog.");
+      if (currentFacts.queryRuns > 2500 || currentFinancials.queryHoursSaved > 8) add("Query Performance", "Repeated dashboard waits are creating measurable monthly loss.");
+      if (numeric("modelSizeMb") > 800 || numeric("logicIssueCount") > 10 || numeric("duplicateMeasureInput") > 10) add("Power BI Model Slimdown", "Model size, duplicate DAX, or known logic issues are creating cleanup value.");
+      if (numeric("semanticHealth") < 60 || numeric("certifiedMetrics") < numeric("measureCount") * 0.5) add("Trusted Semantic Models", "Certified metric coverage and semantic health need a stronger product layer.");
+      if (numeric("governanceCoverage") < 60) add("Unified Standards", "Metric ownership, definitions, and certification need standardization.");
+      if (numeric("automationCoverage") < 60) add("BI Engineering Automation", "Repeatable delivery needs templates, validation, documentation, and release proof.");
+      if (numeric("rlsRoles") > 0) add("Governance + RLS", "Sensitive access roles suggest row-level security should be scoped as a package.");
+      return recommendations.slice(0, 3);
+    }
+
+    function renderCatalogRecommendations() {
+      const wrap = document.getElementById("catalogRecommendations");
+      if (!wrap) return;
+      if (!readinessComplete()) {
+        wrap.innerHTML = `<div class="recommendation-locked">Take the readiness test to unlock recommended modules from score, reporting, model, query, governance, automation, and RLS signals.</div>`;
+        return;
+      }
+      const recs = moduleRecommendations();
+      wrap.innerHTML = recs.map((item, index) => `<div class="recommendation-tile"><b>Suggested module ${index + 1}: ${item.title}</b><span>${item.reason}</span></div>`).join("");
+    }
+
+    function updateRecommendedPath() {
+      const wrap = document.getElementById("recommendedPathGrid");
+      if (!wrap) return;
+      const score = document.getElementById("scoreValue").textContent;
+      const roi = moneyFormat.format(currentFinancials.savedValue * 12);
+      const complete = readinessComplete();
+      document.getElementById("pathPanel")?.classList.toggle("path-locked", !complete);
+      if (!complete) {
+        document.getElementById("pathRoi").textContent = "Locked";
+        document.getElementById("pathScore").textContent = "Test needed";
+        document.getElementById("pathHours").textContent = "Hidden";
+        document.getElementById("pathSummary").textContent = "Complete the readiness test to unlock the recommended path. This keeps the roadmap from looking like a generic recommendation before the evidence is captured.";
+        wrap.innerHTML = `<div class="path-card locked"><b>Take the readiness test to unlock this page</b><span>The completed score will turn this into an export-style path with 12 month ROI, hours/month recoverable, readiness score, recommended capability modules, semantic workbook output, and final sales assets.</span></div>`;
+        return;
+      }
+      const recs = readinessComplete() ? moduleRecommendations() : [];
+      const moduleByTitle = Object.fromEntries(catalogModules.map((module) => [module.title, module]));
+      const moduleCards = recs.map((item, index) => {
+        const module = moduleByTitle[item.title];
+        const proof = module?.proof?.slice(0, 2).join(" | ") || "Proof artifact defined during assessment.";
+        return [`${index + 4}. Capability module: ${item.title}`, `${item.reason} Proof target: ${proof}`];
+      });
+      document.getElementById("pathRoi").textContent = roi;
+      document.getElementById("pathScore").textContent = `${score}/100`;
+      document.getElementById("pathHours").textContent = numberFormat.format(currentFinancials.savedHours);
+      document.getElementById("pathSummary").textContent = `${roi} estimated 12 month opportunity. ${document.getElementById("caseFormula").textContent} Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`;
+      wrap.innerHTML = [
+        ["1. 12 month ROI brief", `${roi} estimated 1 year ROI opportunity. Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`],
+        ["2. Outcome proof", `${document.getElementById("manualHoursSaved").textContent} recoverable hours/month, ${document.getElementById("queryHoursSaved").textContent} query wait hours removed, ${document.getElementById("modelOpportunity").textContent} model/logic cleanup opportunity, and ${score}/100 readiness score.`],
+        ["3. Analytics Foundation Health Assessment", "Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and the completed readiness evidence."],
+        ...(recs.length ? moduleCards : [["4. Capability modules", "No single module is strongly indicated yet. Use the completed evidence to choose the smallest next delivery module."]]),
+        ["Semantic product workbook", "Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind."],
+        ["Final sales asset package", "Pair the Parallax outcome brief with this recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook so the next step feels concrete."]
+      ].map((item) => `<div class="path-card"><b>${item[0]}</b><span>${item[1]}</span></div>`).join("");
+    }
+
+    function updateLeanResultGrid() {
+      const wrap = document.getElementById("leanResultGrid");
+      if (!wrap) return;
+      ensureSemanticTerms();
+      const certified = (semanticTerms.measure || []).filter((term) => term.status === "Certified");
+      const owners = Array.from(new Set(Object.values(semanticTerms).flat().map((term) => term.businessOwner).filter(Boolean)));
+      const names = (type, fallback) => (semanticTerms[type] || []).slice(0, 4).map((term) => term.name).join(", ") || fallback;
+      const sectionLabels = { source: "Sources", fact: "Facts", dimension: "Dimensions", measure: "Measures" };
+      const dictionary = Object.entries(sectionLabels).map(([type, label]) => {
+        const rows = (semanticTerms[type] || []).map((term) => `
+          <div class="lean-term-item">
+            <div><b>${escapeHtml(term.name)}</b><span>${escapeHtml(term.status || "Candidate")} | ${escapeHtml(term.businessOwner || "Owner needed")}</span></div>
+            <span>${escapeHtml(term.definition || "Definition needed.")}</span>
+            <span><b>Grain</b>${escapeHtml(term.grain || "Grain needed.")}<br><b>Example</b>${escapeHtml(term.example || "Business example needed.")}</span>
+          </div>
+        `).join("");
+        return `<details ${type === "measure" ? "open" : ""}><summary>${label}: variables, definitions, grain, examples, and owners</summary><div class="lean-term-list">${rows}</div></details>`;
+      }).join("");
+      const accessRows = numeric("rlsRoles")
+        ? Array.from({ length: numeric("rlsRoles") }, (_, index) => `
+          <div class="lean-term-item">
+            <div><b>Access role ${index + 1}</b><span>Governed access rule</span></div>
+            <span>Role-based row visibility for sensitive clinical, finance, department, region, or leadership reporting.</span>
+            <span><b>Grain</b>Policy grain by role, department, clinic, market, account, or employee row visibility.<br><b>Example</b>Clinic leaders see their clinic rows; executives see enterprise totals.</span>
+          </div>
+        `).join("")
+        : `<div class="lean-term-item"><div><b>Base access</b><span>No RLS role entered</span></div><span>Base governance may be enough if all certified reporting can share the same row visibility.</span><span><b>Grain</b>Workspace/report access.<br><b>Example</b>Certified reports inherit standard permissions.</span></div>`;
+      const summaryCards = [
+        ["Sources", `${semanticTerms.source?.length || 0} source feeds documented with system grain and ownership. Examples: ${names("source", "Epic EHR Encounter Feed, RCM Billing Platform")}.`],
+        ["Facts", `${semanticTerms.fact?.length || 0} fact tables defined around real activity grain. Examples: ${names("fact", "Fact Patient Encounter, Fact Claim Payment")}.`],
+        ["Dimensions", `${semanticTerms.dimension?.length || 0} shared dimensions used to filter facts. Examples: ${names("dimension", "Dim Service Date, Dim Clinic Location")}.`],
+        ["Measures", `${semanticTerms.measure?.length || 0} metric definitions captured, with ${certified.length} certified for reuse. Examples: ${names("measure", "Net Collection Rate, No-show Rate")}.`],
+        ["Access", `${numeric("rlsRoles")} sensitive role${numeric("rlsRoles") === 1 ? "" : "s"} entered. Access rules connect governed visibility to the same certified model instead of separate report logic.`],
+        ["Product ownership", `${owners.length} owner group${owners.length === 1 ? "" : "s"} assigned across the semantic product so definitions, changes, and certification have accountable owners.`]
+      ].map((item) => `<div class="lean-result-card"><b>${item[0]}</b><span>${item[1]}</span></div>`).join("");
+      wrap.innerHTML = `${summaryCards}<div class="lean-dictionary">${dictionary}<details open><summary>Access: rules and visibility definitions</summary><div class="lean-term-list">${accessRows}</div></details></div>`;
+    }
+
+    function toggleSemanticResult(show) {
+      updateLeanResultGrid();
+      document.querySelector(".semantic-term-editor")?.classList.toggle("show-result", show);
     }
 
     function setupGovernanceMatrix() {
@@ -3186,40 +3929,40 @@
     }
 
     const examples = {
-      sources: ["ERP", "CRM", "HRIS", "Finance", "Ops", "Warehouse", "Files", "Service"],
-      facts: ["Sales", "Invoice", "Ticket", "Shipment", "Labor", "Budget", "Forecast", "Inventory"],
-      dims: ["Date", "Account", "Product", "Region", "Employee", "Business Unit", "Channel", "Vendor"],
-      measures: ["Revenue", "Margin", "Utilization", "SLA %", "Backlog", "Cost", "Retention", "Forecast"],
-      roles: ["Executive", "Region", "Finance", "Manager", "HR", "Sales", "Ops", "Audit"]
+      sources: ["Epic EHR", "RCM Billing", "Scheduling", "Provider HR", "Claims", "Patient Survey", "Lab Feed", "Finance GL"],
+      facts: ["Encounter", "Claim", "Appointment", "Provider Capacity", "Denial", "Payment", "Referral", "Patient Satisfaction"],
+      dims: ["Service Date", "Patient", "Provider", "Clinic", "Payer", "Procedure", "Diagnosis", "Care Program"],
+      measures: ["Net Collection Rate", "No-show Rate", "Denial Rate", "Provider Utilization", "RVUs", "Patient NPS", "Open Referral Aging", "Revenue Per Visit"],
+      roles: ["Executive", "Clinic Manager", "Revenue Cycle", "Provider Lead", "Finance", "Care Ops", "Compliance", "Regional Director"]
     };
 
     const semanticDefaults = {
       source: [
-        ["ERP Finance", "Posted invoices, credit memos, payments, and close-period finance data.", "System grain: transaction and document line records.", "Used to reconcile revenue and margin back to finance."],
-        ["CRM Pipeline", "Accounts, opportunities, territories, bookings, and forecast stages.", "System grain: one opportunity or account record.", "Used to connect sales pipeline to recognized revenue."],
-        ["Service Operations", "Tickets, SLA status, queues, resolution dates, and support ownership.", "System grain: one service ticket event.", "Used to measure SLA, backlog, and operational throughput."],
-        ["HRIS", "Employees, departments, managers, cost centers, and workforce attributes.", "System grain: one employee assignment per effective period.", "Used for department security, labor cost, and productivity reporting."]
+        ["Epic EHR Encounter Feed", "Clinical encounter, diagnosis, procedure, and provider activity from the electronic health record.", "System grain: one encounter line per patient visit and service date.", "Used to connect clinical volume to revenue, access, and quality reporting."],
+        ["RCM Billing Platform", "Charges, claims, denials, payments, adjustments, and payer status from revenue cycle operations.", "System grain: one claim or transaction event per encounter and payer.", "Used to reconcile net collection, denial aging, and payment performance."],
+        ["Clinic Scheduling System", "Appointments, cancellations, no-shows, waitlist events, room assignments, and provider templates.", "System grain: one appointment slot per clinic, provider, patient, and scheduled time.", "Used to measure access, no-show rate, provider utilization, and clinic capacity."],
+        ["Provider Workforce HR", "Provider assignment, specialty, FTE, clinic location, role, and manager hierarchy.", "System grain: one provider assignment per effective date range.", "Used for capacity, productivity, security filtering, and clinic leadership views."]
       ],
       fact: [
-        ["Fact Sales", "Revenue activity from posted invoice lines.", "One row per posted invoice line by invoice date, customer, product, and legal entity.", "Example: a monthly executive revenue report sums invoice line amount by region and product."],
-        ["Fact Cost", "Cost activity from GL postings, vendor spend, and allocated department expense.", "One row per GL posting or allocation by accounting period, department, vendor, and account.", "Example: Finance reviews department expense vs budget by month and GL account."],
-        ["Fact Ticket", "Service ticket lifecycle measurements including opened, resolved, breached, and aged tickets.", "One row per ticket status event by ticket, date, queue, and owner.", "Example: Operations tracks backlog, SLA breach rate, and average resolution time."],
-        ["Fact Forecast", "Forecast snapshots captured across planning cycles.", "One row per forecast version, account, product, month, and scenario.", "Example: Leadership compares current forecast to prior commit and actuals."]
+        ["Fact Patient Encounter", "Completed clinical visit activity including visit type, provider, clinic, charge amount, and encounter status.", "One row per completed patient encounter by service date, provider, clinic, payer, and procedure.", "Example: executives review visit volume, revenue per visit, and provider productivity by clinic."],
+        ["Fact Claim Payment", "Revenue cycle activity from submitted claims, denied claims, payments, adjustments, and write-offs.", "One row per claim transaction by posting date, payer, clinic, denial reason, and procedure.", "Example: revenue cycle leaders monitor denial rate, days in AR, and net collection by payer."],
+        ["Fact Appointment Slot", "Scheduled, completed, cancelled, and no-show appointment slots.", "One row per appointment slot by scheduled date, clinic, provider, visit type, and patient.", "Example: operations leaders track no-show rate, access lag, and utilization by clinic."],
+        ["Fact Provider Capacity", "Provider template hours, available slots, booked slots, and expected clinical capacity.", "One row per provider, clinic, schedule date, and template block.", "Example: clinic leaders compare booked capacity to available capacity for staffing decisions."]
       ],
       dimension: [
-        ["Dim Date", "Certified calendar with fiscal period, week, quarter, year, and close status.", "One row per calendar date.", "Filters every fact consistently by invoice date, accounting period, or ticket date."],
-        ["Dim Account", "Customer or account master with segment, industry, owner, and territory.", "One row per account at the current reporting state.", "Lets sales and finance see the same customer hierarchy."],
-        ["Dim Product", "Product catalog with category, family, SKU, status, and launch attributes.", "One row per product or SKU.", "Enables revenue, margin, and support metrics by product family."],
-        ["Dim Region", "Sales or operating territory with region, market, and leader assignment.", "One row per territory or region.", "Supports regional scorecards and role-based access."],
-        ["Dim Department", "Department and cost center hierarchy used for finance and workforce reporting.", "One row per department or cost center.", "Filters cost and headcount reporting for Finance and HR."],
-        ["Dim Vendor", "Vendor master with parent, category, risk tier, and payment terms.", "One row per vendor.", "Used to analyze spend concentration and vendor performance."],
-        ["Dim GL Account", "Chart of accounts with account type, financial statement grouping, and rollup hierarchy.", "One row per general ledger account.", "Used to report cost, revenue, expense, and balance sheet activity consistently."]
+        ["Dim Service Date", "Certified calendar with fiscal period, clinic operating day, holiday flag, and month-close status.", "One row per calendar date.", "Filters encounters, claims, appointments, and capacity consistently by service or posting date."],
+        ["Dim Patient Cohort", "Patient reporting attributes such as age band, care program, risk tier, and anonymized cohort.", "One row per anonymized patient reporting key.", "Supports population health and access reporting without exposing unnecessary PHI."],
+        ["Dim Provider", "Provider roster with specialty, credential, FTE, manager, and active assignment.", "One row per provider assignment and effective period.", "Used to compare productivity, utilization, and schedule availability by provider."],
+        ["Dim Clinic Location", "Clinic hierarchy with region, market, service line, manager, and operating model.", "One row per clinic location.", "Supports clinic scorecards and regional access/security filtering."],
+        ["Dim Payer", "Payer master with payer group, contract type, plan, and reimbursement category.", "One row per payer or payer-plan reporting group.", "Used to analyze collections, denials, and revenue cycle performance."],
+        ["Dim Procedure", "Procedure and CPT grouping with service category, complexity, and revenue family.", "One row per procedure or procedure group.", "Enables productivity and revenue reporting by visit/procedure category."],
+        ["Dim Denial Reason", "Standardized denial reason hierarchy with root cause and appeal category.", "One row per denial reason code.", "Used by revenue cycle teams to prioritize denial reduction work."]
       ],
       measure: [
-        ["Revenue", "Posted invoice amount net of credit memos using the certified finance definition.", "Calculated at invoice-line grain, aggregated by certified dimensions.", "Used in executive scorecards, close packs, and sales performance reporting."],
-        ["Gross Margin %", "Revenue less cost divided by revenue, using certified revenue and cost measures.", "Calculated after filtering facts to the same fiscal period and product/account scope.", "Used to compare margin by product family, region, and customer segment."],
-        ["SLA Breach Rate", "Resolved or open tickets breaching SLA divided by total in-scope tickets.", "Calculated at ticket-event grain with queue and priority filters.", "Used by Operations to identify service risk and staffing needs."],
-        ["Forecast Accuracy", "Actual revenue compared to forecast snapshot for the same period and account/product scope.", "Calculated by joining actuals to forecast version grain.", "Used in leadership planning and sales accountability reviews."]
+        ["Net Collection Rate", "Payments collected divided by allowed claim amount after contractual adjustments.", "Calculated from claim payment transactions by posting date, payer, clinic, and procedure group.", "Used by revenue cycle leaders to evaluate payer and clinic collection performance."],
+        ["No-show Rate", "No-show appointments divided by total scheduled appointments excluding cancelled-in-advance slots.", "Calculated at appointment-slot grain by scheduled date, clinic, provider, and visit type.", "Used by operations teams to reduce access leakage and improve provider utilization."],
+        ["Denial Rate", "Denied claims divided by submitted claims for in-scope payers and procedures.", "Calculated from claim transaction events by denial reason, payer, clinic, and posting period.", "Used to prioritize denial prevention and appeal workflow improvements."],
+        ["Provider Utilization", "Booked clinical hours divided by available template hours.", "Calculated at provider-capacity grain by clinic, provider, and schedule date.", "Used by clinic leaders to balance access, staffing, and productivity."]
       ]
     };
 
@@ -3228,7 +3971,10 @@
 
     function cloneDefaultTerm(type, index) {
       const fallback = semanticDefaults[type][index % semanticDefaults[type].length];
-      return { type, name: fallback[0], definition: fallback[1], grain: fallback[2], example: fallback[3] };
+      const owner = type === "measure" ? "Finance Analytics" : type === "source" ? "Data Platform" : "BI Engineering";
+      const techOwner = type === "source" ? "Data Engineering" : "Analytics Engineering";
+      const status = type === "measure" && index < numeric("certifiedMetrics") ? "Certified" : "Candidate";
+      return { type, name: fallback[0], definition: fallback[1], grain: fallback[2], example: fallback[3], businessOwner: owner, technicalOwner: techOwner, status };
     }
 
     function ensureSemanticTerms() {
@@ -3256,6 +4002,31 @@
       updateSemanticModel();
     }
 
+    function addSemanticTerm(type) {
+      const inputMap = { source: "sourceSystems", fact: "factTables", dimension: "dimensionTables", measure: "measureCount" };
+      const input = document.getElementById(inputMap[type]);
+      if (input) input.value = Number(input.value || 0) + 1;
+      semanticTerms[type] = semanticTerms[type] || [];
+      lastAddedTerm = { type, index: semanticTerms[type].length };
+      semanticTerms[type].push(cloneDefaultTerm(type, semanticTerms[type].length));
+      semanticTermSignature = "";
+      renderSemanticTerms(true);
+      updateCalculator();
+    }
+
+    function deleteSemanticTerm(type, index) {
+      const inputMap = { source: "sourceSystems", fact: "factTables", dimension: "dimensionTables", measure: "measureCount" };
+      const minMap = { source: 1, fact: 1, dimension: 1, measure: 1 };
+      const group = semanticTerms[type] || [];
+      if (group.length <= minMap[type]) return;
+      group.splice(index, 1);
+      const input = document.getElementById(inputMap[type]);
+      if (input) input.value = Math.max(minMap[type], Number(input.value || 0) - 1);
+      semanticTermSignature = "";
+      renderSemanticTerms(true);
+      updateCalculator();
+    }
+
     function renderSemanticTerms(force = false) {
       const signature = ensureSemanticTerms();
       const wrap = document.getElementById("semanticTermGrid");
@@ -3265,15 +4036,23 @@
       const labels = { source: "Source", fact: "Fact", dimension: "Dim", measure: "Metric" };
       const order = ["source", "fact", "dimension", "measure"];
       wrap.innerHTML = order.flatMap((type) => semanticTerms[type].map((term, index) => `
-        <div class="term-row">
+        <div class="term-row ${lastAddedTerm?.type === type && lastAddedTerm?.index === index ? "new-term" : ""}">
           <span class="term-type">${labels[type]}</span>
           <input data-term-type="${type}" data-term-index="${index}" data-term-field="name" value="${escapeHtml(term.name)}" aria-label="${labels[type]} name">
           <input data-term-type="${type}" data-term-index="${index}" data-term-field="definition" value="${escapeHtml(term.definition)}" aria-label="${labels[type]} definition">
           <input data-term-type="${type}" data-term-index="${index}" data-term-field="grain" value="${escapeHtml(term.grain)}" aria-label="${labels[type]} grain">
           <input data-term-type="${type}" data-term-index="${index}" data-term-field="example" value="${escapeHtml(term.example)}" aria-label="${labels[type]} business example">
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="businessOwner" value="${escapeHtml(term.businessOwner || "")}" aria-label="${labels[type]} business owner">
+          <input data-term-type="${type}" data-term-index="${index}" data-term-field="technicalOwner" value="${escapeHtml(term.technicalOwner || "")}" aria-label="${labels[type]} technical owner">
+          <select data-term-type="${type}" data-term-index="${index}" data-term-field="status" aria-label="${labels[type]} status">
+            ${["Candidate", "Certified", "Deprecated", "Needs review"].map((status) => `<option value="${status}" ${term.status === status ? "selected" : ""}>${status}</option>`).join("")}
+          </select>
+          <button class="term-delete" type="button" data-delete-term="${type}" data-delete-index="${index}" aria-label="Delete ${labels[type]} row">x</button>
         </div>
       `)).join("");
       wrap.querySelectorAll("input").forEach((input) => input.addEventListener("input", updateSemanticTerm));
+      wrap.querySelectorAll("select").forEach((input) => input.addEventListener("change", updateSemanticTerm));
+      wrap.querySelectorAll("[data-delete-term]").forEach((button) => button.addEventListener("click", () => deleteSemanticTerm(button.dataset.deleteTerm, Number(button.dataset.deleteIndex))));
     }
 
     function termNames(type, fallback) {
@@ -3282,9 +4061,20 @@
 
     function chips(label, count, className, names = []) {
       const visible = Math.min(count, 10);
-      const items = Array.from({ length: visible }, (_, index) => `<span class="model-chip ${className}">${names[index % names.length] || `${label} ${index + 1}`}</span>`);
+      const items = Array.from({ length: visible }, (_, index) => {
+        const name = names[index % names.length] || `${label} ${index + 1}`;
+        return `<span class="model-chip ${className}" data-chip-name="${escapeHtml(name)}">${escapeHtml(name)}</span>`;
+      });
       if (count > visible) items.push(`<span class="model-chip ${className}">+${count - visible}</span>`);
       return items.join("");
+    }
+
+    function selectModelChip(name) {
+      document.querySelectorAll(".model-chip.selected-chip").forEach((chip) => chip.classList.remove("selected-chip"));
+      const normalized = String(name || "").toLowerCase();
+      document.querySelectorAll("#modelCanvas .model-chip").forEach((chip) => {
+        if ((chip.dataset.chipName || chip.textContent || "").toLowerCase() === normalized) chip.classList.add("selected-chip");
+      });
     }
 
     function renderBadLogicList(count) {
@@ -3307,28 +4097,39 @@
       const dims = dimTerms.map((term) => term.name);
       const cleanExample = (text) => String(text || "").replace(/^Example:\s*/i, "");
       const definitions = [
-        { name: factTerm.name, type: "Fact table", detail: `${factTerm.definition} Grain: ${factTerm.grain} Business example: ${cleanExample(factTerm.example)}` },
-        ...dimTerms.map((dim) => ({ name: dim.name, type: "Dimension table", detail: `${dim.definition} Grain: ${dim.grain} Business example: ${cleanExample(dim.example)}` })),
-        { name: role, type: "Access rule", detail: "Security layer that decides which rows a department, role, region, account team, or executive group can see." }
+        { ...factTerm, typeLabel: "Fact table", detail: `${factTerm.definition} Grain: ${factTerm.grain} Business example: ${cleanExample(factTerm.example)}` },
+        ...dimTerms.map((dim) => ({ ...dim, typeLabel: "Dimension table", detail: `${dim.definition} Grain: ${dim.grain} Business example: ${cleanExample(dim.example)}` })),
+        { name: role, typeLabel: "Access rule", detail: "Security layer that decides which rows a department, role, region, account team, or executive group can see.", grain: "Policy grain: role, department, territory, account, or employee row visibility.", businessOwner: "Governance owner", technicalOwner: "BI Engineering", status: "Needs review" }
       ];
-      return `<div class="model-example"><h3>${title}</h3><div class="model-web"><svg class="relationship-svg" viewBox="0 0 520 250" role="img" aria-label="${title}">
-        <line x1="260" y1="120" x2="96" y2="50" stroke="#f5b544" stroke-width="3"/>
-        <line x1="260" y1="120" x2="424" y2="50" stroke="#f5b544" stroke-width="3"/>
-        <line x1="260" y1="120" x2="96" y2="198" stroke="#f5b544" stroke-width="3"/>
-        <line x1="260" y1="120" x2="424" y2="198" stroke="#f5b544" stroke-width="3"/>
-        <line x1="260" y1="120" x2="260" y2="212" stroke="#6457c2" stroke-width="3"/>
-        <rect x="200" y="92" width="120" height="56" rx="8" fill="#071d54" stroke="#f5b544" stroke-width="3"/><text x="260" y="120">${escapeHtml(fact)}</text>
-        <text class="rel-label" x="232" y="90">*</text><text class="rel-label" x="288" y="90">*</text><text class="rel-label" x="232" y="152">*</text><text class="rel-label" x="288" y="152">*</text>
-        <rect x="36" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="50">${escapeHtml(dims[0])}</text><text class="rel-label" x="162" y="46">1</text>
-        <rect x="364" y="28" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="50">${escapeHtml(dims[1])}</text><text class="rel-label" x="358" y="46">1</text>
-        <rect x="36" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="96" y="198">${escapeHtml(dims[2])}</text><text class="rel-label" x="162" y="198">1</text>
-        <rect x="364" y="176" width="120" height="44" rx="8" fill="#0878be"/><text x="424" y="198">${escapeHtml(dims[3])}</text><text class="rel-label" x="358" y="198">1</text>
-        <rect x="200" y="212" width="120" height="30" rx="8" fill="#6457c2"/><text x="260" y="227">${escapeHtml(role)}</text>
+      return `<div class="model-example"><h3>${title}</h3><div class="relationship-note">Dimensions filter facts. Facts store transactional activity at the defined grain, so each dimension is the <b>1</b> side and the fact table is the <b>*</b> side.</div><div class="model-web"><svg class="relationship-svg" viewBox="0 0 720 340" role="img" aria-label="${title}">
+        <defs><marker id="arrow-${idSafe(title)}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f5b544"/></marker></defs>
+        <line x1="130" y1="70" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
+        <line x1="590" y1="70" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
+        <line x1="130" y1="258" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
+        <line x1="590" y1="258" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
+        <line x1="360" y1="164" x2="360" y2="296" stroke="#6457c2" stroke-width="3"/>
+        <rect x="265" y="124" width="190" height="80" rx="9" fill="#071d54" stroke="#f5b544" stroke-width="3"/>${svgLabel(fact, 360, 164, 22)}
+        <text class="rel-label" x="308" y="120">*</text><text class="rel-label" x="412" y="120">*</text><text class="rel-label" x="308" y="209">*</text><text class="rel-label" x="412" y="209">*</text>
+        <rect x="35" y="34" width="190" height="72" rx="9" fill="#0878be"/>${svgLabel(dims[0], 130, 70, 22)}<text class="rel-label" x="234" y="70">1</text>
+        <rect x="495" y="34" width="190" height="72" rx="9" fill="#0878be"/>${svgLabel(dims[1], 590, 70, 22)}<text class="rel-label" x="486" y="70">1</text>
+        <rect x="35" y="222" width="190" height="72" rx="9" fill="#0878be"/>${svgLabel(dims[2], 130, 258, 22)}<text class="rel-label" x="234" y="258">1</text>
+        <rect x="495" y="222" width="190" height="72" rx="9" fill="#0878be"/>${svgLabel(dims[3], 590, 258, 22)}<text class="rel-label" x="486" y="258">1</text>
+        <rect x="270" y="296" width="180" height="34" rx="9" fill="#6457c2"/>${svgLabel(role, 360, 313, 20)}
       </svg></div><div class="table-definition-list">${definitions.map((item, index) => `
         <button class="table-definition-card ${index === 0 ? "active" : ""}" type="button">
-          <b>${escapeHtml(item.name)}</b>
-          <span>${escapeHtml(item.type)}</span>
-          <span>${escapeHtml(item.detail)}</span>
+          <div class="definition-inner">
+            <div class="definition-face">
+              <b>${escapeHtml(item.name)}</b>
+              <span>${escapeHtml(item.typeLabel)}</span>
+              <span>${escapeHtml(item.detail)}</span>
+            </div>
+            <div class="definition-face back">
+              <b>Finished product fields</b>
+              <span>Example fields: encounter_id, service_date, clinic_location_key, provider_key, payer_key, procedure_key, net_allowed_amount.</span>
+              <span>Definition: ${escapeHtml(item.definition || item.detail)} Grain: ${escapeHtml(item.grain || "Clinical reporting grain by table.")}</span>
+              <span>Owner: ${escapeHtml(item.businessOwner || "Not assigned")} | Tech: ${escapeHtml(item.technicalOwner || "Not assigned")} | Status: ${escapeHtml(item.status || "Candidate")}</span>
+            </div>
+          </div>
         </button>
       `).join("")}</div></div>`;
     }
@@ -3377,22 +4178,26 @@
       const dimTerms = semanticTerms.dimension.length ? semanticTerms.dimension : semanticDefaults.dimension.map((item, index) => cloneDefaultTerm("dimension", index));
       const pickDims = (indexes) => indexes.map((index) => dimTerms[index % dimTerms.length]);
       const html = id === "cost"
-        ? relationshipWeb("Example 2: Department Cost Model", factTerms[1] || factTerms[0], pickDims([0, 4, 5, 6]), roles ? "Finance Role" : "Base Access")
-        : relationshipWeb("Example 1: Executive Revenue Model", factTerms[0], pickDims([0, 1, 2, 3]), roles ? "Role Access" : "Base Access");
+        ? relationshipWeb("Revenue Cycle Claim Payment Model", factTerms[1] || factTerms[0], pickDims([0, 4, 5, 6]), roles ? "Revenue Cycle Role" : "Base Access")
+        : relationshipWeb("Clinic Revenue and Access Model", factTerms[0], pickDims([0, 1, 2, 3]), roles ? "Clinic Leadership Role" : "Base Access");
       document.getElementById("relationshipMap").innerHTML = html;
       document.querySelectorAll("#relationshipMap .table-definition-card").forEach((card) => {
         card.addEventListener("click", () => {
           document.querySelectorAll("#relationshipMap .table-definition-card").forEach((item) => item.classList.remove("active"));
           card.classList.add("active");
+          selectModelChip(card.querySelector("b")?.textContent);
         });
       });
+      selectModelChip(document.querySelector("#relationshipMap .table-definition-card.active b")?.textContent);
     }
 
     function exportBrief() {
       const score = document.getElementById("scoreValue").textContent;
       const scoreColor = score < 40 ? "#be4b49" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "#20845a";
       const annualRoi = currentFinancials.savedValue * 12;
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:920px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year ROI opportunity. This is monthly estimated value returned (${document.getElementById("manualValue").textContent}) x 12.</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Total monthly value returned</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div></div></body></html>`;
+      const recs = moduleRecommendations();
+      const recText = recs.length ? recs.map((item, index) => `${index + 1}. ${item.title}: ${item.reason}`).join("<br>") : "Take the readiness test to unlock recommended capability modules.";
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:920px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year ROI opportunity. This is monthly estimated value returned (${document.getElementById("manualValue").textContent}) x 12.</span><span>${document.getElementById("caseFormula").textContent}</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Total monthly value returned</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div><div class="note"><b>Recommended path</b><br>${recText}</div></div></body></html>`;
       const blob = new Blob([html], { type: "text/html" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -3408,33 +4213,40 @@
     function exportSemanticProduct() {
       ensureSemanticTerms();
       const badLogic = Array.from(document.querySelectorAll("#badLogicList input")).map((input) => input.value.trim()).filter(Boolean);
-      const rows = [
-        ["category", "metric", "value", "definition"],
-        ["semantic input", "Source systems", numeric("sourceSystems"), "Distinct systems feeding analytics such as ERP, CRM, HRIS, finance, files, warehouse, or operational apps."],
-        ["semantic input", "Fact tables", numeric("factTables"), "Event or transaction tables at a defined grain."],
-        ["semantic input", "Dimension tables", numeric("dimensionTables"), "Descriptive tables used to filter and group facts."],
-        ["semantic input", "Measures", numeric("measureCount"), "Reusable calculations exposed to reports."],
-        ["semantic input", "Certified metrics", numeric("certifiedMetrics"), "Measures with owner, definition, lineage, and approval status."],
-        ["semantic input", "Suspected duplicates", numeric("duplicateMeasureInput"), "Measures that calculate the same business concept in multiple ways."],
-        ["semantic input", "Sensitive access roles", numeric("rlsRoles"), "Roles that need different row visibility."],
-        ["semantic input", "Automated refresh jobs", numeric("refreshJobs"), "Scheduled refresh or pipeline jobs that run without manual work."],
-        ["semantic input", "Power BI model size MB", numeric("modelSizeMb"), "Dataset or PBIX model size used to estimate footprint and capacity pressure."],
-        ["semantic input", "Known logic issues", numeric("logicIssueCount"), "Known DAX, relationship, grain, duplicate, or report-specific logic problems."],
-        ["relationship example", "Executive Revenue Model", semanticTerms.fact[0]?.name || "Fact Sales", "Dimensions are the one side and the fact table is the many side for Date, Account, Product, and Region style reporting."],
-        ["relationship example", "Department Cost Model", semanticTerms.fact[1]?.name || "Fact Cost", "Dimensions are the one side and the fact table is the many side for Date, Department, Vendor, and GL Account style reporting."]
+      const esc = (value) => escapeHtml(value ?? "");
+      const sheet = (name, headers, rows) => `<Worksheet ss:Name="${esc(name)}"><Table><Row>${headers.map((header) => `<Cell><Data ss:Type="String">${esc(header)}</Data></Cell>`).join("")}</Row>${rows.map((row) => `<Row>${row.map((cell) => `<Cell><Data ss:Type="String">${esc(cell)}</Data></Cell>`).join("")}</Row>`).join("")}</Table></Worksheet>`;
+      const termRows = (type) => (semanticTerms[type] || []).map((term) => [term.name, term.definition, term.grain, term.example, term.businessOwner, term.technicalOwner, term.status]);
+      const summaryRows = [
+        ["Source systems", numeric("sourceSystems"), "Distinct systems feeding analytics."],
+        ["Fact tables", numeric("factTables"), "Event or transaction tables at a defined grain."],
+        ["Dimension tables", numeric("dimensionTables"), "Descriptive tables used to filter and group facts."],
+        ["Measures", numeric("measureCount"), "Reusable calculations exposed to reports."],
+        ["Certified metrics", numeric("certifiedMetrics"), "Measures with owner, definition, lineage, and approval status."],
+        ["Known logic issues", numeric("logicIssueCount"), "DAX, relationship, grain, duplicate, or report-specific logic problems."]
       ];
-      ["source", "fact", "dimension", "measure"].forEach((type) => {
-        (semanticTerms[type] || []).forEach((term, index) => {
-          rows.push(["semantic term", `${type} ${index + 1}: ${term.name}`, term.grain, `${term.definition} Example: ${term.example}`]);
-        });
-      });
-      badLogic.forEach((item, index) => rows.push(["bad logic item", `Item ${index + 1}`, item, "User-entered logic issue to inspect during semantic model cleanup."]));
-      if (!badLogic.length) rows.push(["bad logic item", "None entered", "", "No bad logic items entered yet."]);
-      const csv = rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
-      const blob = new Blob([csv], { type: "text/csv" });
+      const relationshipRows = [
+        ["Clinic Revenue and Access Model", semanticTerms.fact[0]?.name || "Fact Patient Encounter", "Service Date, Patient Cohort, Provider, Clinic Location", "Dimensions are the 1 side; fact is the * side."],
+        ["Revenue Cycle Claim Payment Model", semanticTerms.fact[1]?.name || "Fact Claim Payment", "Service Date, Payer, Procedure, Denial Reason", "Dimensions are the 1 side; fact is the * side."]
+      ];
+      const workbook = `<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+${[
+        sheet("Summary", ["Metric", "Value", "Definition"], summaryRows),
+        sheet("Sources", ["Name", "Definition", "Grain", "Business Example", "Business Owner", "Technical Owner", "Status"], termRows("source")),
+        sheet("Facts", ["Name", "Definition", "Grain", "Business Example", "Business Owner", "Technical Owner", "Status"], termRows("fact")),
+        sheet("Dimensions", ["Name", "Definition", "Grain", "Business Example", "Business Owner", "Technical Owner", "Status"], termRows("dimension")),
+        sheet("Metrics", ["Name", "Definition", "Grain", "Business Example", "Business Owner", "Technical Owner", "Status"], termRows("measure")),
+        sheet("Relationships", ["Model", "Fact", "Dimensions", "Cardinality"], relationshipRows),
+        sheet("Bad Logic", ["Item", "Description", "Assessment Use"], (badLogic.length ? badLogic : ["None entered"]).map((item, index) => [`Item ${index + 1}`, item, "Inspect during semantic model cleanup."]))
+      ].join("")}</Workbook>`;
+      const blob = new Blob([workbook], { type: "application/vnd.ms-excel" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "parallax-semantic-product.csv";
+      link.download = "parallax-semantic-product-workbook.xls";
       link.click();
       URL.revokeObjectURL(link.href);
     }
@@ -3443,6 +4255,8 @@
       clearOpsOverride();
       completedReadiness.clear();
       readinessStarted = false;
+      Object.keys(readinessBandSelections).forEach((key) => delete readinessBandSelections[key]);
+      lastAddedTerm = null;
       const defaults = {
         reportCount: 25, hoursPerReport: 1, cyclesPerMonth: 2, dashboardViews: 300, queriesPerView: 8, querySeconds: 8, reportingRate: 85, eligiblePercent: 25, modelSizeMb: 350, logicIssueCount: 8,
         metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30,
@@ -3468,6 +4282,7 @@
     document.getElementById("quickModeBtn").addEventListener("click", () => setInputMode("quick"));
     document.getElementById("detailedModeBtn").addEventListener("click", () => setInputMode("detailed"));
     document.getElementById("addReportRow").addEventListener("click", addReportRow);
+    document.getElementById("continueReadinessBtn").addEventListener("click", () => setView("readiness"));
     document.getElementById("editReadinessBtn").addEventListener("click", () => setView("readiness"));
     document.getElementById("opsZeroBtn").addEventListener("click", () => setOpsOverride("zero"));
     document.getElementById("opsFullBtn").addEventListener("click", () => setOpsOverride("full"));
@@ -3496,6 +4311,10 @@
     });
     document.getElementById("copyBtn").addEventListener("click", exportBrief);
     document.getElementById("exportSemanticBtn").addEventListener("click", exportSemanticProduct);
+    document.querySelectorAll("[data-add-term]").forEach((button) => button.addEventListener("click", () => addSemanticTerm(button.dataset.addTerm)));
+    document.getElementById("semanticFlipBtn").addEventListener("click", () => toggleSemanticResult(true));
+    document.getElementById("semanticEditBtn").addEventListener("click", () => toggleSemanticResult(false));
+    document.getElementById("returnOutcomesBtn").addEventListener("click", () => setView("outcomes"));
     document.getElementById("resetBtn").addEventListener("click", resetScenario);
     document.getElementById("startReadinessTestBtn").addEventListener("click", startReadinessTest);
     document.querySelectorAll("[data-ops-driver]").forEach((button) => button.addEventListener("click", () => showOpsDriver(button.dataset.opsDriver)));
