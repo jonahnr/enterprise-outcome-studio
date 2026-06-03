@@ -1758,8 +1758,13 @@
     }
 
     .table-definition-card:hover {
-      border-color: var(--gold);
-      background: #fff9eb;
+      border-color: var(--blue);
+      background: #edf6ff;
+    }
+
+    .table-definition-card.active:hover {
+      border-color: var(--blue);
+      background: #eef6ff;
     }
 
     .relationship-row {
@@ -2948,7 +2953,7 @@
               <div class="panel-header" style="padding:0 0 14px;border-bottom:0">
                 <div>
                   <h2>Semantic Model Trust Layer</h2>
-                  <p>This turns abstract semantic modeling into a concrete product: smaller Power BI models, cleaner DAX logic, certified measures, intentional relationships, and governed access.</p>
+                  <p>This turns abstract semantic modeling into a concrete product: smaller Power BI models, cleaner DAX logic, clearer definitions, intentional relationships, and reusable reporting standards.</p>
                 </div>
                 <button class="mini-btn" type="button" id="exportSemanticBtn">Export semantic workbook</button>
               </div>
@@ -2981,21 +2986,13 @@
                   </div>
                   <div class="semantic-face result">
                     <h3>Lean Semantic Product Result</h3>
-                    <p>This is the after-state generated from the editable terms: certified measures, governed owners, cleaner model structure, and reusable reporting definitions.</p>
+                    <p>This is the after-state generated from the editable terms: clearer definitions, accountable owners, cleaner model structure, and reusable reporting standards. Today this is an editable/exportable view, not yet a fully productized searchable definition catalog unless that layer is intentionally built.</p>
                     <button class="mini-btn" type="button" id="semanticEditBtn">Back to editable terms</button>
                     <div class="lean-result-grid" id="leanResultGrid"></div>
                   </div>
                 </div>
               </div>
-              <div class="semantic-summary-nodes">
-                <div class="semantic-node"><b>Certified reporting</b><span id="certifiedText">Reports inherit 8 trusted metrics instead of redefining logic in every dashboard.</span></div>
-                <div class="semantic-node"><b>Governed access</b><span id="accessText">2 sensitive access roles may require RLS package design and testing.</span></div>
-              </div>
               <div class="semantic-stage">
-                <div class="semantic-column source-pair">
-                  <div class="semantic-node dark-node"><b>Raw business systems</b><span id="sourceSystemsText">3 sources feeding the analytics estate.</span></div>
-                  <div class="semantic-node dark-node"><b>Data product tables</b><span id="dataTablesText">4 facts and 6 dimensions with grain, refresh, lineage, and owners.</span></div>
-                </div>
                 <div class="semantic-node primary">
                   <b>Lean semantic product health</b>
                   <span id="semanticSummary">35 measures, 8 certified, and 12 suspected duplicates create a practical starting point for cleanup.</span>
@@ -3032,6 +3029,11 @@
                     <tr><td>RLS need confirmed</td><td><span class="status bad">Package</span></td></tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div class="semantic-side-section">
+                <h2 class="section-title">Definition Productization</h2>
+                <p class="section-subtitle">Current answer: not fully yet. The page can capture definitions and export them, but an easy productized view would need a dedicated searchable catalog, owners, approval status, lineage, and change history.</p>
               </div>
               <div class="hierarchy semantic-side-section">
                 <h2 class="section-title">Example Model Relationships</h2>
@@ -3205,6 +3207,7 @@
     let currentFinancials = { savedValue: 0, modelValue: 0, reportingValue: 0, savedHours: 0, queryHoursSaved: 0 };
     const completedReadiness = new Set();
     let readinessStarted = false;
+    let recommendedPathUnlocked = false;
     const readinessBandSelections = {};
     let lastAddedTerm = null;
     const detailedReports = [
@@ -3612,12 +3615,37 @@
       return readinessStarted && (completedReadiness.has(id) || index === getCurrentReadinessIndex());
     }
 
+    function completedReadinessCount() {
+      return criteria.filter((criterion) => completedReadiness.has(criterion.id)).length;
+    }
+
+    function markRecommendedPathUnlocked() {
+      recommendedPathUnlocked = true;
+      document.body.dataset.readinessComplete = "true";
+      document.getElementById("pathPanel")?.classList.remove("path-locked");
+    }
+
     function readinessComplete() {
-      return completedReadiness.size === criteria.length;
+      return recommendedPathUnlocked ||
+        document.body.dataset.readinessComplete === "true" ||
+        criteria.every((criterion) => completedReadiness.has(criterion.id));
+    }
+
+    function renderReadinessCompleteState() {
+      const finalScore = document.getElementById("scoreValue")?.textContent || "0";
+      document.getElementById("adviceTitle").textContent = `Final readiness score: ${finalScore}/100`;
+      document.getElementById("adviceBody").textContent = "Your readiness score is complete. The Recommended Path is now unlocked.";
+      document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Assessment complete</strong><p class="section-subtitle">All six readiness sections are scored. Open Recommended Path to view the roadmap.</p></div>`;
+      const btn = document.getElementById("applyChecklistBtn");
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Readiness score complete";
+      }
     }
 
     function updateReadinessLocks() {
       const currentIndex = getCurrentReadinessIndex();
+      const completedCount = completedReadinessCount();
       const complete = readinessComplete();
       document.querySelectorAll("[data-readiness-field]").forEach((field) => {
         const id = field.dataset.readinessField;
@@ -3626,12 +3654,12 @@
         const input = field.querySelector("input");
         if (input) input.disabled = !unlocked;
       });
-      document.getElementById("readinessInputGrid").classList.toggle("locked", completedReadiness.size < criteria.length);
+      document.getElementById("readinessInputGrid").classList.toggle("locked", completedCount < criteria.length);
       const scoreText = document.getElementById("scoreValue")?.textContent || "0";
-      document.getElementById("readinessProgress").textContent = complete ? `Complete: final readiness score ${scoreText}/100` : `${completedReadiness.size} of ${criteria.length} sections complete`;
-      document.getElementById("startReadinessTestBtn").style.display = complete ? "none" : "";
+      document.getElementById("readinessProgress").textContent = complete ? `Complete: final readiness score ${scoreText}/100` : `${completedCount} of ${criteria.length} sections complete`;
+      document.getElementById("startReadinessTestBtn").style.display = "";
       document.getElementById("returnOutcomesBtn").style.display = complete ? "" : "none";
-      document.getElementById("startReadinessTestBtn").textContent = readinessStarted ? "Resume active section" : "Start test";
+      document.getElementById("startReadinessTestBtn").textContent = complete ? "Retake readiness test" : readinessStarted ? "Resume active section" : "Start test";
       document.getElementById("readinessGate").querySelector("b").textContent = complete ? "Readiness score complete" : readinessStarted ? "Readiness test active" : "Start with the readiness test";
       document.getElementById("readinessAssessor")?.classList.toggle("locked-test", !readinessStarted);
       document.getElementById("scorePanel")?.classList.toggle("score-locked", !complete);
@@ -3642,7 +3670,32 @@
       }
     }
 
+    function resetReadinessTestForRetake() {
+      completedReadiness.clear();
+      Object.keys(readinessBandSelections).forEach((key) => delete readinessBandSelections[key]);
+      recommendedPathUnlocked = false;
+      delete document.body.dataset.readinessComplete;
+      readinessStarted = false;
+      selectedAdviceId = criteria[0].id;
+      const readinessDefaults = {
+        metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30
+      };
+      Object.entries(readinessDefaults).forEach(([id, value]) => {
+        const input = document.getElementById(id);
+        if (input) input.value = value;
+      });
+      const btn = document.getElementById("applyChecklistBtn");
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Submit section score";
+      }
+      updateCalculator();
+    }
+
     function startReadinessTest() {
+      if (readinessComplete()) {
+        resetReadinessTestForRetake();
+      }
       readinessStarted = true;
       selectedAdviceId = criteria[getCurrentReadinessIndex()].id;
       updateReadinessLocks();
@@ -3673,6 +3726,11 @@
       const criterion = criteria.find((item) => item.id === id);
       if (!criterion) return;
       if (document.querySelector('.view.active')?.dataset.view === "readiness") {
+        if (readinessComplete()) {
+          renderReadinessCompleteState();
+          buildReadinessSections();
+          return;
+        }
         if (!readinessStarted) {
           selectedAdviceId = criteria[0].id;
           document.getElementById("adviceTitle").textContent = "Start with Metric standards";
@@ -3703,13 +3761,18 @@
     function renderCriterionChecklist(criterion, locked = false) {
       const wrap = document.getElementById("criterionChecklist");
       if (!wrap) return;
+      const btn = document.getElementById("applyChecklistBtn");
+      if (btn) {
+        btn.disabled = !!locked;
+        btn.textContent = criterion.id === criteria[criteria.length - 1].id ? "Finish readiness score" : "Submit section score";
+      }
       const selected = readinessBandSelections[criterion.id] ?? -1;
       wrap.innerHTML = `<div class="check-band ${selected >= 0 ? "active-band" : ""}"><strong>${locked ? "Start the test to unlock Metric standards" : `${criterion.label}: pass each maturity level that accurately describes you`}</strong>${criterion.bands.map((band, index) => {
         const unlocked = !locked && index <= selected + 1;
         const passed = selected >= index;
         const example = band[2]?.join(" | ") || band[1];
         return `<label class="${passed ? "active-band" : ""}">
-          <input type="radio" name="readiness-band-${criterion.id}" data-readiness-band="${index}" ${passed ? "checked" : ""} ${unlocked ? "" : "disabled"}>
+          <input type="radio" name="readiness-band-${criterion.id}" data-readiness-band="${index}" ${selected === index ? "checked" : ""} ${unlocked ? "" : "disabled"}>
           <span><b>${band[0]}</b> ${band[1]} <i class="band-hint" tabindex="0" data-tip="${escapeHtml(example)}">?</i> ${unlocked ? "" : "Complete the prior level first."}</span>
         </label>`;
       }).join("")}</div>`;
@@ -3725,24 +3788,36 @@
       const criterion = criteria.find((item) => item.id === selectedAdviceId);
       if (!criterion || !readinessStarted || !canAccessReadiness(criterion.id)) return;
       const selectedBand = readinessBandSelections[criterion.id] ?? -1;
-      const score = selectedBand < 0 ? 0 : [20, 40, 60, 80, 100][selectedBand];
+      if (selectedBand < 0) {
+        document.getElementById("evidenceQuality").textContent = `Select a maturity level for ${criterion.label} before submitting this section.`;
+        return;
+      }
+      const score = [20, 40, 60, 80, 100][selectedBand];
       document.getElementById(criterion.id).value = score;
       const quality = score >= 80 ? "Strong evidence quality: this section has broad operating proof." : score >= 60 ? "Moderate evidence quality: enough proof for a scaling score, with some gaps remaining." : score >= 40 ? "Foundation evidence quality: useful proof exists, but the section is not yet reliable at scale." : "Early evidence quality: too many proof points are missing for a confident operating score.";
-      const bandLabel = selectedBand < 0 ? "0-20 not yet passed" : criterion.bands[selectedBand][0];
+      const bandLabel = criterion.bands[selectedBand][0];
       document.getElementById("evidenceQuality").textContent = `${criterion.label} score set to ${score}/100 from the ${bandLabel} maturity level. ${quality}`;
       completedReadiness.add(criterion.id);
+
+      const nowComplete = completedReadinessCount() === criteria.length;
+      if (nowComplete) {
+        markRecommendedPathUnlocked();
+      }
+
       updateCalculator();
       updateReadinessLocks();
-      const nextIndex = getCurrentReadinessIndex();
-      const nextCriterion = completedReadiness.size === criteria.length ? criterion : criteria[nextIndex];
-      if (completedReadiness.size === criteria.length) {
-        const finalScore = document.getElementById("scoreValue").textContent;
-        document.getElementById("adviceTitle").textContent = `Final readiness score: ${finalScore}/100`;
-        document.getElementById("adviceBody").textContent = "Your readiness score is complete. Return to Outcomes to see the updated business case, score, and recommended path.";
-        document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Assessment complete</strong><p class="section-subtitle">All six readiness sections are scored. Use Return to outcomes to continue the workflow.</p></div>`;
-      } else {
-        showAdvice(nextCriterion.id);
+
+      if (nowComplete) {
+        renderReadinessCompleteState();
+        buildCatalog();
+        renderCatalogRecommendations();
+        updateRecommendedPath();
+        return;
       }
+
+      const nextIndex = getCurrentReadinessIndex();
+      selectedAdviceId = criteria[nextIndex].id;
+      showAdvice(selectedAdviceId);
     }
 
     function buildAutomationQueue() {
@@ -3827,7 +3902,8 @@
       const score = document.getElementById("scoreValue").textContent;
       const roi = moneyFormat.format(currentFinancials.savedValue * 12);
       const complete = readinessComplete();
-      document.getElementById("pathPanel")?.classList.toggle("path-locked", !complete);
+      const panel = document.getElementById("pathPanel");
+      panel?.classList.toggle("path-locked", !complete);
       if (!complete) {
         document.getElementById("pathRoi").textContent = "Locked";
         document.getElementById("pathScore").textContent = "Test needed";
@@ -3836,8 +3912,8 @@
         wrap.innerHTML = `<div class="path-card locked"><b>Take the readiness test to unlock this page</b><span>The completed score will turn this into an export-style path with 12 month ROI, hours/month recoverable, readiness score, recommended capability modules, semantic workbook output, and final sales assets.</span></div>`;
         return;
       }
-      const recs = readinessComplete() ? moduleRecommendations() : [];
-      const moduleByTitle = Object.fromEntries(catalogModules.map((module) => [module.title, module]));
+      const recs = moduleRecommendations();
+      const moduleByTitle = Object.fromEntries(catalog.map((module) => [module.title, module]));
       const moduleCards = recs.map((item, index) => {
         const module = moduleByTitle[item.title];
         const proof = module?.proof?.slice(0, 2).join(" | ") || "Proof artifact defined during assessment.";
@@ -4149,16 +4225,20 @@
       const duplicateOpportunity = measures ? Math.round(duplicates / measures * 100) : 0;
       const footprint = Math.min(65, Math.round(duplicateOpportunity * 0.55 + Math.max(0, measures - certified) * 0.18 + Math.max(0, facts + dims - refresh) * 0.8));
 
-      document.getElementById("sourceSystemsText").textContent = `${numberFormat.format(sources)} sources feeding the analytics estate.`;
-      document.getElementById("dataTablesText").textContent = `${numberFormat.format(facts)} facts and ${numberFormat.format(dims)} dimensions with grain, refresh, lineage, and owners.`;
+      const sourceSystemsText = document.getElementById("sourceSystemsText");
+      if (sourceSystemsText) sourceSystemsText.textContent = `${numberFormat.format(sources)} sources feeding the analytics estate.`;
+      const dataTablesText = document.getElementById("dataTablesText");
+      if (dataTablesText) dataTablesText.textContent = `${numberFormat.format(facts)} facts and ${numberFormat.format(dims)} dimensions with grain, refresh, lineage, and owners.`;
       document.getElementById("semanticSummary").textContent = `${numberFormat.format(measures)} measures, ${numberFormat.format(certified)} certified, and ${numberFormat.format(duplicates)} suspected duplicates create a practical starting point for cleanup.`;
       document.getElementById("modelFootprint").textContent = `${footprint}%`;
       document.getElementById("duplicateMeasures").textContent = `${duplicateOpportunity}%`;
       document.getElementById("semanticTrust").textContent = `${certifiedCoverage}%`;
       document.getElementById("badLogicScore").textContent = numberFormat.format(numeric("logicIssueCount"));
       renderBadLogicList(numeric("logicIssueCount"));
-      document.getElementById("certifiedText").textContent = `Reports inherit ${numberFormat.format(certified)} trusted metrics instead of redefining logic in every dashboard.`;
-      document.getElementById("accessText").textContent = roles ? `${roles} sensitive access roles may require RLS package design and testing.` : "No sensitive access roles entered yet; base governance may be enough.";
+      const certifiedText = document.getElementById("certifiedText");
+      if (certifiedText) certifiedText.textContent = `Reports inherit ${numberFormat.format(certified)} trusted metrics instead of redefining logic in every dashboard.`;
+      const accessText = document.getElementById("accessText");
+      if (accessText) accessText.textContent = roles ? `${roles} sensitive access roles may require RLS package design and testing.` : "No sensitive access roles entered yet; base governance may be enough.";
       document.getElementById("modelCanvas").innerHTML = `
         <div class="model-layer"><b>Sources</b><div class="model-chips">${chips("Src", sources, "", termNames("source", examples.sources))}</div></div>
         <div class="model-layer"><b>Facts</b><div class="model-chips">${chips("Fact", facts, "", termNames("fact", examples.facts))}</div></div>
@@ -4254,6 +4334,8 @@ ${[
     function resetScenario() {
       clearOpsOverride();
       completedReadiness.clear();
+      recommendedPathUnlocked = false;
+      delete document.body.dataset.readinessComplete;
       readinessStarted = false;
       Object.keys(readinessBandSelections).forEach((key) => delete readinessBandSelections[key]);
       lastAddedTerm = null;
