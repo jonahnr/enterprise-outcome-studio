@@ -274,6 +274,50 @@
       align-items: start;
     }
 
+    .journey-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .journey-step {
+      min-height: 74px;
+      display: grid;
+      align-content: start;
+      gap: 5px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: #fbfdff;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .journey-step b,
+    .journey-step span {
+      display: block;
+    }
+
+    .journey-step b {
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .journey-step span {
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .journey-step[aria-current="step"] {
+      border-color: var(--gold);
+      background: #fff9eb;
+      box-shadow: 0 0 0 3px rgba(245, 181, 68, 0.16);
+    }
+
     .benchmark-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -308,6 +352,55 @@
       color: #e6efff;
       font-size: 14px;
       line-height: 1.45;
+    }
+
+    .confidence-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgba(255,255,255,.11);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .scenario-presets {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      padding: 14px 20px 0;
+    }
+
+    .preset-btn {
+      min-height: 52px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .preset-btn span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .preset-btn.active {
+      border-color: var(--blue);
+      background: #edf6ff;
+      box-shadow: 0 0 0 3px rgba(31, 106, 229, 0.12);
     }
 
     .case-metrics {
@@ -609,6 +702,12 @@
       gap: 12px;
     }
 
+    .primary-result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
     .result-card {
       padding: 16px;
       border: 1px solid color-mix(in srgb, var(--mode-color) 34%, var(--line));
@@ -647,6 +746,76 @@
 
     .roi-card span {
       color: #e6efff;
+    }
+
+    .advanced-results {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .advanced-results summary {
+      padding: 13px 14px;
+      color: var(--navy);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .advanced-result-grid {
+      display: grid;
+      gap: 12px;
+      padding: 0 14px 14px;
+    }
+
+    .calc-explainer {
+      display: grid;
+      gap: 10px;
+      padding: 0 14px 14px;
+    }
+
+    .calc-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .calc-line.total-line {
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
+    .calc-line b,
+    .calc-line span {
+      display: block;
+    }
+
+    .calc-line b {
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .calc-line span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .calc-line strong {
+      color: var(--blue);
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .total-line strong {
+      color: var(--navy);
+      font-size: 22px;
     }
 
     .quick-inputs.hidden {
@@ -851,6 +1020,10 @@
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 12px;
+    }
+
+    .demo-controls {
+      display: none;
     }
 
     .ops-drivers {
@@ -1943,17 +2116,14 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin-top: 16px;
-      padding: 14px;
-      border: 1px solid #f0d08a;
-      border-radius: 8px;
-      background: #fff9eb;
     }
 
     .value-tile {
       padding: 12px;
+      border: 1px solid var(--line);
       border-radius: 8px;
       color: var(--navy);
-      background: #ffffff;
+      background: #fbfdff;
     }
 
     .value-tile b,
@@ -2235,6 +2405,63 @@
       line-height: 1.4;
     }
 
+    .fine-tune-panel,
+    .score-map {
+      margin: 14px 20px 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .fine-tune-panel {
+      border-color: #cfe0f7;
+      background: #f7fbff;
+    }
+
+    .fine-tune-panel b,
+    .fine-tune-panel span {
+      display: block;
+    }
+
+    .fine-tune-panel span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .score-map {
+      display: grid;
+      gap: 8px;
+    }
+
+    .score-map-row {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .score-map-row.active {
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
+    .score-map-row b {
+      color: var(--navy);
+      font-size: 12px;
+    }
+
+    .score-map-row span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2298,6 +2525,155 @@
       font-weight: 900;
     }
 
+    .module-card {
+      display: grid;
+      gap: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(7, 29, 84, 0.08);
+    }
+
+    .module-card.recommended {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(245,181,68,.18), 0 12px 30px rgba(7,29,84,.12);
+    }
+
+    .module-art {
+      min-height: 116px;
+      position: relative;
+      display: grid;
+      align-content: end;
+      padding: 14px;
+      color: #ffffff;
+      background:
+        linear-gradient(135deg, rgba(7, 29, 84, 0.82), rgba(31, 106, 229, 0.46)),
+        var(--image);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .module-art::after {
+      content: "";
+      position: absolute;
+      inset: auto 14px 14px 14px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.28);
+      box-shadow: 0 -28px 0 rgba(255,255,255,.18), 70px -56px 0 rgba(245,181,68,.7);
+    }
+
+    .module-art b {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+      font-size: 18px;
+    }
+
+    .module-card.recommended .module-art b {
+      color: var(--gold);
+    }
+
+    .module-body {
+      display: grid;
+      gap: 12px;
+      padding: 0 18px 18px;
+    }
+
+    .module-card h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .module-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .module-meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    .module-meta div {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .module-meta b,
+    .module-meta span {
+      display: block;
+    }
+
+    .module-meta b {
+      color: var(--navy);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .module-meta span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .proof-company {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #d7e4f5;
+      border-radius: 8px;
+      background: #f7fbff;
+    }
+
+    .fake-logo {
+      width: 42px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .proof-company b,
+    .proof-company span {
+      display: block;
+    }
+
+    .proof-company b {
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .proof-company span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .recommended-note {
+      grid-column: 1 / -1;
+      padding: 14px;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      color: var(--navy);
+      background: #fff9eb;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
     .recommendation-locked {
       grid-column: 1 / -1;
       padding: 12px 14px;
@@ -2313,9 +2689,11 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(240px, .6fr);
       gap: 16px;
-      padding: 20px;
+      margin-top: 16px;
+      padding: 22px;
       color: #ffffff;
-      background: linear-gradient(135deg, var(--navy), #0b3a7d);
+      background: var(--navy);
+      border: 3px solid var(--gold);
       border-radius: 8px;
     }
 
@@ -2333,22 +2711,6 @@
       line-height: 1.45;
     }
 
-    .path-panel.path-locked .path-hero {
-      color: #3f4d63;
-      background: linear-gradient(135deg, #d7deeb, #edf2f8);
-      border: 1px solid #c6d2e2;
-    }
-
-    .path-panel.path-locked .path-hero b,
-    .path-panel.path-locked .path-hero span {
-      color: #66748a;
-    }
-
-    .path-panel.path-locked .case-metric {
-      background: rgba(255,255,255,.62);
-      border-color: #d4deec;
-    }
-
     .path-card.locked {
       grid-column: 1 / -1;
       border: 2px dashed #b8c3d3;
@@ -2359,6 +2721,105 @@
     .path-card.locked b,
     .path-card.locked span {
       color: #66748a;
+    }
+
+    .executive-brief {
+      display: grid;
+      grid-template-columns: minmax(220px, .7fr) minmax(0, 1.3fr);
+      gap: 12px;
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .executive-brief h2,
+    .executive-brief p {
+      margin: 0;
+    }
+
+    .executive-brief h2 {
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .executive-brief p,
+    .brief-list span {
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 12px;
+    }
+
+    .brief-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .brief-list div {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .brief-list b,
+    .brief-list span {
+      display: block;
+    }
+
+    .brief-list b {
+      color: var(--navy);
+      font-size: 12px;
+    }
+
+    .path-export {
+      margin-top: 0;
+      padding: 18px;
+      border-radius: 8px 8px 0 0;
+      color: #ffffff;
+      background: var(--navy);
+      border-bottom: 8px solid var(--gold);
+    }
+
+    .path-export h2 {
+      margin: 0;
+      color: var(--gold);
+      font-size: 26px;
+    }
+
+    .path-export p {
+      margin: 8px 0 0;
+      color: #e6efff;
+      line-height: 1.45;
+    }
+
+    .path-panel .path-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .path-panel .path-card {
+      background: #ffffff;
+    }
+
+    .path-panel .path-card b {
+      font-size: 15px;
+    }
+
+    .path-card.primary-path {
+      grid-column: span 2;
+      border-color: var(--gold);
+      background: #fff9eb;
+    }
+
+    .path-card.next-path {
+      grid-column: span 2;
+    }
+
+    .path-card.asset-path {
+      grid-column: span 2;
+      background: #f7fbff;
     }
 
     .flip-card {
@@ -2653,10 +3114,13 @@
         flex-direction: column;
       }
       .benchmark-row,
+      .journey-flow,
+      .scenario-presets,
       .scenario,
       .business-case-hero,
       .case-metrics,
       .input-grid,
+      .primary-result-grid,
       .evidence-grid,
       .semantic-stage,
       .semantic-summary-nodes,
@@ -2672,6 +3136,7 @@
       .recommendation-strip,
       .path-grid,
       .path-hero,
+      .executive-brief,
       .term-header,
       .term-row,
       .table-definition-list,
@@ -2743,12 +3208,20 @@
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/></svg>
               Reset
             </button>
-            <button class="btn primary" id="copyBtn" type="button" title="Copy executive summary">
+            <button class="btn primary" id="copyBtn" type="button" title="Export outcome brief">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               Export brief
             </button>
           </div>
         </header>
+
+        <div class="journey-flow" aria-label="Guided demo flow">
+          <button class="journey-step" type="button" data-journey-view="outcomes" aria-current="step"><b>1. Estimate value</b><span>Enter operating facts or choose a scenario.</span></button>
+          <button class="journey-step" type="button" data-journey-view="readiness"><b>2. Diagnose readiness</b><span>Score evidence and operating pressure.</span></button>
+          <button class="journey-step" type="button" data-journey-view="semantic"><b>3. Explain drivers</b><span>Show model, performance, and trust signals.</span></button>
+          <button class="journey-step" type="button" data-journey-view="catalog"><b>4. Match modules</b><span>Connect gaps to delivery capabilities.</span></button>
+          <button class="journey-step" type="button" data-journey-view="path"><b>5. Export package</b><span>Review the buyer-ready brief and roadmap.</span></button>
+        </div>
 
         <section class="view active" data-view="outcomes">
           <div class="outcomes-grid">
@@ -2770,11 +3243,19 @@
                 <div>
                   <b id="businessCaseHeadline">$0 annual opportunity</b>
                   <span id="businessCaseDetail">Based on your inputs, this shows the estimated value of capacity returned, performance lift, model cleanup, and governance risk reduction.</span>
+                  <div class="confidence-badge" id="confidenceBadge">Directional estimate</div>
                 </div>
                 <div class="case-metrics">
                   <div class="case-metric"><b id="caseHours">0</b><span>hours/month recoverable</span></div>
                   <div class="case-formula" id="caseFormula">Recoverable hours = monthly baseline report hours x eligible automation share x 75% proven reduction benchmark.</div>
                 </div>
+              </div>
+              <div class="scenario-presets" aria-label="Scenario presets">
+                <button class="preset-btn active" type="button" data-preset="starter">Starter demo<span>Conservative baseline</span></button>
+                <button class="preset-btn" type="button" data-preset="small">Small BI team<span>Growing analytics team</span></button>
+                <button class="preset-btn" type="button" data-preset="manual">Manual-heavy enterprise<span>Reporting capacity drag</span></button>
+                <button class="preset-btn" type="button" data-preset="performance">Slow Power BI estate<span>Repeated wait cost</span></button>
+                <button class="preset-btn" type="button" data-preset="governed">Governed executive org<span>Higher proof maturity</span></button>
               </div>
               <div class="scenario">
                 <div>
@@ -2822,7 +3303,7 @@
                     </div>
                     <div class="field range-field">
                       <div class="range-head">
-                        <label for="eligiblePercent">Reporting effort eligible for automation <span class="info" tabindex="0" data-tip="If unknown, start low. 10-25% means only refresh/publish/reconciliation work is repeatable. 40-60% means recurring prep, QA, and table creation are standardized. 70%+ usually requires strong templates and governance already.">?</span></label>
+                        <label for="eligiblePercent">Reporting effort eligible for automation <span class="info" tabindex="0" data-tip="This is the share of current reporting effort that follows a repeatable pattern and could realistically be reduced. If unsure, start low: 10-25% for refresh/publish/reconciliation only, 40-60% when prep and QA are repeatable, and 70%+ only when templates, governance, and standard inputs already exist.">?</span></label>
                         <output id="eligibleOut">25%</output>
                       </div>
                       <input id="eligiblePercent" type="range" min="0" max="100" value="25">
@@ -2845,13 +3326,27 @@
                   <div class="input-section-label">Proof inputs <span>Use report inventories, usage logs, model metadata, and governance records to validate the estimate.</span></div>
                 </div>
                 <div class="result-stack">
-                  <div class="result-card roi-card"><b id="annualRoiValue">$0</b><span>estimated 12 month ROI opportunity from reporting capacity, model cleanup, logic cleanup, performance, and premium-capacity risk avoidance</span></div>
-                  <div class="result-card"><b id="manualHoursSaved">9</b><span>manual hours saved per month from eligible reporting work</span></div>
-                  <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly value returned: reporting capacity plus model, logic, and premium-capacity risk</span></div>
-                  <div class="result-card"><b id="queryHoursSaved">5</b><span>hours of wait time removed per month using dashboard loads x queries per load</span></div>
-                  <div class="result-card"><b id="modelOpportunity">18%</b><span>estimated Power BI model and logic cleanup opportunity</span></div>
-                  <div class="result-card"><b id="modelValue">$0</b><span>monthly value from model-size, logic, and performance cleanup</span></div>
+                  <div class="result-card roi-card"><b id="annualRoiValue">$0</b><span>estimated 12 month opportunity across reporting capacity, performance, model health, and governance risk.</span></div>
+                  <div class="primary-result-grid">
+                    <div class="result-card"><b id="manualHoursSaved">9</b><span>manual hours saved per month from eligible reporting work</span></div>
+                    <div class="result-card"><b id="primaryDriver">Manual reporting</b><span>largest visible value driver</span></div>
+                  </div>
                   <div class="result-card"><b id="storyLine">25 reports become a governed product backlog.</b><span id="storyDetail">Automation value is based on your volume, not a made-up savings slider.</span></div>
+                  <details class="advanced-results">
+                    <summary>Show calculation details</summary>
+                    <div class="calc-explainer" id="calcExplainer">
+                      <div class="calc-line"><div><b>Reporting capacity value</b><span id="calcReportingFormula">Recoverable reporting hours x hourly cost.</span></div><strong id="calcReportingValue">$0</strong></div>
+                      <div class="calc-line"><div><b>Performance, model, and logic value</b><span id="calcModelFormula">Query wait removed, model size pressure, logic cleanup, duplicate measure cleanup, and premium-capacity risk.</span></div><strong id="calcModelValue">$0</strong></div>
+                      <div class="calc-line total-line"><div><b>Estimated monthly value returned</b><span id="calcMonthlyFormula">Reporting capacity + model/performance value.</span></div><strong id="calcMonthlyValue">$0</strong></div>
+                      <div class="calc-line total-line"><div><b>Estimated 12 month opportunity</b><span id="calcAnnualFormula">Monthly value x 12.</span></div><strong id="calcAnnualValue">$0</strong></div>
+                    </div>
+                    <div class="advanced-result-grid">
+                      <div class="result-card"><b id="manualValue">$765</b><span>estimated monthly value returned: reporting capacity plus model, logic, and premium-capacity risk</span></div>
+                      <div class="result-card"><b id="queryHoursSaved">5</b><span>hours of wait time removed per month using dashboard loads x queries per load</span></div>
+                      <div class="result-card"><b id="modelOpportunity">18%</b><span>estimated Power BI model and logic cleanup opportunity</span></div>
+                      <div class="result-card"><b id="modelValue">$0</b><span>monthly value from model-size, logic, and performance cleanup</span></div>
+                    </div>
+                  </details>
                   <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span><button class="mini-btn" type="button" id="continueReadinessBtn" style="margin-top:10px">Continue to readiness score</button></div>
                 </div>
               </div>
@@ -2895,6 +3390,8 @@
               <div class="ops-explainer"><b id="opsDriverTitle">Manual reporting pressure</b><span id="opsDriverBody">Driven by recurring report count and monthly baseline hours. Higher recurring effort lowers ops health because the analytics operating model is carrying too much manual work.</span></div>
               <div class="score-actions">
                 <button class="mini-btn" type="button" id="editReadinessBtn">Edit readiness inputs</button>
+              </div>
+              <div class="score-actions demo-controls" aria-hidden="true">
                 <button class="mini-btn" type="button" id="opsZeroBtn">Set ops 0/20</button>
                 <button class="mini-btn" type="button" id="opsFullBtn">Set ops 20/20</button>
               </div>
@@ -2927,6 +3424,10 @@
                 <div class="evidence-quality" id="evidenceQuality">Start the test to begin with Metric standards.</div>
                 <button class="mini-btn" type="button" id="applyChecklistBtn" style="margin-top:10px">Submit section score</button>
               </div>
+              <div class="fine-tune-panel" id="fineTunePanel" style="display:none">
+                <b>Fine tune the completed score</b>
+                <span>After the guided test, adjust any slider below if new evidence changes the score. Use the reference map on the right for the selected metric, then export the updated path.</span>
+              </div>
               <div class="scenario" style="grid-template-columns:1fr">
                 <div class="input-grid readiness-fields locked" id="readinessInputGrid">
                   <div class="field range-field locked-section" data-readiness-field="metricStandardization"><div class="range-head"><label for="metricStandardization">Metric standardization <span class="info" tabindex="0" data-tip="Score how consistently KPIs are defined, owned, and reused across reports. Low means every team defines metrics differently.">?</span></label><output id="metricStandardizationOut">25%</output></div><input id="metricStandardization" type="range" min="0" max="100" value="25"></div>
@@ -2943,6 +3444,7 @@
               <p class="section-subtitle" id="scoreInterpretation">Move the criteria to see the maturity band.</p>
               <div class="side-list" id="readinessSections"></div>
               <div class="advice-card"><b id="adviceTitle">Select a metric</b><span id="adviceBody">Choose a readiness metric to see what the current score means and what to improve next.</span></div>
+              <div class="score-map" id="scoreMap"></div>
             </aside>
           </div>
         </section>
@@ -3031,10 +3533,6 @@
                 </table>
               </div>
 
-              <div class="semantic-side-section">
-                <h2 class="section-title">Definition Productization</h2>
-                <p class="section-subtitle">Current answer: not fully yet. The page can capture definitions and export them, but an easy productized view would need a dedicated searchable catalog, owners, approval status, lineage, and change history.</p>
-              </div>
               <div class="hierarchy semantic-side-section">
                 <h2 class="section-title">Example Model Relationships</h2>
                 <p class="section-subtitle">Flip between two finished model examples. Dimensions filter facts. Facts store transactional activity at the defined grain.</p>
@@ -3081,7 +3579,7 @@
                   <div class="example-shot"><b>After</b><div class="example-bars"><i style="--w:28%"></i><i style="--w:36%"></i><i style="--w:84%"></i></div><span>Repeatable delivery with proof you can inspect.</span></div>
                 </div>
                 <div class="automation-value">
-                  <div class="value-tile"><b id="recipeFinancialWin">$0/mo</b><span>financial value this recipe helps expose or recover</span></div>
+                  <div class="value-tile"><b id="recipeFinancialWin">$0/mo</b><span id="recipeFinancialNote">Scenario-based monthly value tied to the current estimate.</span></div>
                   <div class="value-tile"><b id="recipeAcceleration">Faster cycle</b><span>what gets accelerated when the process is standardized</span></div>
                   <div class="value-tile"><b id="recipeBusinessWin">Proof</b><span>the win you can show after implementation</span></div>
                 </div>
@@ -3139,14 +3637,18 @@
         <section class="view" data-view="catalog">
           <div class="panel catalog-intro">
             <h2 class="section-title">How To Use This Catalog</h2>
-            <p class="section-subtitle">Use this page to connect the assessment results to a delivery module. Each card explains the business problem, the proof artifact you receive, and where it fits in a transformation roadmap.</p>
+            <p class="section-subtitle">Use this page to connect the assessment results to a delivery module. Each card explains the business problem, the intervention, the proof artifact you receive, and where it fits in a transformation roadmap.</p>
             <div class="recommendation-strip" id="catalogRecommendations"></div>
           </div>
           <div class="catalog-grid" id="catalogGrid"></div>
         </section>
 
         <section class="view" data-view="path">
-          <article class="panel path-panel path-locked" id="pathPanel">
+          <article class="panel path-panel" id="pathPanel">
+            <div class="path-export">
+              <h2>Parallax Data Lab Outcome Brief</h2>
+              <p id="pathExportNarrative">This in-app path mirrors the exported brief: business case, proof, evidence plan, module sequence, and next meeting agenda.</p>
+            </div>
             <div class="path-hero">
               <div>
                 <b id="pathRoi">$0</b>
@@ -3157,12 +3659,23 @@
                 <div class="case-metric"><b id="pathHours">0</b><span>hours/month recoverable</span></div>
               </div>
             </div>
+            <div class="executive-brief">
+              <div>
+                <h2>Executive Brief Preview</h2>
+                <p id="briefNarrative">Use the estimate, readiness score, and evidence plan as the buyer-ready takeaway for the next conversation.</p>
+              </div>
+              <div class="brief-list">
+                <div><b>Business case</b><span id="briefBusinessCase">Annual opportunity, recoverable hours, and primary driver will update from your inputs.</span></div>
+                <div><b>Evidence plan</b><span id="briefEvidence">Validate with report inventory, usage logs, semantic model metadata, and governance records.</span></div>
+                <div><b>Next meeting agenda</b><span id="briefAgenda">Confirm assumptions, review readiness gaps, choose the first capability module, and define proof artifacts.</span></div>
+              </div>
+            </div>
             <div class="path-grid" id="recommendedPathGrid">
-              <div class="path-card"><b>1. Outcome brief anchor</b><span>Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case.</span></div>
-              <div class="path-card"><b>2. Analytics Foundation Health Assessment</b><span>Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and readiness scoring.</span></div>
-              <div class="path-card"><b>3. Capability modules</b><span>Recommended modules unlock after the readiness test and map directly to manual reporting, query performance, semantic model, governance, automation, and RLS pressure.</span></div>
-              <div class="path-card"><b>Semantic product workbook</b><span>Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind.</span></div>
-              <div class="path-card"><b>Final sales asset package</b><span>Pair the Parallax outcome brief with the recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook.</span></div>
+              <div class="path-card primary-path"><b>1. Business Case</b><span>Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case.</span></div>
+              <div class="path-card primary-path"><b>2. Evidence Plan</b><span>Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and readiness scoring.</span></div>
+              <div class="path-card next-path"><b>3. Capability Modules</b><span>Complete readiness to personalize the module sequence from manual reporting, query performance, semantic model, governance, automation, and RLS pressure.</span></div>
+              <div class="path-card asset-path"><b>Semantic Product Workbook</b><span>Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind.</span></div>
+              <div class="path-card asset-path"><b>Final Sales Asset Package</b><span>Pair the Parallax outcome brief with the recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook.</span></div>
             </div>
           </article>
         </section>
@@ -3177,7 +3690,7 @@
       { id: "semantic", label: "Semantic Model", icon: "cube", title: "Trusted Semantic Model", subtitle: "A deeper inspection layer for model trust, footprint, certification, performance, and governed access." },
       { id: "automation", label: "Automation", icon: "flow", title: "Automation Recipes", subtitle: "Plain-language automation examples that show what changes in the business process and what proof is produced." },
       { id: "governance", label: "Governance + RLS", icon: "shield", title: "Governance and RLS Packaging", subtitle: "Clear package definitions plus the coverage matrix for base, scale, audit, and RLS add-on." },
-      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Flip cards with examples, proof artifacts, and the value behind each capability." },
+      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Scannable module cards with examples, proof artifacts, and the value behind each capability." },
       { id: "path", label: "Recommended Path", icon: "path", title: "Recommended Transformation Path", subtitle: "A prioritized roadmap from your estimate, readiness evidence, semantic model signals, and governance needs." }
     ];
 
@@ -3349,6 +3862,10 @@
       const tab = tabs.find((item) => item.id === id);
       document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.dataset.view === id));
       document.querySelectorAll("[data-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.tab === id)));
+      document.querySelectorAll("[data-journey-view]").forEach((button) => {
+        if (button.dataset.journeyView === id) button.setAttribute("aria-current", "step");
+        else button.removeAttribute("aria-current");
+      });
       document.getElementById("pageTitle").textContent = tab.title;
       document.getElementById("pageSubtitle").textContent = tab.subtitle;
       if (id === "readiness") showAdvice(selectedAdviceId);
@@ -3506,6 +4023,7 @@
       const eligibleRate = baselineHours ? Math.round(eligibleHours / baselineHours * 100) : 0;
       currentFacts = { reportCount, baselineHours, queryRuns, beforeWaitHours, eligibleRate };
       const savedHours = Math.round(eligibleHours * 0.75);
+      const valueHours = savedHours > 450 ? Math.round(450 + Math.pow(savedHours - 450, 0.72) * 4.5) : savedHours;
       const afterWaitHours = beforeWaitHours / 25;
       const queryHoursSaved = Math.max(0, Math.round(beforeWaitHours - afterWaitHours));
       const modelSize = numeric("modelSizeMb");
@@ -3513,18 +4031,30 @@
       const duplicateMeasures = numeric("duplicateMeasureInput");
       const modelOpportunity = Math.min(70, Math.round(modelSize / 80 + logicIssues * 1.8 + duplicateMeasures * 0.8));
       const premiumPressure = Math.max(0, modelSize - 1000);
-      const premiumRiskValue = Math.round(Math.pow(premiumPressure / 1000, 1.18) * 5200);
+      const premiumRiskValue = Math.round(Math.pow(premiumPressure / 1000, 0.86) * 4200);
       const logicValue = logicIssues * 520 + duplicateMeasures * 150;
-      const queryValue = queryHoursSaved * reportingRate * 1.35;
-      const modelValue = Math.round(queryValue + (modelSize * 1.35) + logicValue + premiumRiskValue + (modelOpportunity * 85));
-      const reportingValue = savedHours * reportingRate;
+      const valueQueryHours = queryHoursSaved > 250 ? Math.round(250 + Math.pow(queryHoursSaved - 250, 0.65) * 3.5) : queryHoursSaved;
+      const queryValue = valueQueryHours * reportingRate * 1.25;
+      const modelValue = Math.round(queryValue + (Math.pow(modelSize, 0.82) * 8) + logicValue + premiumRiskValue + (modelOpportunity * 85));
+      const reportingValue = valueHours * reportingRate;
       const savedValue = reportingValue + modelValue;
-      currentFinancials = { savedValue, modelValue, reportingValue, savedHours, queryHoursSaved };
+      currentFinancials = { savedValue, modelValue, reportingValue, savedHours, queryHoursSaved, valueHours, valueQueryHours, queryValue, logicValue, premiumRiskValue };
+      const primaryDriver = primaryDriverLabel(reportingValue, modelValue, queryHoursSaved);
       const assessmentScore = reportCount * 0.35 + baselineHours * 0.2 + queryHoursSaved * 1.2 + modelOpportunity * 0.8 + Math.max(0, eligibleRate - 20) * 0.6;
 
       document.getElementById("manualHoursSaved").textContent = numberFormat.format(savedHours);
       document.getElementById("manualValue").textContent = moneyFormat.format(savedValue);
       document.getElementById("annualRoiValue").textContent = moneyFormat.format(savedValue * 12);
+      document.getElementById("confidenceBadge").textContent = confidenceLabel();
+      document.getElementById("primaryDriver").textContent = primaryDriver;
+      document.getElementById("calcReportingValue").textContent = moneyFormat.format(reportingValue);
+      document.getElementById("calcModelValue").textContent = moneyFormat.format(modelValue);
+      document.getElementById("calcMonthlyValue").textContent = moneyFormat.format(savedValue);
+      document.getElementById("calcAnnualValue").textContent = moneyFormat.format(savedValue * 12);
+      document.getElementById("calcReportingFormula").textContent = `${numberFormat.format(savedHours)} recoverable hours/month${savedHours !== valueHours ? `, value-weighted to ${numberFormat.format(valueHours)} hours for large-estate diminishing returns` : ""} x ${moneyFormat.format(reportingRate)} hourly cost = ${moneyFormat.format(reportingValue)}.`;
+      document.getElementById("calcModelFormula").textContent = `${numberFormat.format(queryHoursSaved)} wait hours removed${queryHoursSaved !== valueQueryHours ? `, value-weighted to ${numberFormat.format(valueQueryHours)} hours` : ""}, plus model-size, logic, duplicate measure, and capacity-risk signals = ${moneyFormat.format(modelValue)}.`;
+      document.getElementById("calcMonthlyFormula").textContent = `${moneyFormat.format(reportingValue)} reporting capacity + ${moneyFormat.format(modelValue)} model/performance/governance value = ${moneyFormat.format(savedValue)}.`;
+      document.getElementById("calcAnnualFormula").textContent = `${moneyFormat.format(savedValue)} monthly value x 12 = ${moneyFormat.format(savedValue * 12)}.`;
       document.getElementById("businessCaseHeadline").textContent = `${moneyFormat.format(savedValue * 12)} annual opportunity`;
       document.getElementById("businessCaseDetail").textContent = `Based on your inputs, ${numberFormat.format(savedHours)} hours/month are recoverable from reporting work, with additional value from performance, Power BI model cleanup, bad logic reduction, and capacity risk avoidance.`;
       document.getElementById("caseHours").textContent = numberFormat.format(savedHours);
@@ -3537,10 +4067,13 @@
       document.getElementById("assessmentTrigger").textContent = assessmentScore > 85 ? "High-priority health assessment recommended" : assessmentScore > 40 ? "Foundation health assessment recommended" : "Starter environment: keep pressure-testing";
       document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? "Your operating footprint is large enough that manual reporting, query wait, model bloat, bad logic, and governance risk are likely hiding material cost." : assessmentScore > 40 ? "You have enough recurring analytics work to justify a structured review of architecture, automation, and semantic model health." : "Inputs are still near the conservative starter setup. Increase only what is true for your environment to reveal the gap.";
       updateScore();
+      updateExecutiveBrief();
       updateSemanticModel();
       buildCatalog();
       updateRecommendedPath();
       updateLeanResultGrid();
+      const activeRecipe = document.querySelector("[data-recipe].active");
+      if (activeRecipe) setRecipe(Number(activeRecipe.dataset.recipe));
     }
 
     function updateScore() {
@@ -3593,7 +4126,7 @@
       wrap.innerHTML = criteria.map((criterion, index) => {
         const done = completedReadiness.has(criterion.id);
         const available = readinessStarted && (done || index === currentIndex);
-        const status = done ? "Complete" : available ? "Active" : index === 0 && !readinessStarted ? "Start here" : "Locked";
+        const status = done ? "Complete" : available ? "Active" : index === 0 && !readinessStarted ? "Start here" : "Pending";
         return `<button type="button" data-readiness-step="${criterion.id}" class="${criterion.id === selectedAdviceId ? "active" : ""} ${available || (!readinessStarted && index === 0) ? "" : "locked"}" ${available || (!readinessStarted && index === 0) ? "" : "disabled"}>
           <span>${criterion.weight}% weight</span><b>${criterion.label}</b><span>${status}</span>
         </button>`;
@@ -3622,7 +4155,6 @@
     function markRecommendedPathUnlocked() {
       recommendedPathUnlocked = true;
       document.body.dataset.readinessComplete = "true";
-      document.getElementById("pathPanel")?.classList.remove("path-locked");
     }
 
     function readinessComplete() {
@@ -3634,12 +4166,13 @@
     function renderReadinessCompleteState() {
       const finalScore = document.getElementById("scoreValue")?.textContent || "0";
       document.getElementById("adviceTitle").textContent = `Final readiness score: ${finalScore}/100`;
-      document.getElementById("adviceBody").textContent = "Your readiness score is complete. The Recommended Path is now unlocked.";
+      document.getElementById("adviceBody").textContent = "Your readiness score is complete. You can fine tune any slider below if new evidence changes a section score.";
       document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Assessment complete</strong><p class="section-subtitle">All six readiness sections are scored. Open Recommended Path to view the roadmap.</p></div>`;
+      document.getElementById("fineTunePanel").style.display = "";
       const btn = document.getElementById("applyChecklistBtn");
       if (btn) {
         btn.disabled = true;
-        btn.textContent = "Readiness score complete";
+        btn.style.display = "none";
       }
     }
 
@@ -3657,13 +4190,14 @@
       document.getElementById("readinessInputGrid").classList.toggle("locked", completedCount < criteria.length);
       const scoreText = document.getElementById("scoreValue")?.textContent || "0";
       document.getElementById("readinessProgress").textContent = complete ? `Complete: final readiness score ${scoreText}/100` : `${completedCount} of ${criteria.length} sections complete`;
-      document.getElementById("startReadinessTestBtn").style.display = "";
+      document.getElementById("startReadinessTestBtn").style.display = readinessStarted || complete ? "none" : "";
       document.getElementById("returnOutcomesBtn").style.display = complete ? "" : "none";
-      document.getElementById("startReadinessTestBtn").textContent = complete ? "Retake readiness test" : readinessStarted ? "Resume active section" : "Start test";
-      document.getElementById("readinessGate").querySelector("b").textContent = complete ? "Readiness score complete" : readinessStarted ? "Readiness test active" : "Start with the readiness test";
+      document.getElementById("startReadinessTestBtn").textContent = "Start test";
+      document.getElementById("readinessGate").querySelector("b").textContent = complete ? "Score ready for fine tuning" : readinessStarted ? "Readiness test active" : "Start with the readiness test";
       document.getElementById("readinessAssessor")?.classList.toggle("locked-test", !readinessStarted);
       document.getElementById("scorePanel")?.classList.toggle("score-locked", !complete);
       document.getElementById("scoreLockNote").style.display = complete ? "none" : "";
+      document.getElementById("fineTunePanel").style.display = complete ? "" : "none";
       buildReadinessSections();
       if (readinessStarted && !completedReadiness.has(selectedAdviceId) && criteria.findIndex((item) => item.id === selectedAdviceId) !== currentIndex) {
         selectedAdviceId = criteria[currentIndex].id;
@@ -3687,6 +4221,7 @@
       const btn = document.getElementById("applyChecklistBtn");
       if (btn) {
         btn.disabled = false;
+        btn.style.display = "";
         btn.textContent = "Submit section score";
       }
       updateCalculator();
@@ -3729,17 +4264,17 @@
         if (readinessComplete()) {
           renderReadinessCompleteState();
           buildReadinessSections();
-          return;
         }
-        if (!readinessStarted) {
+        if (!readinessComplete() && !readinessStarted) {
           selectedAdviceId = criteria[0].id;
           document.getElementById("adviceTitle").textContent = "Start with Metric standards";
           document.getElementById("adviceBody").textContent = "Use the Start test button to begin. The sections unlock in order so the score is evidence-led before it becomes customizable.";
           renderCriterionChecklist(criteria[0], true);
+          renderScoreMap(criteria[0], 1);
           buildReadinessSections();
           return;
         }
-        if (!canAccessReadiness(id)) {
+        if (!readinessComplete() && !canAccessReadiness(id)) {
           id = criteria[getCurrentReadinessIndex()].id;
         }
       }
@@ -3755,7 +4290,87 @@
       document.getElementById(id)?.closest(".field")?.classList.add("active-input");
       document.getElementById("adviceTitle").textContent = `${activeCriterion.label}: ${band[0]}`;
       document.getElementById("adviceBody").textContent = `${band[1]} Recommendation: ${activeCriterion.advice}`;
-      renderCriterionChecklist(activeCriterion);
+      if (!readinessComplete()) renderCriterionChecklist(activeCriterion);
+      renderScoreMap(activeCriterion, bandIndex);
+    }
+
+    function renderScoreMap(criterion, activeIndex) {
+      const wrap = document.getElementById("scoreMap");
+      if (!wrap || !criterion) return;
+      wrap.innerHTML = `<b>${criterion.label} reference map</b>` + criterion.bands.map((band, index) => `
+        <div class="score-map-row ${index === activeIndex ? "active" : ""}">
+          <b>${band[0]}</b>
+          <span>${band[1]} ${band[2]?.slice(0, 2).join(" ") || ""}</span>
+        </div>
+      `).join("");
+    }
+
+    function applyPreset(id) {
+      const wasComplete = readinessComplete();
+      const presets = {
+        starter: {
+          reportCount: 25, hoursPerReport: 1, cyclesPerMonth: 2, dashboardViews: 300, queriesPerView: 8, querySeconds: 8, reportingRate: 85, eligiblePercent: 25, modelSizeMb: 350, logicIssueCount: 8, duplicateMeasureInput: 12,
+          metricStandardization: 25, automationCoverage: 15, semanticHealth: 20, performanceHealth: 25, governanceCoverage: 20, adoptionReadiness: 30,
+          sourceSystems: 3, factTables: 4, dimensionTables: 6, measureCount: 35, certifiedMetrics: 8, rlsRoles: 2, refreshJobs: 4
+        },
+        small: {
+          reportCount: 45, hoursPerReport: 1.5, cyclesPerMonth: 3, dashboardViews: 1400, queriesPerView: 10, querySeconds: 10, reportingRate: 90, eligiblePercent: 32, modelSizeMb: 700, logicIssueCount: 14, duplicateMeasureInput: 18,
+          metricStandardization: 38, automationCoverage: 30, semanticHealth: 35, performanceHealth: 40, governanceCoverage: 34, adoptionReadiness: 42,
+          sourceSystems: 4, factTables: 5, dimensionTables: 9, measureCount: 58, certifiedMetrics: 16, rlsRoles: 1, refreshJobs: 7
+        },
+        manual: {
+          reportCount: 180, hoursPerReport: 4, cyclesPerMonth: 4, dashboardViews: 7800, queriesPerView: 14, querySeconds: 16, reportingRate: 95, eligiblePercent: 48, modelSizeMb: 2200, logicIssueCount: 38, duplicateMeasureInput: 42,
+          metricStandardization: 28, automationCoverage: 22, semanticHealth: 34, performanceHealth: 36, governanceCoverage: 30, adoptionReadiness: 33,
+          sourceSystems: 8, factTables: 12, dimensionTables: 20, measureCount: 140, certifiedMetrics: 32, rlsRoles: 3, refreshJobs: 15
+        },
+        performance: {
+          reportCount: 95, hoursPerReport: 2, cyclesPerMonth: 3, dashboardViews: 18000, queriesPerView: 22, querySeconds: 42, reportingRate: 105, eligiblePercent: 35, modelSizeMb: 5200, logicIssueCount: 46, duplicateMeasureInput: 65,
+          metricStandardization: 36, automationCoverage: 34, semanticHealth: 25, performanceHealth: 18, governanceCoverage: 42, adoptionReadiness: 36,
+          sourceSystems: 7, factTables: 14, dimensionTables: 28, measureCount: 220, certifiedMetrics: 55, rlsRoles: 2, refreshJobs: 18
+        },
+        governed: {
+          reportCount: 120, hoursPerReport: 2.25, cyclesPerMonth: 3, dashboardViews: 12500, queriesPerView: 15, querySeconds: 12, reportingRate: 115, eligiblePercent: 42, modelSizeMb: 1800, logicIssueCount: 18, duplicateMeasureInput: 20,
+          metricStandardization: 72, automationCoverage: 66, semanticHealth: 70, performanceHealth: 68, governanceCoverage: 82, adoptionReadiness: 74,
+          sourceSystems: 9, factTables: 10, dimensionTables: 18, measureCount: 160, certifiedMetrics: 112, rlsRoles: 8, refreshJobs: 28
+        }
+      };
+      const preset = presets[id] || presets.starter;
+      Object.entries(preset).forEach(([fieldId, value]) => {
+        const input = document.getElementById(fieldId);
+        if (input) input.value = value;
+      });
+      document.querySelectorAll("[data-preset]").forEach((button) => button.classList.toggle("active", button.dataset.preset === id));
+      if (opsOverride) clearOpsOverride();
+      if (wasComplete) {
+        criteria.forEach((criterion) => completedReadiness.add(criterion.id));
+        readinessStarted = true;
+        recommendedPathUnlocked = true;
+        document.body.dataset.readinessComplete = "true";
+      } else {
+        completedReadiness.clear();
+        Object.keys(readinessBandSelections).forEach((key) => delete readinessBandSelections[key]);
+        readinessStarted = false;
+        recommendedPathUnlocked = false;
+        delete document.body.dataset.readinessComplete;
+        selectedAdviceId = criteria[0].id;
+      }
+      setInputMode("quick");
+      updateReadinessLocks();
+      updateCalculator();
+      if (wasComplete) showAdvice(selectedAdviceId);
+    }
+
+    function confidenceLabel() {
+      if (readinessComplete() && inputMode === "detailed") return "Validated business case";
+      if (readinessComplete()) return "Evidence-supported estimate";
+      if (inputMode === "detailed") return "Inventory-supported estimate";
+      return "Directional estimate";
+    }
+
+    function primaryDriverLabel(reportingValue, modelValue, queryHoursSaved) {
+      if (modelValue > reportingValue * 1.25) return "Model and performance";
+      if (queryHoursSaved > currentFinancials.savedHours) return "Slow dashboard wait";
+      return "Manual reporting";
     }
 
     function renderCriterionChecklist(criterion, locked = false) {
@@ -3764,6 +4379,7 @@
       const btn = document.getElementById("applyChecklistBtn");
       if (btn) {
         btn.disabled = !!locked;
+        btn.style.display = "";
         btn.textContent = criterion.id === criteria[criteria.length - 1].id ? "Finish readiness score" : "Submit section score";
       }
       const selected = readinessBandSelections[criterion.id] ?? -1;
@@ -3835,6 +4451,7 @@
 
     function setRecipe(index) {
       const recipe = recipes[index];
+      const recipeEstimate = automationRecipeEstimate(recipe.title);
       document.querySelectorAll("[data-recipe]").forEach((button) => button.classList.toggle("active", Number(button.dataset.recipe) === index));
       document.getElementById("recipeTitle").textContent = recipe.title;
       document.getElementById("recipeSubtitle").textContent = recipe.subtitle;
@@ -3844,29 +4461,85 @@
       document.getElementById("recipeMechanism").textContent = recipe.mechanism;
       document.getElementById("recipeFit").textContent = recipe.fit;
       document.getElementById("recipeProof").textContent = recipe.proof;
-      document.getElementById("recipeFinancialWin").textContent = recipe.value;
+      document.getElementById("recipeFinancialWin").textContent = recipeEstimate.value;
+      document.getElementById("recipeFinancialNote").textContent = recipeEstimate.note;
       document.getElementById("recipeAcceleration").textContent = recipe.accelerates;
       document.getElementById("recipeBusinessWin").textContent = recipe.win;
     }
 
+    function automationRecipeEstimate(title) {
+      const reporting = currentFinancials.reportingValue || 0;
+      const model = currentFinancials.modelValue || 0;
+      const query = currentFinancials.queryValue || 0;
+      const logic = currentFinancials.logicValue || 0;
+      const premium = currentFinancials.premiumRiskValue || 0;
+      const saved = currentFinancials.savedValue || 0;
+      const map = {
+        "Aggregate Table Factory": {
+          value: Math.round(reporting * 0.35 + query * 0.25),
+          note: `${moneyFormat.format(reporting)} reporting capacity x 35% + ${moneyFormat.format(query)} query-wait value x 25%.`
+        },
+        "Metric Certification Workflow": {
+          value: Math.round(logic * 0.55 + reporting * 0.12),
+          note: `${moneyFormat.format(logic)} logic cleanup value x 55% + ${moneyFormat.format(reporting)} reporting capacity x 12%.`
+        },
+        "Report Factory Intake": {
+          value: Math.round(reporting * 0.45),
+          note: `${moneyFormat.format(reporting)} reporting capacity x 45% for repeatable intake, QA, documentation, and release work.`
+        },
+        "Performance Regression Guard": {
+          value: Math.round(query * 0.7 + model * 0.12),
+          note: `${moneyFormat.format(query)} query-wait value x 70% + ${moneyFormat.format(model)} model/performance value x 12%.`
+        },
+        "Governance Evidence Pack": {
+          value: Math.round(saved * 0.1 + premium * 0.35),
+          note: `${moneyFormat.format(saved)} total monthly value x 10% + ${moneyFormat.format(premium)} capacity-risk value x 35%.`
+        },
+        "Power BI Model Slimdown": {
+          value: Math.round(model * 0.55 + premium * 0.35),
+          note: `${moneyFormat.format(model)} model/performance value x 55% + ${moneyFormat.format(premium)} capacity-risk value x 35%.`
+        },
+        "Refresh Reliability Control": {
+          value: Math.round(reporting * 0.12 + query * 0.18),
+          note: `${moneyFormat.format(reporting)} reporting capacity x 12% + ${moneyFormat.format(query)} query-wait value x 18% for fewer failure/recovery cycles.`
+        }
+      };
+      const estimate = map[title] || { value: Math.round(saved * 0.15), note: `${moneyFormat.format(saved)} total monthly value x 15%.` };
+      return { value: moneyFormat.format(estimate.value) + "/mo", note: estimate.note };
+    }
+
     function buildCatalog() {
       const recommended = readinessComplete() ? moduleRecommendations().map((item) => item.title) : [];
-      document.getElementById("catalogGrid").innerHTML = catalog.map((item) => `
-        <article class="flip-card ${recommended.includes(item.title) ? "recommended" : ""}" tabindex="0">
-          <div class="flip-inner">
-            <div class="face">
-              <div class="visual" data-art="${item.art}" style="--image:${item.image}"></div>
-              <div class="face-body"><h3>${item.title}</h3><p>${item.summary}</p><div class="meaning-box"><b>What it does:</b><p>${catalogDetails[item.title].meaning}</p></div></div>
+      const proofCompanies = [
+        { name: "Northstar Clinics", logo: "NC", artifact: "Monthly reporting capacity brief" },
+        { name: "Brightline Supply", logo: "BS", artifact: "Dashboard runtime evidence pack" },
+        { name: "Cobalt Finance", logo: "CF", artifact: "Power BI model slimdown workbook" },
+        { name: "Harbor Retail", logo: "HR", artifact: "Certified metric standards sheet" },
+        { name: "Mosaic Health", logo: "MH", artifact: "Automation validation log" },
+        { name: "Pioneer Services", logo: "PS", artifact: "Semantic model ownership map" },
+        { name: "Summit Workforce", logo: "SW", artifact: "RLS role test matrix" }
+      ];
+      document.getElementById("catalogGrid").innerHTML = catalog.map((item, index) => {
+        const proofLabel = item.proof[0] || "Proof target";
+        const company = proofCompanies[index % proofCompanies.length];
+        return `
+        <article class="module-card ${recommended.includes(item.title) ? "recommended" : ""}">
+          <div class="module-art" style="--image:${item.image}"><b>${recommended.includes(item.title) ? "Recommended for you" : "Capability module"}</b></div>
+          <div class="module-body">
+            <h3>${item.title}</h3>
+            <p>${item.summary}</p>
+            <div class="module-meta">
+              <div><b>Business problem</b><span>${catalogDetails[item.title].meaning}</span></div>
+              <div><b>Intervention</b><span>${item.example}</span></div>
+              <div><b>Proof artifact</b><span><strong>${proofLabel}</strong>. ${item.proof.slice(1).join(", ")}.</span></div>
             </div>
-            <div class="face back">
-              <h3>${item.title}</h3>
-              <p>${item.example}</p>
-              <p><b>Why this matters:</b> ${item.why}</p>
-              <p><b>Numerical proof example:</b> ${item.proof.join(", ")}.</p>
+            <div class="proof-company">
+              <div class="fake-logo">${company.logo}</div>
+              <div><b>${company.name}</b><span>${company.artifact}: ${proofLabel}</span></div>
             </div>
           </div>
         </article>
-      `).join("");
+      `}).join("");
       renderCatalogRecommendations();
     }
 
@@ -3889,7 +4562,7 @@
       const wrap = document.getElementById("catalogRecommendations");
       if (!wrap) return;
       if (!readinessComplete()) {
-        wrap.innerHTML = `<div class="recommendation-locked">Take the readiness test to unlock recommended modules from score, reporting, model, query, governance, automation, and RLS signals.</div>`;
+        wrap.innerHTML = `<div class="recommendation-locked">Complete readiness to personalize the top modules. Until then, use the catalog as a menu of delivery options tied to reporting, model, query, governance, automation, and RLS signals.</div>`;
         return;
       }
       const recs = moduleRecommendations();
@@ -3902,14 +4575,19 @@
       const score = document.getElementById("scoreValue").textContent;
       const roi = moneyFormat.format(currentFinancials.savedValue * 12);
       const complete = readinessComplete();
-      const panel = document.getElementById("pathPanel");
-      panel?.classList.toggle("path-locked", !complete);
       if (!complete) {
-        document.getElementById("pathRoi").textContent = "Locked";
-        document.getElementById("pathScore").textContent = "Test needed";
-        document.getElementById("pathHours").textContent = "Hidden";
-        document.getElementById("pathSummary").textContent = "Complete the readiness test to unlock the recommended path. This keeps the roadmap from looking like a generic recommendation before the evidence is captured.";
-        wrap.innerHTML = `<div class="path-card locked"><b>Take the readiness test to unlock this page</b><span>The completed score will turn this into an export-style path with 12 month ROI, hours/month recoverable, readiness score, recommended capability modules, semantic workbook output, and final sales assets.</span></div>`;
+        document.getElementById("pathRoi").textContent = roi;
+        document.getElementById("pathScore").textContent = "Preview";
+        document.getElementById("pathHours").textContent = numberFormat.format(currentFinancials.savedHours);
+        document.getElementById("pathSummary").textContent = "Preview path from the current estimate. Complete readiness to personalize the module order and confidence level.";
+        document.getElementById("pathExportNarrative").textContent = `${roi} preview opportunity. Complete readiness to turn this into the finalized buyer brief with score, module sequence, evidence plan, and next meeting agenda.`;
+        wrap.innerHTML = [
+          ["primary-path", "1. Business Case", "Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case."],
+          ["primary-path", "2. Evidence Plan", "Validate assumptions with report inventory, usage logs, Power BI model metadata, governance records, and readiness evidence."],
+          ["next-path", "3. Module Sequence", "Complete readiness to rank the first delivery modules instead of showing a generic roadmap."],
+          ["asset-path", "4. Semantic Leave-Behind", "Export sources, facts, dimensions, measures, ownership, certification, relationship examples, and bad logic items."],
+          ["asset-path", "5. Next Meeting Agenda", "Pair the outcome brief with readiness scoring, governance/RLS scope, recommended modules, and proof artifacts."]
+        ].map((item) => `<div class="path-card ${item[0]}"><b>${item[1]}</b><span>${item[2]}</span></div>`).join("");
         return;
       }
       const recs = moduleRecommendations();
@@ -3917,20 +4595,34 @@
       const moduleCards = recs.map((item, index) => {
         const module = moduleByTitle[item.title];
         const proof = module?.proof?.slice(0, 2).join(" | ") || "Proof artifact defined during assessment.";
-        return [`${index + 4}. Capability module: ${item.title}`, `${item.reason} Proof target: ${proof}`];
+        return ["next-path", `${index + 4}. ${item.title}`, `${item.reason} Proof target: ${proof}`];
       });
       document.getElementById("pathRoi").textContent = roi;
       document.getElementById("pathScore").textContent = `${score}/100`;
       document.getElementById("pathHours").textContent = numberFormat.format(currentFinancials.savedHours);
       document.getElementById("pathSummary").textContent = `${roi} estimated 12 month opportunity. ${document.getElementById("caseFormula").textContent} Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`;
+      document.getElementById("pathExportNarrative").textContent = `${confidenceLabel()}: ${roi} in estimated 12 month opportunity with ${score}/100 readiness. This is the same package structure used by the exported outcome brief.`;
       wrap.innerHTML = [
-        ["1. 12 month ROI brief", `${roi} estimated 1 year ROI opportunity. Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`],
-        ["2. Outcome proof", `${document.getElementById("manualHoursSaved").textContent} recoverable hours/month, ${document.getElementById("queryHoursSaved").textContent} query wait hours removed, ${document.getElementById("modelOpportunity").textContent} model/logic cleanup opportunity, and ${score}/100 readiness score.`],
-        ["3. Analytics Foundation Health Assessment", "Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and the completed readiness evidence."],
-        ...(recs.length ? moduleCards : [["4. Capability modules", "No single module is strongly indicated yet. Use the completed evidence to choose the smallest next delivery module."]]),
-        ["Semantic product workbook", "Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind."],
-        ["Final sales asset package", "Pair the Parallax outcome brief with this recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook so the next step feels concrete."]
-      ].map((item) => `<div class="path-card"><b>${item[0]}</b><span>${item[1]}</span></div>`).join("");
+        ["primary-path", "1. Business Case", `${roi} estimated 1 year ROI opportunity. Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`],
+        ["primary-path", "2. Outcome Proof", `${document.getElementById("manualHoursSaved").textContent} recoverable hours/month, ${document.getElementById("queryHoursSaved").textContent} query wait hours removed, ${document.getElementById("modelOpportunity").textContent} model/logic cleanup opportunity, and ${score}/100 readiness score.`],
+        ["asset-path", "3. Evidence Plan", "Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and the completed readiness evidence."],
+        ...(recs.length ? moduleCards : [["next-path", "4. Capability Modules", "No single module is strongly indicated yet. Use the completed evidence to choose the smallest next delivery module."]]),
+        ["asset-path", "Semantic Product Workbook", "Export sources, facts, dimensions, measures, ownership, certified status, relationship examples, and bad logic items as the semantic product leave-behind."],
+        ["asset-path", "Next Meeting Agenda", "Pair the Parallax outcome brief with this recommended path, capability modules, readiness evidence, governance/RLS scope, and semantic workbook so the next step feels concrete."]
+      ].map((item) => `<div class="path-card ${item[0]}"><b>${item[1]}</b><span>${item[2]}</span></div>`).join("");
+    }
+
+    function updateExecutiveBrief() {
+      const roi = moneyFormat.format(currentFinancials.savedValue * 12);
+      const hours = numberFormat.format(currentFinancials.savedHours);
+      const primary = document.getElementById("primaryDriver")?.textContent || "Manual reporting";
+      const confidence = confidenceLabel();
+      const score = document.getElementById("scoreValue")?.textContent || "0";
+      const recs = moduleRecommendations().map((item) => item.title).join(", ") || "readiness assessment and foundation health review";
+      document.getElementById("briefNarrative").textContent = `${confidence}: ${roi} in estimated 12 month opportunity, led by ${primary.toLowerCase()}.`;
+      document.getElementById("briefBusinessCase").textContent = `${roi} annual opportunity with ${hours} hours/month recoverable. Current readiness score: ${score}/100.`;
+      document.getElementById("briefEvidence").textContent = "Validate with report inventory, usage logs, query/runtime evidence, semantic model metadata, certified metrics, ownership, access policy, and RLS scope.";
+      document.getElementById("briefAgenda").textContent = `Confirm assumptions, review readiness gaps, choose first modules (${recs}), and define proof artifacts for the next delivery phase.`;
     }
 
     function updateLeanResultGrid() {
@@ -4047,10 +4739,17 @@
 
     function cloneDefaultTerm(type, index) {
       const fallback = semanticDefaults[type][index % semanticDefaults[type].length];
+      const extended = index >= semanticDefaults[type].length;
+      const sourceNames = ["Patient Experience Feed", "Finance Budget Platform", "Contact Center Platform", "Care Management Registry", "Quality Measures Feed", "Referral Management System", "Pharmacy Claims Feed", "Provider Credentialing System"];
+      const factNames = ["Fact Referral Event", "Fact Patient Survey", "Fact Budget Variance", "Fact Care Gap", "Fact Contact Center Interaction", "Fact Quality Measure", "Fact Pharmacy Claim", "Fact Credentialing Event"];
+      const dimensionNames = ["Dim Service Line", "Dim Region", "Dim Account", "Dim Visit Type", "Dim Care Team", "Dim Contract", "Dim Channel", "Dim Quality Program", "Dim Market Segment", "Dim Fiscal Period"];
+      const measureNames = ["Operating Margin", "Access Lag Days", "Care Gap Closure Rate", "Budget Variance", "First Contact Resolution", "Referral Conversion Rate", "Quality Compliance Rate", "Cost Per Encounter"];
+      const generated = { source: sourceNames, fact: factNames, dimension: dimensionNames, measure: measureNames }[type] || [];
+      const name = extended ? generated[(index - semanticDefaults[type].length) % generated.length] || fallback[0] : fallback[0];
       const owner = type === "measure" ? "Finance Analytics" : type === "source" ? "Data Platform" : "BI Engineering";
       const techOwner = type === "source" ? "Data Engineering" : "Analytics Engineering";
       const status = type === "measure" && index < numeric("certifiedMetrics") ? "Certified" : "Candidate";
-      return { type, name: fallback[0], definition: fallback[1], grain: fallback[2], example: fallback[3], businessOwner: owner, technicalOwner: techOwner, status };
+      return { type, name, definition: fallback[1], grain: fallback[2], example: fallback[3], businessOwner: owner, technicalOwner: techOwner, status };
     }
 
     function ensureSemanticTerms() {
@@ -4177,7 +4876,9 @@
         ...dimTerms.map((dim) => ({ ...dim, typeLabel: "Dimension table", detail: `${dim.definition} Grain: ${dim.grain} Business example: ${cleanExample(dim.example)}` })),
         { name: role, typeLabel: "Access rule", detail: "Security layer that decides which rows a department, role, region, account team, or executive group can see.", grain: "Policy grain: role, department, territory, account, or employee row visibility.", businessOwner: "Governance owner", technicalOwner: "BI Engineering", status: "Needs review" }
       ];
-      return `<div class="model-example"><h3>${title}</h3><div class="relationship-note">Dimensions filter facts. Facts store transactional activity at the defined grain, so each dimension is the <b>1</b> side and the fact table is the <b>*</b> side.</div><div class="model-web"><svg class="relationship-svg" viewBox="0 0 720 340" role="img" aria-label="${title}">
+      const dimensionText = dims.filter(Boolean).slice(0, 4).join(", ");
+      const roleText = role === "Base Access" ? "Base access" : role;
+      return `<div class="model-example"><h3>${escapeHtml(title)}</h3><div class="relationship-note">This example is generated from your inputs: <b>${escapeHtml(fact)}</b> is the fact table, filtered by <b>${escapeHtml(dimensionText)}</b>, with <b>${escapeHtml(roleText)}</b> as the access layer. Dimensions filter facts; facts store transactional activity at the defined grain.</div><div class="model-web"><svg class="relationship-svg" viewBox="0 0 720 340" role="img" aria-label="${escapeHtml(title)}">
         <defs><marker id="arrow-${idSafe(title)}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f5b544"/></marker></defs>
         <line x1="130" y1="70" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
         <line x1="590" y1="70" x2="360" y2="164" stroke="#f5b544" stroke-width="3" marker-end="url(#arrow-${idSafe(title)})"/>
@@ -4257,9 +4958,10 @@
       const factTerms = semanticTerms.fact.length ? semanticTerms.fact : semanticDefaults.fact.map((item, index) => cloneDefaultTerm("fact", index));
       const dimTerms = semanticTerms.dimension.length ? semanticTerms.dimension : semanticDefaults.dimension.map((item, index) => cloneDefaultTerm("dimension", index));
       const pickDims = (indexes) => indexes.map((index) => dimTerms[index % dimTerms.length]);
+      const modelTitle = (fact, suffix) => `${fact?.name || "Fact table"} ${suffix}`;
       const html = id === "cost"
-        ? relationshipWeb("Revenue Cycle Claim Payment Model", factTerms[1] || factTerms[0], pickDims([0, 4, 5, 6]), roles ? "Revenue Cycle Role" : "Base Access")
-        : relationshipWeb("Clinic Revenue and Access Model", factTerms[0], pickDims([0, 1, 2, 3]), roles ? "Clinic Leadership Role" : "Base Access");
+        ? relationshipWeb(modelTitle(factTerms[1] || factTerms[0], "Model"), factTerms[1] || factTerms[0], pickDims([0, 4, 5, 6]), roles ? `Role ${Math.min(roles, 2)} access policy` : "Base Access")
+        : relationshipWeb(modelTitle(factTerms[0], "Model"), factTerms[0], pickDims([0, 1, 2, 3]), roles ? "Role 1 access policy" : "Base Access");
       document.getElementById("relationshipMap").innerHTML = html;
       document.querySelectorAll("#relationshipMap .table-definition-card").forEach((card) => {
         card.addEventListener("click", () => {
@@ -4276,8 +4978,10 @@
       const scoreColor = score < 40 ? "#be4b49" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "#20845a";
       const annualRoi = currentFinancials.savedValue * 12;
       const recs = moduleRecommendations();
-      const recText = recs.length ? recs.map((item, index) => `${index + 1}. ${item.title}: ${item.reason}`).join("<br>") : "Take the readiness test to unlock recommended capability modules.";
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:920px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year ROI opportunity. This is monthly estimated value returned (${document.getElementById("manualValue").textContent}) x 12.</span><span>${document.getElementById("caseFormula").textContent}</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b>Manual hours saved per month</div><div class="card"><b>${document.getElementById("manualValue").textContent}</b>Total monthly value returned</div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b>Query wait hours removed</div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b>Model and logic cleanup opportunity</div><div class="card"><b>${document.getElementById("modelValue").textContent}</b>Model, logic, and performance value</div><div class="card score"><b>${score}/100</b>Readiness score<div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div><div class="note"><b>Recommended path</b><br>${recText}</div></div></body></html>`;
+      const recText = recs.length ? recs.map((item, index) => `${index + 1}. ${item.title}: ${item.reason}`).join("<br>") : "Complete readiness to personalize recommended capability modules.";
+      const confidence = confidenceLabel();
+      const primary = document.getElementById("primaryDriver").textContent;
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:960px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.badge{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:700}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.card span{display:block;margin-top:6px;color:#667085}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding:18px}.roi b{font-size:36px}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p><div class="badge">${confidence}</div></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year opportunity. Primary driver: ${primary}.</span><span>${document.getElementById("caseFormula").textContent}</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b><span>Manual hours saved per month</span></div><div class="card"><b>${document.getElementById("manualValue").textContent}</b><span>Total monthly value returned</span></div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b><span>Query wait hours removed</span></div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b><span>Model and logic cleanup opportunity</span></div><div class="card"><b>${document.getElementById("modelValue").textContent}</b><span>Model, logic, and performance value</span></div><div class="card score"><b>${score}/100</b><span>Readiness score</span><div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div><div class="note"><b>Evidence plan</b><br>${document.getElementById("briefEvidence").textContent}</div><div class="note"><b>Recommended path</b><br>${recText}</div><div class="note"><b>Next meeting agenda</b><br>${document.getElementById("briefAgenda").textContent}</div></div></body></html>`;
       const blob = new Blob([html], { type: "text/html" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -4346,6 +5050,7 @@ ${[
       };
       Object.entries(defaults).forEach(([id, value]) => { document.getElementById(id).value = value; });
       document.getElementById("badLogicList").dataset.count = "";
+      document.querySelectorAll("[data-preset]").forEach((button) => button.classList.toggle("active", button.dataset.preset === "starter"));
       semanticTerms = {};
       semanticTermSignature = "";
       renderSemanticTerms(true);
@@ -4399,6 +5104,12 @@ ${[
     document.getElementById("returnOutcomesBtn").addEventListener("click", () => setView("outcomes"));
     document.getElementById("resetBtn").addEventListener("click", resetScenario);
     document.getElementById("startReadinessTestBtn").addEventListener("click", startReadinessTest);
+    document.querySelectorAll("[data-journey-view]").forEach((button) => button.addEventListener("click", () => setView(button.dataset.journeyView)));
+    document.querySelectorAll("[data-preset]").forEach((button) => button.addEventListener("click", () => applyPreset(button.dataset.preset)));
+    document.querySelectorAll(".info, .band-hint").forEach((item) => {
+      const tip = item.getAttribute("data-tip");
+      if (tip) item.setAttribute("aria-label", tip);
+    });
     document.querySelectorAll("[data-ops-driver]").forEach((button) => button.addEventListener("click", () => showOpsDriver(button.dataset.opsDriver)));
     document.querySelectorAll("[data-relationship-example]").forEach((button) => button.addEventListener("click", () => showRelationshipExample(button.dataset.relationshipExample)));
     updateCalculator();
