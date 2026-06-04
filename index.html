@@ -868,6 +868,20 @@
       font-weight: 900;
     }
 
+    .progressive-disclosure {
+      margin-top: 14px;
+    }
+
+    .progressive-body {
+      display: grid;
+      gap: 14px;
+      padding: 0 14px 14px;
+    }
+
+    .progressive-body > .section-subtitle {
+      margin: 0;
+    }
+
     .advanced-result-grid {
       display: grid;
       gap: 12px;
@@ -3648,16 +3662,18 @@
                 <div class="assessment-card"><b id="assessmentTrigger">Foundation health assessment recommended</b><span id="assessmentReason">The starter setup is intentionally modest. Increasing inputs should reveal where the analytics operating model is carrying hidden cost.</span><button class="mini-btn" type="button" id="continueReadinessBtn" style="margin-top:10px">Continue to readiness test</button></div>
                 </div>
               </div>
-              <div class="evidence">
-                <h2 class="section-title">What You Can Bring As Evidence</h2>
-              <p class="section-subtitle">These are the evidence sources Parallax would review during an Analytics Foundation Assessment to turn this directional estimate into a contextual recommendation.</p>
-                <div class="evidence-grid">
-                  <div class="evidence-card"><b>Report inventory</b><span>Recurring reports, owners, cycle frequency, and effort by domain.</span></div>
-                  <div class="evidence-card"><b>Usage and performance logs</b><span>Query count, average wait time, slow dashboard list, refresh history.</span></div>
-                  <div class="evidence-card"><b>Reporting model metadata</b><span>Model size, tables, business metrics, duplicate calculations, approved metrics, logic issues, and relationship health.</span></div>
-                  <div class="evidence-card"><b>Governance records</b><span>Ownership, glossary, lineage, access policy, and RLS coverage.</span></div>
+              <details class="advanced-results progressive-disclosure">
+                <summary>Open evidence sources reviewed during the assessment</summary>
+                <div class="progressive-body evidence">
+                  <p class="section-subtitle">These are the evidence sources Parallax would review during an Analytics Foundation Assessment to turn this directional estimate into a contextual recommendation.</p>
+                  <div class="evidence-grid">
+                    <div class="evidence-card"><b>Report inventory</b><span>Recurring reports, owners, cycle frequency, and effort by domain.</span></div>
+                    <div class="evidence-card"><b>Usage and performance logs</b><span>Query count, average wait time, slow dashboard list, refresh history.</span></div>
+                    <div class="evidence-card"><b>Reporting model metadata</b><span>Model size, tables, business metrics, duplicate calculations, approved metrics, logic issues, and relationship health.</span></div>
+                    <div class="evidence-card"><b>Governance records</b><span>Ownership, glossary, lineage, access policy, and RLS coverage.</span></div>
+                  </div>
                 </div>
-              </div>
+              </details>
             </article>
 
             <aside class="panel score-panel score-locked" id="scorePanel">
@@ -3672,20 +3688,26 @@
               </div>
               <span class="score-status" id="scoreStatus">Needs attention</span>
               <div class="score-lock-note" id="scoreLockNote">Take the readiness test to unlock the final readiness result and recommendations.</div>
-              <div class="score-breakdown">
-                <div class="break-row"><b>Self-assess</b><div class="break-track"><i id="selfAssessBar"></i></div><span id="selfAssessText">0/80</span></div>
-                <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
-              </div>
-              <div class="helper-card">
-                <b>Scoring methodology</b>
-                <span>80 points come from the evidence-based readiness sections. 20 points come from operational pressure: manual reporting volume, query wait, Power BI model size, duplicate calculations, and known logic issues.</span>
-              </div>
-              <div class="ops-drivers">
-                <button class="ops-driver active" type="button" data-ops-driver="manual"><b id="manualPressureText">0%</b><span>Manual reporting pressure</span></button>
-                <button class="ops-driver" type="button" data-ops-driver="model"><b id="modelPressureText">0%</b><span>Model and logic pressure</span></button>
-                <button class="ops-driver" type="button" data-ops-driver="query"><b id="queryPressureText">0%</b><span>Query wait pressure</span></button>
-              </div>
-              <div class="ops-explainer"><b id="opsDriverTitle">Manual reporting pressure</b><span id="opsDriverBody">Driven by recurring report count and monthly baseline hours. Higher recurring effort lowers ops health because the analytics operating model is carrying too much manual work.</span></div>
+              <details class="advanced-results progressive-disclosure">
+                <summary>Open score drivers and scoring guidance</summary>
+                <div class="progressive-body">
+                  <div class="score-breakdown">
+                    <div class="break-row"><b>Self-assess</b><div class="break-track"><i id="selfAssessBar"></i></div><span id="selfAssessText">0/80</span></div>
+                    <div class="break-row"><b>Ops health</b><div class="break-track"><i id="opsHealthBar"></i></div><span id="opsHealthText">0/20</span></div>
+                  </div>
+                  <div class="helper-card">
+                    <b>Scoring methodology</b>
+                    <span>80 points come from the evidence-based readiness sections. 20 points come from operational pressure: manual reporting volume, query wait, Power BI model size, duplicate calculations, and known logic issues.</span>
+                  </div>
+                  <div class="ops-drivers">
+                    <button class="ops-driver active" type="button" data-ops-driver="manual"><b id="manualPressureText">0%</b><span>Manual reporting pressure</span></button>
+                    <button class="ops-driver" type="button" data-ops-driver="model"><b id="modelPressureText">0%</b><span>Model and logic pressure</span></button>
+                    <button class="ops-driver" type="button" data-ops-driver="query"><b id="queryPressureText">0%</b><span>Query wait pressure</span></button>
+                  </div>
+                  <div class="ops-explainer"><b id="opsDriverTitle">Manual reporting pressure</b><span id="opsDriverBody">Driven by recurring report count and monthly baseline hours. Higher recurring effort lowers ops health because the analytics operating model is carrying too much manual work.</span></div>
+                  <div class="criteria" id="criteriaList"></div>
+                </div>
+              </details>
               <div class="score-actions">
                 <button class="mini-btn" type="button" id="editReadinessBtn">Edit readiness inputs</button>
               </div>
@@ -3693,7 +3715,6 @@
                 <button class="mini-btn" type="button" id="opsZeroBtn">Set ops 0/20</button>
                 <button class="mini-btn" type="button" id="opsFullBtn">Set ops 20/20</button>
               </div>
-              <div class="criteria" id="criteriaList"></div>
             </aside>
           </div>
         </section>
@@ -3789,31 +3810,36 @@
                   </div>
                 </div>
               </div>
-              <div class="semantic-term-editor">
-                <div class="semantic-flip-inner">
-                  <div class="semantic-face">
-                    <h3>Editable Reporting Terms</h3>
-                    <p>Name the systems, business activity, lookup lists, and metrics in language a buyer would recognize. These definitions, examples, owners, and statuses export to the workbook.</p>
-                    <div class="term-actions add-actions">
-                      <button class="mini-btn" type="button" data-add-term="source">Add source</button>
-                      <button class="mini-btn" type="button" data-add-term="fact">Add fact</button>
-                      <button class="mini-btn" type="button" data-add-term="dimension">Add dimension</button>
-                      <button class="mini-btn" type="button" data-add-term="measure">Add metric</button>
+              <details class="advanced-results progressive-disclosure">
+                <summary>Open editable reporting workbook</summary>
+                <div class="progressive-body">
+                  <div class="semantic-term-editor">
+                    <div class="semantic-flip-inner">
+                      <div class="semantic-face">
+                        <h3>Editable Reporting Terms</h3>
+                        <p>Name the systems, business activity, lookup lists, and metrics in language a buyer would recognize. These definitions, examples, owners, and statuses export to the workbook.</p>
+                        <div class="term-actions add-actions">
+                          <button class="mini-btn" type="button" data-add-term="source">Add source</button>
+                          <button class="mini-btn" type="button" data-add-term="fact">Add fact</button>
+                          <button class="mini-btn" type="button" data-add-term="dimension">Add dimension</button>
+                          <button class="mini-btn" type="button" data-add-term="measure">Add metric</button>
+                        </div>
+                        <div class="term-actions flip-actions">
+                          <button class="mini-btn" type="button" id="semanticFlipBtn">View lean product result</button>
+                        </div>
+                        <div class="term-header"><span>Type</span><span>Name</span><span>Plain-language definition</span><span>Level of detail</span><span>Business example</span><span>Business owner</span><span>Technical owner</span><span>Status</span><span></span></div>
+                        <div class="term-grid" id="semanticTermGrid"></div>
+                      </div>
+                      <div class="semantic-face result">
+                        <h3>Clean Reporting Model Result</h3>
+                        <p>This is the buyer-friendly after-state: clearer definitions, accountable owners, fewer duplicate calculations, and reusable reporting standards. Today this is an editable/exportable view; a searchable metric catalog can be added as a delivery layer.</p>
+                        <button class="mini-btn" type="button" id="semanticEditBtn">Back to editable terms</button>
+                        <div class="lean-result-grid" id="leanResultGrid"></div>
+                      </div>
                     </div>
-                    <div class="term-actions flip-actions">
-                      <button class="mini-btn" type="button" id="semanticFlipBtn">View lean product result</button>
-                    </div>
-                    <div class="term-header"><span>Type</span><span>Name</span><span>Plain-language definition</span><span>Level of detail</span><span>Business example</span><span>Business owner</span><span>Technical owner</span><span>Status</span><span></span></div>
-                    <div class="term-grid" id="semanticTermGrid"></div>
-                  </div>
-                  <div class="semantic-face result">
-                    <h3>Clean Reporting Model Result</h3>
-                    <p>This is the buyer-friendly after-state: clearer definitions, accountable owners, fewer duplicate calculations, and reusable reporting standards. Today this is an editable/exportable view; a searchable metric catalog can be added as a delivery layer.</p>
-                    <button class="mini-btn" type="button" id="semanticEditBtn">Back to editable terms</button>
-                    <div class="lean-result-grid" id="leanResultGrid"></div>
                   </div>
                 </div>
-              </div>
+              </details>
             </article>
             <aside class="panel side-card">
               <div class="semantic-side-section">
@@ -3825,15 +3851,17 @@
                 </div>
               </div>
 
-              <div class="hierarchy semantic-side-section">
-                <h2 class="section-title">Example Reporting Relationships</h2>
-                <p class="section-subtitle">Compare two examples of how business activity connects to the fields people use to filter reports.</p>
-                <div class="relationship-tabs">
-                  <button class="mini-btn active" type="button" data-relationship-example="revenue">Clinic Revenue Model</button>
-                  <button class="mini-btn" type="button" data-relationship-example="cost">Revenue Cycle Model</button>
+              <details class="advanced-results progressive-disclosure hierarchy semantic-side-section">
+                <summary>Open example reporting relationships</summary>
+                <div class="progressive-body">
+                  <p class="section-subtitle">Compare two examples of how business activity connects to the fields people use to filter reports.</p>
+                  <div class="relationship-tabs">
+                    <button class="mini-btn active" type="button" data-relationship-example="revenue">Clinic Revenue Model</button>
+                    <button class="mini-btn" type="button" data-relationship-example="cost">Revenue Cycle Model</button>
+                  </div>
+                  <div class="relationship-map" id="relationshipMap"></div>
                 </div>
-                <div class="relationship-map" id="relationshipMap"></div>
-              </div>
+              </details>
             </aside>
           </div>
         </section>
@@ -3932,7 +3960,12 @@
             <p class="section-subtitle">This is not the final recommendation. It previews the delivery areas that may matter before the Analytics Foundation Assessment confirms the real scope and package fit.</p>
             <div class="recommendation-strip" id="catalogRecommendations"></div>
           </div>
-          <div class="catalog-grid" id="catalogGrid"></div>
+          <details class="advanced-results progressive-disclosure">
+            <summary>Open full delivery area catalog</summary>
+            <div class="progressive-body">
+              <div class="catalog-grid" id="catalogGrid"></div>
+            </div>
+          </details>
         </section>
 
         <section class="view" data-view="path">
