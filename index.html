@@ -393,6 +393,22 @@
       box-shadow: 0 0 0 3px rgba(245, 181, 68, 0.16);
     }
 
+    body:not([data-active-view="outcomes"]) .journey-flow {
+      grid-template-columns: repeat(5, minmax(0, auto));
+      gap: 8px;
+      padding: 10px 28px;
+    }
+
+    body:not([data-active-view="outcomes"]) .journey-step {
+      min-height: 0;
+      align-content: center;
+      padding: 9px 11px;
+    }
+
+    body:not([data-active-view="outcomes"]) .journey-step span {
+      display: none;
+    }
+
     .benchmark-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1381,6 +1397,40 @@
       gap: 14px;
       align-items: start;
       margin-top: 14px;
+    }
+
+    .semantic-input-drawer {
+      margin-bottom: 14px;
+    }
+
+    .semantic-input-drawer .input-grid {
+      padding: 0;
+    }
+
+    .assessment-context {
+      margin: 0 0 16px;
+      padding: 16px;
+      border: 1px solid #b8d5ff;
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      background: #edf6ff;
+    }
+
+    .assessment-context b,
+    .assessment-context span {
+      display: block;
+    }
+
+    .assessment-context b {
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .assessment-context span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     .semantic-column {
@@ -3472,7 +3522,7 @@
 
   </style>
 </head>
-<body>
+<body data-active-view="outcomes">
   <div class="app mode-quick" id="appShell">
     <aside class="rail" aria-label="Product navigation">
       <div>
@@ -3489,7 +3539,7 @@
       <nav class="nav" id="railNav"></nav>
       <div class="rail-note">
         <b>Your analytics outcome calculator</b>
-        <span>Benchmark feats stay fixed. Your outcomes are calculated from reporting volume, query pain, model health, automation coverage, and governance maturity.</span>
+        <span>Benchmarks stay fixed. Your outcomes are calculated from reporting volume, query pain, model health, automation coverage, and governance maturity.</span>
       </div>
     </aside>
 
@@ -3778,16 +3828,21 @@
                 </div>
                 <button class="mini-btn" type="button" id="exportSemanticBtn">Export reporting model workbook</button>
               </div>
-              <div class="semantic-controls">
-                <div class="field"><label for="sourceSystems">Source systems <span class="info" tabindex="0" data-tip="Distinct systems feeding analytics: ERP, CRM, HRIS, finance platform, data warehouse marts, files, or operational apps.">?</span></label><input id="sourceSystems" type="number" min="1" max="30" value="3"></div>
-                <div class="field"><label for="factTables">Business activity tables <span class="info" tabindex="0" data-tip="Tables that store real activity, such as orders, invoices, tickets, shipments, visits, or monthly balances.">?</span></label><input id="factTables" type="number" min="1" max="80" value="4"></div>
-                <div class="field"><label for="dimensionTables">Report filter tables <span class="info" tabindex="0" data-tip="Lists people use to filter reports, such as account, product, region, employee, date, channel, vendor, or business unit.">?</span></label><input id="dimensionTables" type="number" min="1" max="100" value="6"></div>
-                <div class="field"><label for="measureCount">Business metrics <span class="info" tabindex="0" data-tip="Reusable calculations exposed to reports: revenue, margin, utilization, retention, SLA, cost, and other KPIs.">?</span></label><input id="measureCount" type="number" min="1" max="1000" value="35"></div>
-                <div class="field"><label for="certifiedMetrics">Approved metrics <span class="info" tabindex="0" data-tip="Metrics that have a named owner, definition, lineage, and approval status.">?</span></label><input id="certifiedMetrics" type="number" min="0" max="1000" value="8"></div>
-                <div class="field"><label for="duplicateMeasureInput">Suspected duplicates <span class="info" tabindex="0" data-tip="Measures that appear to calculate the same business concept in multiple ways across reports or datasets.">?</span></label><input id="duplicateMeasureInput" type="number" min="0" max="1000" value="12"></div>
-                <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
-                <div class="field"><label for="refreshJobs">Automated refreshes <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
-              </div>
+              <details class="advanced-results progressive-disclosure semantic-input-drawer">
+                <summary>Open reporting model input assumptions</summary>
+                <div class="progressive-body">
+                  <div class="semantic-controls">
+                    <div class="field"><label for="sourceSystems">Source systems <span class="info" tabindex="0" data-tip="Distinct systems feeding analytics: ERP, CRM, HRIS, finance platform, data warehouse marts, files, or operational apps.">?</span></label><input id="sourceSystems" type="number" min="1" max="30" value="3"></div>
+                    <div class="field"><label for="factTables">Business activity tables <span class="info" tabindex="0" data-tip="Tables that store real activity, such as orders, invoices, tickets, shipments, visits, or monthly balances.">?</span></label><input id="factTables" type="number" min="1" max="80" value="4"></div>
+                    <div class="field"><label for="dimensionTables">Report filter tables <span class="info" tabindex="0" data-tip="Lists people use to filter reports, such as account, product, region, employee, date, channel, vendor, or business unit.">?</span></label><input id="dimensionTables" type="number" min="1" max="100" value="6"></div>
+                    <div class="field"><label for="measureCount">Business metrics <span class="info" tabindex="0" data-tip="Reusable calculations exposed to reports: revenue, margin, utilization, retention, SLA, cost, and other KPIs.">?</span></label><input id="measureCount" type="number" min="1" max="1000" value="35"></div>
+                    <div class="field"><label for="certifiedMetrics">Approved metrics <span class="info" tabindex="0" data-tip="Metrics that have a named owner, definition, lineage, and approval status.">?</span></label><input id="certifiedMetrics" type="number" min="0" max="1000" value="8"></div>
+                    <div class="field"><label for="duplicateMeasureInput">Suspected duplicates <span class="info" tabindex="0" data-tip="Measures that appear to calculate the same business concept in multiple ways across reports or datasets.">?</span></label><input id="duplicateMeasureInput" type="number" min="0" max="1000" value="12"></div>
+                    <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
+                    <div class="field"><label for="refreshJobs">Automated refreshes <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
+                  </div>
+                </div>
+              </details>
               <div class="semantic-stage">
                 <div class="semantic-node primary">
                   <b>Trusted reporting model health</b>
@@ -3875,6 +3930,10 @@
                   <p>Each recipe shows a common reporting operations problem, what would be standardized, and what evidence you would receive to confirm the improvement worked.</p>
                 </div>
               </div>
+              <div class="assessment-context">
+                <b>How this feeds the assessment</b>
+                <span>These recipes are examples of repeatable work Parallax would look for during the Analytics Foundation Assessment. The assessment decides which processes are stable enough to standardize and which still need business design first.</span>
+              </div>
               <div class="queue" id="automationQueue"></div>
             </article>
             <article class="panel">
@@ -3916,6 +3975,10 @@
                   <h2>Governance Packaging</h2>
                   <p>Start by choosing the type of control the buyer needs: a trusted foundation, scalable operating rhythm, audit-ready evidence, or role-based data access. Then compare the package rows.</p>
                 </div>
+              </div>
+              <div class="assessment-context">
+                <b>How this feeds the assessment</b>
+                <span>The Analytics Foundation Assessment confirms what level of governance is actually needed: basic ownership, scale controls, audit evidence, or a separate RLS workstream for sensitive row-level access.</span>
               </div>
               <div class="package-defs">
                 <div class="package-card" data-package-col="1"><b>Base</b><span>For scattered reporting that needs one trusted foundation: glossary, owners, certified metrics, core lineage, and refresh monitoring.</span><small>Best for: first governed analytics layer</small></div>
@@ -4208,6 +4271,7 @@
 
     function setView(id) {
       const tab = tabs.find((item) => item.id === id);
+      document.body.dataset.activeView = id;
       document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.dataset.view === id));
       document.querySelectorAll("[data-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.tab === id)));
       document.querySelectorAll("[data-journey-view]").forEach((button) => {
@@ -4788,8 +4852,9 @@
         const unlocked = !locked;
         const passed = selected >= index;
         const example = band[2]?.join(" | ") || band[1];
-        return `<label class="${passed ? "active-band" : ""}">
-          <input type="radio" name="readiness-band-${criterion.id}" data-readiness-band="${index}" ${selected === index ? "checked" : ""} ${unlocked ? "" : "disabled"}>
+        const inputId = `readiness-band-${criterion.id}-${index}`;
+        return `<label class="${passed ? "active-band" : ""}" for="${inputId}">
+          <input id="${inputId}" type="radio" name="readiness-band-${criterion.id}" value="${index}" data-readiness-band="${index}" ${selected === index ? "checked" : ""} ${unlocked ? "" : "disabled"}>
           <span><b>${band[0]}</b> ${band[1]} <i class="band-hint" tabindex="0" data-tip="${escapeHtml(example)}">?</i></span>
         </label>`;
       }).join("")}</div>`;
@@ -4987,7 +5052,7 @@
         wrap.innerHTML = [
           ["section", "Recommended Next Step"],
           ["assessment-path", "Analytics Foundation Assessment", `${assessmentNextStep}<a href="${assessmentUrl}" target="_blank" rel="noopener">Open assessment package</a>`],
-          ["focus-path", "Decision System Reset", `A focused package when the assessment confirms the core problem is how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
+          ["focus-path", "Possible follow-on: Decision System Reset", `If the assessment finds the reporting problem is really a decision process problem, this focused package rebuilds how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
           ["section", "Why This Is Worth Reviewing"],
           ["primary-path", "Outcome estimate", "Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case."],
           ["section", "Evidence To Confirm"],
@@ -5012,7 +5077,7 @@
       wrap.innerHTML = [
         ["section", "Recommended Next Step"],
         ["assessment-path", "Analytics Foundation Assessment", `${assessmentNextStep}<a href="${assessmentUrl}" target="_blank" rel="noopener">Open assessment package</a>`],
-        ["focus-path", "Decision System Reset", `A focused package when the assessment confirms the core problem is how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
+        ["focus-path", "Possible follow-on: Decision System Reset", `If the assessment finds the reporting problem is really a decision process problem, this focused package rebuilds how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
         ["section", "Why This Is Worth Reviewing"],
         ["primary-path", "Outcome estimate", `${roi} estimated 1 year ROI opportunity. Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`],
         ["primary-path", "Outcome proof", `${document.getElementById("manualHoursSaved").textContent} recoverable hours/month, ${document.getElementById("queryHoursSaved").textContent} query wait hours removed, ${document.getElementById("modelOpportunity").textContent} model/logic cleanup opportunity, and <strong>${score}/100 readiness test result</strong>.`],
