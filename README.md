@@ -23,9 +23,11 @@ The interface is organized around a five-step sales/demo journey:
 - Customer-input outcome calculator using report volume, report-cycle effort, query usage, wait time, hourly cost, and automation eligibility
 - Confidence labels for directional, inventory-supported, evidence-supported, and validated business cases
 - Guided definitions for customer inputs so buyers understand what they are choosing
+- Executive first-screen header with live annual opportunity, hours recovered, and readiness-state chips
 - Quick estimate mode and detailed report-inventory mode for mixed weekly/monthly reporting portfolios
 - Simplified first-page results with advanced calculation detail available on demand
 - Cumulative calculation explainers showing how reporting capacity, performance/model value, monthly value, and annual opportunity add up
+- Executive snapshot cards that translate the estimate into primary signal, proof needed, and next move
 - Slower-growth value weighting for very large manual-reporting and slow-dashboard estates so high-end estimates stay directional instead of exploding linearly
 - 0-100 readiness score based on weighted criteria with scoring guidance bands
 - Readiness score blended from 80% self-assessment plus 20% operational pressure from manual reporting, query wait, model size, and logic issues
@@ -40,7 +42,7 @@ The interface is organized around a five-step sales/demo journey:
 - Clickable governance package columns for comparison
 - Governance packaging for Base, Scale, Audit, and RLS Add-on
 - Visual capability catalog with business problem, intervention, fictional proof-company artifacts, and quiz-gated recommendation callouts
-- Recommended Path page that shows a useful preview immediately and personalizes after readiness is complete
+- Recommended Path page that shows a useful preview immediately, then formats the completed path like a screenshot-ready executive export with package and readout guidance
 
 ## Run Locally
 
