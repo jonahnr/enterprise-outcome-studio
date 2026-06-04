@@ -3039,6 +3039,28 @@
       background: #f7fbff;
     }
 
+    .path-card.assessment-path {
+      grid-column: span 4;
+      border: 2px solid var(--gold);
+      color: #ffffff;
+      background: var(--navy);
+    }
+
+    .path-card.assessment-path b,
+    .path-card.assessment-path span {
+      color: #ffffff;
+    }
+
+    .path-card.assessment-path a {
+      color: var(--gold);
+    }
+
+    .path-card.focus-path {
+      grid-column: span 2;
+      border-color: #b8ccf5;
+      background: #edf6ff;
+    }
+
     .path-card a {
       display: flex;
       width: fit-content;
@@ -3490,8 +3512,8 @@
           <button class="journey-step" type="button" data-journey-view="outcomes" aria-current="step"><b>1. Estimate value</b><span>Enter operating facts or choose a scenario.</span></button>
           <button class="journey-step" type="button" data-journey-view="readiness"><b>2. Diagnose readiness</b><span>Score evidence and operating pressure.</span></button>
           <button class="journey-step" type="button" data-journey-view="semantic"><b>3. Explain drivers</b><span>Show model, performance, and trust signals.</span></button>
-          <button class="journey-step" type="button" data-journey-view="catalog"><b>4. Match modules</b><span>Connect gaps to delivery capabilities.</span></button>
-          <button class="journey-step" type="button" data-journey-view="path"><b>5. Export package</b><span>Review the buyer-ready brief and roadmap.</span></button>
+          <button class="journey-step" type="button" data-journey-view="catalog"><b>4. Preview fit</b><span>See which delivery areas may matter.</span></button>
+          <button class="journey-step" type="button" data-journey-view="path"><b>5. Next step</b><span>Route to the assessment recommendation.</span></button>
         </div>
 
         <section class="view active" data-view="outcomes">
@@ -3500,7 +3522,7 @@
               <div class="panel-header">
                 <div>
                   <h2>Outcome Calculator</h2>
-                  <p>The four large numbers are enterprise-level proof points. Start with the conservative defaults, then increase only what reflects your current environment.</p>
+                  <p>Start with a quick directional estimate. The goal is not to prove the final answer here; it is to identify whether an Analytics Foundation Assessment is worth reviewing against your real environment.</p>
                 </div>
                 <span class="pill">Evidence-led</span>
               </div>
@@ -3524,7 +3546,7 @@
               <div class="executive-snapshot">
                 <div class="snapshot-card"><b>Primary signal</b><span id="snapshotSignal">Manual reporting pressure creates the first business case.</span></div>
                 <div class="snapshot-card"><b>Proof needed</b><span id="snapshotProof">Bring report inventory, usage logs, and model metadata.</span></div>
-                <div class="snapshot-card"><b>Next move</b><span id="snapshotNext">Complete readiness to personalize the module path.</span></div>
+                <div class="snapshot-card"><b>Next move</b><span id="snapshotNext">Complete the readiness test, then use the Recommended Path to route the next conversation.</span></div>
               </div>
               <div class="scenario-presets" aria-label="Scenario presets">
                 <button class="preset-btn active" type="button" data-preset="starter">Starter demo<span>Conservative baseline</span></button>
@@ -3596,8 +3618,8 @@
                     </div>
                   </div>
                   <div class="helper-card">
-                    <b>Not sure what to enter?</b>
-                    <span>Use conservative numbers first. If your team has more reports, more refresh cycles, longer waits, larger Power BI models, or more repeatable work than the starter setup, that gap is the reason to run an Analytics Foundation Health Assessment.</span>
+                    <b>Use this as a triage estimate</b>
+                    <span>Keep the inputs conservative. If the estimate points to meaningful reporting drag, the Analytics Foundation Assessment is where Parallax reviews the actual inventory, model, governance, and decision context.</span>
                   </div>
                   <div class="input-section-label">Proof inputs <span>Use report inventories, usage logs, model metadata, and governance records to validate the estimate.</span></div>
                 </div>
@@ -3628,7 +3650,7 @@
               </div>
               <div class="evidence">
                 <h2 class="section-title">What You Can Bring As Evidence</h2>
-                <p class="section-subtitle">The calculator can later connect to real data sources. For now, it asks for facts you can pull from report inventories, usage logs, model metadata, and governance records.</p>
+              <p class="section-subtitle">These are the evidence sources Parallax would review during an Analytics Foundation Assessment to turn this directional estimate into a contextual recommendation.</p>
                 <div class="evidence-grid">
                   <div class="evidence-card"><b>Report inventory</b><span>Recurring reports, owners, cycle frequency, and effort by domain.</span></div>
                   <div class="evidence-card"><b>Usage and performance logs</b><span>Query count, average wait time, slow dashboard list, refresh history.</span></div>
@@ -3731,7 +3753,7 @@
               <div class="panel-header" style="padding:0 0 14px;border-bottom:0">
                 <div>
                   <h2>Trusted Reporting Model</h2>
-                  <p>This shows whether teams can trust the same numbers. It looks at shared definitions, metric ownership, duplicate calculations, report performance, sensitive access, and the cleanup work needed to make reporting easier to reuse.</p>
+                  <p>This checks whether your organization can trust one version of the numbers. It highlights shared definitions, metric ownership, duplicate calculations, report performance, sensitive access, and cleanup work Parallax would validate during assessment.</p>
                 </div>
                 <button class="mini-btn" type="button" id="exportSemanticBtn">Export reporting model workbook</button>
               </div>
@@ -3744,6 +3766,28 @@
                 <div class="field"><label for="duplicateMeasureInput">Suspected duplicates <span class="info" tabindex="0" data-tip="Measures that appear to calculate the same business concept in multiple ways across reports or datasets.">?</span></label><input id="duplicateMeasureInput" type="number" min="0" max="1000" value="12"></div>
                 <div class="field"><label for="rlsRoles">Sensitive access roles <span class="info" tabindex="0" data-tip="Distinct roles that need different row visibility, such as region leaders, branch managers, executives, or HR-only audiences.">?</span></label><input id="rlsRoles" type="number" min="0" max="80" value="2"></div>
                 <div class="field"><label for="refreshJobs">Automated refreshes <span class="info" tabindex="0" data-tip="Scheduled refresh or pipeline jobs that run without a person manually exporting, joining, and republishing data.">?</span></label><input id="refreshJobs" type="number" min="0" max="500" value="4"></div>
+              </div>
+              <div class="semantic-stage">
+                <div class="semantic-node primary">
+                  <b>Trusted reporting model health</b>
+                  <span id="semanticSummary">35 business metrics, 8 approved, and 12 suspected duplicates create a practical cleanup starting point.</span>
+                  <div class="health-grid">
+                    <div class="health"><b id="modelFootprint">24%</b><span>estimated footprint reduction opportunity</span></div>
+                    <div class="health"><b id="duplicateMeasures">34%</b><span>duplicate measure retirement opportunity</span></div>
+                    <div class="health"><b id="badLogicScore">8</b><span>bad logic items to inspect</span></div>
+                    <div class="health"><b id="semanticTrust">23%</b><span>trusted metric coverage</span></div>
+                  </div>
+                  <details class="bad-logic-drawer">
+                    <summary>Open bad logic item capture</summary>
+                    <div class="bad-logic-list" id="badLogicList"></div>
+                  </details>
+                  <div class="model-canvas" id="modelCanvas"></div>
+                  <div class="semantic-proof-grid">
+                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Named Owners</b><span>Revenue, margin, and forecast accuracy have accountable business owners.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Owner: Finance Analytics. Approver: CFO delegate. Review cadence: monthly close and quarterly planning.</span></div></div></article>
+                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Clear Definitions</b><span>Important metrics explain what they mean, how they are calculated, and when they should be used.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Revenue = posted invoice amount net of credit memos, recognized by invoice date, filtered by active customer.</span></div></div></article>
+                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Reusable Metrics</b><span>Reports reuse approved calculations instead of rebuilding the same number differently in each file.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Approved: Revenue, Gross Margin %, Forecast Accuracy, Active Customers. Old duplicates are hidden.</span></div></div></article>
+                  </div>
+                </div>
               </div>
               <div class="semantic-term-editor">
                 <div class="semantic-flip-inner">
@@ -3767,28 +3811,6 @@
                     <p>This is the buyer-friendly after-state: clearer definitions, accountable owners, fewer duplicate calculations, and reusable reporting standards. Today this is an editable/exportable view; a searchable metric catalog can be added as a delivery layer.</p>
                     <button class="mini-btn" type="button" id="semanticEditBtn">Back to editable terms</button>
                     <div class="lean-result-grid" id="leanResultGrid"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="semantic-stage">
-                <div class="semantic-node primary">
-                  <b>Trusted reporting model health</b>
-                  <span id="semanticSummary">35 business metrics, 8 approved, and 12 suspected duplicates create a practical cleanup starting point.</span>
-                  <div class="health-grid">
-                    <div class="health"><b id="modelFootprint">24%</b><span>estimated footprint reduction opportunity</span></div>
-                    <div class="health"><b id="duplicateMeasures">34%</b><span>duplicate measure retirement opportunity</span></div>
-                    <div class="health"><b id="badLogicScore">8</b><span>bad logic items to inspect</span></div>
-                    <div class="health"><b id="semanticTrust">23%</b><span>trusted metric coverage</span></div>
-                  </div>
-                  <details class="bad-logic-drawer">
-                    <summary>Open bad logic item capture</summary>
-                    <div class="bad-logic-list" id="badLogicList"></div>
-                  </details>
-                  <div class="model-canvas" id="modelCanvas"></div>
-                  <div class="semantic-proof-grid">
-                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Named Owners</b><span>Revenue, margin, and forecast accuracy have accountable business owners.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Owner: Finance Analytics. Approver: CFO delegate. Review cadence: monthly close and quarterly planning.</span></div></div></article>
-                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Clear Definitions</b><span>Important metrics explain what they mean, how they are calculated, and when they should be used.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Revenue = posted invoice amount net of credit memos, recognized by invoice date, filtered by active customer.</span></div></div></article>
-                    <article class="proof-card" tabindex="0" role="button" aria-pressed="false"><div class="proof-card-inner"><div class="proof-face"><b>Reusable Metrics</b><span>Reports reuse approved calculations instead of rebuilding the same number differently in each file.</span></div><div class="proof-face back"><b>Finished artifact</b><span>Approved: Revenue, Gross Margin %, Forecast Accuracy, Active Customers. Old duplicates are hidden.</span></div></div></article>
                   </div>
                 </div>
               </div>
@@ -3906,8 +3928,8 @@
 
         <section class="view" data-view="catalog">
           <div class="panel catalog-intro">
-            <h2 class="section-title">How To Use This Catalog</h2>
-            <p class="section-subtitle">Use this page to connect the assessment results to a delivery module. Each card explains the business problem, the intervention, the proof artifact you receive, and where it fits in a transformation roadmap.</p>
+            <h2 class="section-title">Potential Delivery Areas</h2>
+            <p class="section-subtitle">This is not the final recommendation. It previews the delivery areas that may matter before the Analytics Foundation Assessment confirms the real scope and package fit.</p>
             <div class="recommendation-strip" id="catalogRecommendations"></div>
           </div>
           <div class="catalog-grid" id="catalogGrid"></div>
@@ -3917,7 +3939,7 @@
           <article class="panel path-panel" id="pathPanel">
             <div class="path-export">
               <h2>Parallax Data Lab Outcome Brief</h2>
-              <p id="pathExportNarrative">This in-app path mirrors the exported brief: business case, proof, evidence plan, module sequence, and next meeting agenda.</p>
+              <p id="pathExportNarrative">Based on what you entered, the next step is an Analytics Foundation Assessment so Parallax can review your actual reporting environment and recommend the right package.</p>
             </div>
             <div class="path-hero">
               <div>
@@ -3932,7 +3954,7 @@
             <div class="executive-brief">
               <div>
                 <h2>Executive Brief Preview</h2>
-                <p id="briefNarrative">Use the estimate, readiness test result, and evidence plan as the buyer-ready takeaway for the next conversation.</p>
+                <p id="briefNarrative">Use the estimate, readiness test result, and evidence plan to frame the Analytics Foundation Assessment conversation.</p>
               </div>
               <div class="brief-list">
                 <div><b>Business case</b><span id="briefBusinessCase">Annual opportunity, recoverable hours, and primary driver will update from your inputs.</span></div>
@@ -3965,8 +3987,8 @@
       { id: "semantic", label: "Reporting Model", icon: "cube", title: "Trusted Reporting Model", subtitle: "A plain-language view of whether buyers can trust, reuse, and govern the same reporting numbers." },
       { id: "automation", label: "Automation", icon: "flow", title: "Automation Recipes", subtitle: "Plain-language automation examples that show what changes in the business process and what proof is produced." },
       { id: "governance", label: "Governance + RLS", icon: "shield", title: "Governance and RLS Packaging", subtitle: "Clear package definitions plus the coverage matrix for base, scale, audit, and RLS add-on." },
-      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Transformation Capability Catalog", subtitle: "Scannable module cards with examples, proof artifacts, and the value behind each capability." },
-      { id: "path", label: "Recommended Path", icon: "path", title: "Recommended Transformation Path", subtitle: "A prioritized roadmap from your estimate, readiness evidence, reporting model signals, and governance needs." }
+      { id: "catalog", label: "Capability Catalog", icon: "grid", title: "Potential Delivery Areas", subtitle: "A preview of delivery modules that may be relevant before assessment validates the actual scope." },
+      { id: "path", label: "Recommended Path", icon: "path", title: "Recommended Next Step", subtitle: "A clear route from the estimate and readiness evidence into the Analytics Foundation Assessment." }
     ];
 
     const icons = {
@@ -3998,6 +4020,9 @@
     let recommendedPathUnlocked = false;
     const readinessBandSelections = {};
     let lastAddedTerm = null;
+    const assessmentNextStep = "Based on what you entered, the next step is an Analytics Foundation Assessment so Parallax can review your actual reporting environment and recommend the right package.";
+    const assessmentUrl = "https://parallax-data.webflow.io/work/analytics-foundation-assessment";
+    const decisionResetUrl = "https://parallax-data.webflow.io/work/decision-system-reset";
     const detailedReports = [
       { name: "Executive scorecards", reports: 4, cadence: "weekly", cycles: 4, hours: 1.5, eligible: 35, loads: 180, queries: 10, wait: 10 },
       { name: "Finance close pack", reports: 8, cadence: "monthly", cycles: 1, hours: 4, eligible: 45, loads: 80, queries: 12, wait: 18 },
@@ -4357,10 +4382,10 @@
       document.getElementById("storyLine").textContent = `${numberFormat.format(reportCount)} reports become a governed product backlog.`;
       document.getElementById("storyDetail").textContent = `${numberFormat.format(Math.round(baselineHours))} monthly baseline hours, ${numberFormat.format(queryRuns)} query executions, and ${eligibleRate}% eligible effort using the proven 75% enterprise reduction benchmark.`;
       document.getElementById("assessmentTrigger").textContent = assessmentScore > 85 ? "High-priority health assessment recommended" : assessmentScore > 40 ? "Foundation health assessment recommended" : "Starter environment: keep pressure-testing";
-      document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? "Your operating footprint is large enough that manual reporting, query wait, model bloat, bad logic, and governance risk are likely hiding material cost." : assessmentScore > 40 ? "You have enough recurring analytics work to justify a structured review of architecture, automation, and reporting model health." : "Inputs are still near the conservative starter setup. Increase only what is true for your environment to reveal the gap.";
+      document.getElementById("assessmentReason").textContent = assessmentScore > 85 ? `${assessmentNextStep} The current footprint suggests manual reporting, query wait, model bloat, bad logic, and governance risk may be hiding material cost.` : assessmentScore > 40 ? `${assessmentNextStep} You have enough recurring analytics work to justify a structured review of architecture, automation, and reporting model health.` : "Inputs are still near the conservative starter setup. Increase only what is true for your environment to reveal the gap, then use the Recommended Path to decide whether an assessment is warranted.";
       document.getElementById("snapshotSignal").textContent = `${primaryDriver} is the leading value signal, with ${numberFormat.format(savedHours)} recoverable hours/month and ${numberFormat.format(queryHoursSaved)} wait hours removed.`;
       document.getElementById("snapshotProof").textContent = `Validate with report inventory, usage logs, reporting model metadata, logic issue samples, and approved metric coverage.`;
-      document.getElementById("snapshotNext").textContent = readinessComplete() ? `Fine tune readiness, then export the recommended path as the buyer-facing recap.` : `Complete readiness to turn this estimate into a ranked module path and exportable buyer brief.`;
+      document.getElementById("snapshotNext").textContent = readinessComplete() ? assessmentNextStep : `Complete the readiness test, then use Recommended Path to confirm whether the assessment is the right next step.`;
       updateScore();
       updateExecutiveBrief();
       updateSemanticModel();
@@ -4463,7 +4488,7 @@
       const finalScore = document.getElementById("scoreValue")?.textContent || "0";
       document.getElementById("adviceTitle").textContent = `Final readiness test result: ${finalScore}/100`;
       document.getElementById("adviceBody").textContent = "Your readiness test is complete. You can fine tune any slider below if new evidence changes a section result.";
-      document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Assessment complete</strong><p class="section-subtitle">All six readiness sections are scored. Open Recommended Path to view the roadmap.</p></div>`;
+      document.getElementById("criterionChecklist").innerHTML = `<div class="check-band active-band"><strong>Readiness test complete</strong><p class="section-subtitle">${assessmentNextStep}</p></div>`;
       document.getElementById("fineTunePanel").style.display = "";
       const btn = document.getElementById("applyChecklistBtn");
       if (btn) {
@@ -4906,12 +4931,12 @@
       const wrap = document.getElementById("catalogRecommendations");
       if (!wrap) return;
       if (!readinessComplete()) {
-        wrap.innerHTML = `<div class="recommendation-locked"><button type="button" data-open-readiness>Complete readiness test</button> to personalize the top modules. Until then, use the catalog as a menu of delivery options tied to reporting, model, query, governance, automation, and RLS signals.</div>`;
+        wrap.innerHTML = `<div class="recommendation-locked"><button type="button" data-open-readiness>Complete readiness test</button> to preview which delivery areas may need assessment. The final package recommendation should come from the Analytics Foundation Assessment.</div>`;
         wrap.querySelector("[data-open-readiness]")?.addEventListener("click", () => setView("readiness"));
         return;
       }
       const recs = moduleRecommendations();
-      wrap.innerHTML = recs.map((item, index) => `<div class="recommendation-tile"><b>Suggested module ${index + 1}: ${item.title}</b><span>${item.reason}</span></div>`).join("");
+      wrap.innerHTML = `<div class="recommendation-tile"><b>Assessment recommendation</b><span>${assessmentNextStep}</span></div>` + recs.map((item, index) => `<div class="recommendation-tile"><b>Possible focus area ${index + 1}: ${item.title}</b><span>${item.reason}</span></div>`).join("");
     }
 
     function updateRecommendedPath() {
@@ -4924,17 +4949,16 @@
         document.getElementById("pathRoi").textContent = roi;
         document.getElementById("pathScore").textContent = "Preview";
         document.getElementById("pathHours").textContent = numberFormat.format(currentFinancials.savedHours);
-        document.getElementById("pathSummary").textContent = "Preview path from the current estimate. Complete readiness to personalize the module order and confidence level.";
-        document.getElementById("pathExportNarrative").textContent = `${roi} preview opportunity. Complete readiness to turn this into the finalized buyer brief with score, module sequence, evidence plan, and next meeting agenda.`;
+        document.getElementById("pathSummary").textContent = `${roi} preview opportunity. ${assessmentNextStep}`;
+        document.getElementById("pathExportNarrative").textContent = assessmentNextStep;
         wrap.innerHTML = [
-          ["section", "Business Case"],
+          ["section", "Recommended Next Step"],
+          ["assessment-path", "Analytics Foundation Assessment", `${assessmentNextStep}<a href="${assessmentUrl}" target="_blank" rel="noopener">Open assessment package</a>`],
+          ["focus-path", "Decision System Reset", `A focused package when the assessment confirms the core problem is how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
+          ["section", "Why This Is Worth Reviewing"],
           ["primary-path", "Outcome estimate", "Use the annual opportunity, recoverable hours/month, query wait removed, and model cleanup signal as the front-door business case."],
           ["section", "Evidence To Confirm"],
-          ["primary-path", "Evidence plan", "Validate assumptions with report inventory, usage logs, Power BI model metadata, governance records, and readiness test evidence."],
-          ["section", "Delivery Path"],
-          ["next-path", "Analytics Foundation Assessment", `Use this as the next step when the buyer needs a fully contextualized review and recommendation.<a href="https://parallax-data.webflow.io/work/analytics-foundation-assessment" target="_blank" rel="noopener">Open assessment package</a>`],
-          ["next-path", "Decision System Reset", `Use this focused package when the problem is how decisions are defined, supported, and executed.<a href="https://parallax-data.webflow.io/work/decision-system-reset" target="_blank" rel="noopener">Open reset package</a>`],
-          ["next-path", "Module sequence", "Complete the readiness test to rank the first delivery modules instead of showing a generic roadmap."],
+          ["asset-path", "Assessment inputs", "Validate assumptions with report inventory, usage logs, Power BI model metadata, governance records, and readiness test evidence."],
           ["section", "Buyer Leave-Behind"],
           ["asset-path", "Reporting model workbook", "Export systems, business activity tables, report filters, metrics, ownership, approval status, relationship examples, and cleanup items."]
         ].map((item) => item[0] === "section" ? `<div class="path-section-title">${item[1]}</div>` : `<div class="path-card ${item[0]}"><b>${item[1]}</b><span>${item[2]}</span></div>`).join("");
@@ -4950,18 +4974,19 @@
       document.getElementById("pathRoi").textContent = roi;
       document.getElementById("pathScore").textContent = `${score}/100`;
       document.getElementById("pathHours").textContent = numberFormat.format(currentFinancials.savedHours);
-      document.getElementById("pathSummary").textContent = `${roi} estimated 12 month opportunity. ${document.getElementById("caseFormula").textContent} Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`;
-      document.getElementById("pathExportNarrative").textContent = `${confidenceLabel()}: ${roi} in estimated 12 month opportunity with ${score}/100 readiness. This is the same package structure used by the exported outcome brief.`;
+      document.getElementById("pathSummary").textContent = `${roi} estimated 12 month opportunity. ${assessmentNextStep}`;
+      document.getElementById("pathExportNarrative").textContent = assessmentNextStep;
       wrap.innerHTML = [
-        ["section", "Business Case"],
+        ["section", "Recommended Next Step"],
+        ["assessment-path", "Analytics Foundation Assessment", `${assessmentNextStep}<a href="${assessmentUrl}" target="_blank" rel="noopener">Open assessment package</a>`],
+        ["focus-path", "Decision System Reset", `A focused package when the assessment confirms the core problem is how decisions are defined, supported, and executed.<a href="${decisionResetUrl}" target="_blank" rel="noopener">Open reset package</a>`],
+        ["section", "Why This Is Worth Reviewing"],
         ["primary-path", "Outcome estimate", `${roi} estimated 1 year ROI opportunity. Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity plus ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.`],
         ["primary-path", "Outcome proof", `${document.getElementById("manualHoursSaved").textContent} recoverable hours/month, ${document.getElementById("queryHoursSaved").textContent} query wait hours removed, ${document.getElementById("modelOpportunity").textContent} model/logic cleanup opportunity, and <strong>${score}/100 readiness test result</strong>.`],
         ["section", "Evidence To Confirm"],
-        ["asset-path", "Evidence plan", "Confirm the business case with report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and the completed readiness test evidence."],
-        ["section", "Recommended Delivery Modules"],
-        ["next-path", "Analytics Foundation Assessment", `Recommended next step for a fully contextualized review of the current analytics environment, operating gaps, and delivery recommendation.<a href="https://parallax-data.webflow.io/work/analytics-foundation-assessment" target="_blank" rel="noopener">Open assessment package</a>`],
-        ["next-path", "Decision System Reset", `Focused package for rebuilding how decisions are defined, supported, and executed when the buyer needs a tighter decision operating model.<a href="https://parallax-data.webflow.io/work/decision-system-reset" target="_blank" rel="noopener">Open reset package</a>`],
-        ...(recs.length ? moduleCards : [["next-path", "Capability modules", "No single module is strongly indicated yet. Use the completed evidence to choose the smallest next delivery module."]]),
+        ["asset-path", "Assessment evidence plan", "Bring report inventory, usage logs, query/runtime evidence, Power BI model metadata, governance records, and completed readiness evidence into the Analytics Foundation Assessment."],
+        ["section", "Likely Assessment Focus Areas"],
+        ...(recs.length ? moduleCards : [["next-path", "Focus areas", "The assessment should confirm which delivery area is smallest, highest leverage, and most defensible."]]),
         ["section", "Buyer Leave-Behind"],
         ["asset-path", "Reporting model workbook", "Export systems, business activity tables, report filters, metrics, ownership, approval status, relationship examples, and cleanup items as the buyer leave-behind."]
       ].map((item) => item[0] === "section" ? `<div class="path-section-title">${item[1]}</div>` : `<div class="path-card ${item[0]}"><b>${item[1]}</b><span>${item[2]}</span></div>`).join("");
@@ -4973,11 +4998,11 @@
       const primary = document.getElementById("primaryDriver")?.textContent || "Manual reporting";
       const confidence = confidenceLabel();
       const score = document.getElementById("scoreValue")?.textContent || "0";
-      const recs = moduleRecommendations().map((item) => item.title).join(", ") || "readiness assessment and foundation health review";
-      document.getElementById("briefNarrative").textContent = `${confidence}: ${roi} in estimated 12 month opportunity, led by ${primary.toLowerCase()}.`;
+      const recs = moduleRecommendations().map((item) => item.title).join(", ") || "reporting, readiness, governance, and decision support";
+      document.getElementById("briefNarrative").textContent = `${confidence}: ${roi} in estimated 12 month opportunity, led by ${primary.toLowerCase()}. ${assessmentNextStep}`;
       document.getElementById("briefBusinessCase").textContent = `${roi} annual opportunity with ${hours} hours/month recoverable. Current readiness test result: ${score}/100.`;
       document.getElementById("briefEvidence").textContent = "Validate with report inventory, usage logs, query/runtime evidence, reporting model metadata, approved metrics, ownership, access policy, and RLS scope.";
-      document.getElementById("briefAgenda").textContent = `Confirm assumptions, review readiness gaps, choose first modules (${recs}), and define proof artifacts for the next delivery phase.`;
+      document.getElementById("briefAgenda").textContent = `Use the Analytics Foundation Assessment to confirm assumptions, review readiness gaps, inspect focus areas (${recs}), and recommend the right package.`;
     }
 
     function updateLeanResultGrid() {
@@ -5333,10 +5358,10 @@
       const scoreColor = score < 40 ? "#be4b49" : score < 60 ? "#d88919" : score < 80 ? "#d6b21e" : "#20845a";
       const annualRoi = currentFinancials.savedValue * 12;
       const recs = moduleRecommendations();
-      const recText = recs.length ? recs.map((item, index) => `${index + 1}. ${item.title}: ${item.reason}`).join("<br>") : "Complete readiness to personalize recommended capability modules.";
+      const recText = recs.length ? recs.map((item, index) => `${index + 1}. Assessment focus area - ${item.title}: ${item.reason}`).join("<br>") : "Use the Analytics Foundation Assessment to confirm the right package.";
       const confidence = confidenceLabel();
       const primary = document.getElementById("primaryDriver").textContent;
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:960px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.badge{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:700}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.card span{display:block;margin-top:6px;color:#667085}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding:18px}.roi b{font-size:36px}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p><div class="badge">${confidence}</div></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year opportunity. Primary driver: ${primary}.</span><span>${document.getElementById("caseFormula").textContent}</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b><span>Manual hours saved per month</span></div><div class="card"><b>${document.getElementById("manualValue").textContent}</b><span>Total monthly value returned</span></div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b><span>Query wait hours removed</span></div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b><span>Model and logic cleanup opportunity</span></div><div class="card"><b>${document.getElementById("modelValue").textContent}</b><span>Model, logic, and performance value</span></div><div class="card score"><b>${score}/100</b><span>Readiness score</span><div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div><div class="note"><b>Evidence plan</b><br>${document.getElementById("briefEvidence").textContent}</div><div class="note"><b>Recommended path</b><br>${recText}</div><div class="note"><b>Next meeting agenda</b><br>${document.getElementById("briefAgenda").textContent}</div></div></body></html>`;
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Parallax Outcome Brief</title><style>body{font-family:Arial,sans-serif;color:#172033;line-height:1.45;margin:0;background:#f4f8fd}.wrap{max-width:960px;margin:auto;padding:32px}.hero{background:#071d54;color:white;border-radius:12px;padding:24px;border-bottom:8px solid #f5b544}h1{margin:0;color:#f5b544}.badge{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:700}.roi{margin-top:18px;padding:22px;border-radius:12px;background:#071d54;color:white;border:3px solid #f5b544}.roi b{display:block;color:#f5b544;font-size:48px;line-height:1}.roi span{display:block;margin-top:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.card{border:1px solid #d9e2ef;border-radius:8px;padding:16px;background:white}.card b{display:block;font-size:28px;color:#071d54}.card span{display:block;margin-top:6px;color:#667085}.score b{color:${scoreColor}}.note{background:#fff9eb;border:1px solid #f3d28d;border-radius:8px;padding:16px;margin-top:16px}.next{background:#071d54;color:white;border:3px solid #f5b544}.next b{color:#f5b544}.bar{height:10px;background:#e5edf8;border-radius:999px;overflow:hidden}.bar i{display:block;width:${score}%;height:100%;background:${scoreColor}}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding:18px}.roi b{font-size:36px}}</style></head><body><div class="wrap"><div class="hero"><h1>Parallax Data Lab Outcome Brief</h1><p>${document.getElementById("storyDetail").textContent}</p><div class="badge">${confidence}</div></div><div class="roi"><b>${moneyFormat.format(annualRoi)}</b><span>Estimated 1 year opportunity. Primary driver: ${primary}.</span><span>${document.getElementById("caseFormula").textContent}</span><span>Monthly source: ${moneyFormat.format(currentFinancials.reportingValue)} reporting capacity + ${moneyFormat.format(currentFinancials.modelValue)} model, logic, performance, and premium-capacity risk value.</span></div><div class="note next"><b>Recommended next step</b><br>${assessmentNextStep}</div><div class="grid"><div class="card"><b>${document.getElementById("manualHoursSaved").textContent}</b><span>Manual hours saved per month</span></div><div class="card"><b>${document.getElementById("manualValue").textContent}</b><span>Total monthly value returned</span></div><div class="card"><b>${document.getElementById("queryHoursSaved").textContent}</b><span>Query wait hours removed</span></div><div class="card"><b>${document.getElementById("modelOpportunity").textContent}</b><span>Model and logic cleanup opportunity</span></div><div class="card"><b>${document.getElementById("modelValue").textContent}</b><span>Model, logic, and performance value</span></div><div class="card score"><b>${score}/100</b><span>Readiness test result</span><div class="bar"><i></i></div></div></div><div class="note"><b>${document.getElementById("assessmentTrigger").textContent}</b><br>${document.getElementById("assessmentReason").textContent}</div><div class="note"><b>Assessment evidence plan</b><br>${document.getElementById("briefEvidence").textContent}</div><div class="note"><b>Likely assessment focus areas</b><br>${recText}</div><div class="note"><b>Next meeting agenda</b><br>${document.getElementById("briefAgenda").textContent}</div></div></body></html>`;
       const blob = new Blob([html], { type: "text/html" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
