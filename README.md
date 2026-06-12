@@ -24,6 +24,7 @@ The interface is organized around a five-step sales/demo journey:
 - Confidence labels for directional, inventory-supported, evidence-supported, and validated business cases
 - Guided definitions for customer inputs so buyers understand what they are choosing
 - Executive first-screen header with live annual opportunity, hours recovered, and readiness-state chips
+- Branded Parallax Data Lab logo artwork and star-field background treatment across the blue studio surfaces
 - Quick estimate mode and detailed report-inventory mode for mixed weekly/monthly reporting portfolios
 - Simplified first-page results with advanced calculation detail available on demand
 - Cumulative calculation explainers showing how reporting capacity, performance/model value, monthly value, and annual opportunity add up
@@ -87,6 +88,9 @@ To enable it:
 |-- .github/
 |   `-- workflows/
 |       `-- deploy-pages.yml
+|-- assets/
+|   |-- parallax-data-lab-logo.png
+|   `-- parallax-starry-background.png
 |-- .nojekyll
 |-- README.md
 `-- index.html
